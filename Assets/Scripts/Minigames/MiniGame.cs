@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class MiniGame : MonoBehaviour
 {
-    bool hasWon;
+    protected bool hasWon;
     public float maxTimer;
     float timer;
     public EventTrigger.TriggerEvent OnWinCallBack;

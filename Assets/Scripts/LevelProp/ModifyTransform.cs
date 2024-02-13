@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class ModifyTransform : MonoBehaviour
 {
+    // the object to modify
     public GameObject objectToModify;
+    // the increase or decrease in magnitude for each transform element
     public Vector3 positionModification = Vector3.zero;
     public Vector3 rotationModification = Vector3.zero;
     public Vector3 scaleModification = Vector3.zero;
@@ -33,7 +35,7 @@ public class ModifyTransform : MonoBehaviour
             objectToModify.transform.localRotation = Quaternion.Euler(Vector3.Lerp(objectToModify.transform.localRotation.eulerAngles, targetRot, timer));
         }
     }
-    public void Enable()
+    public void Activate()
     {
         start = true;
     }
