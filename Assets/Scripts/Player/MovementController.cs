@@ -13,12 +13,12 @@ public class MovementController : MonoBehaviour
     private bool isGrounded = true;
 
     private Vector3 direction;
-    private float stamina = 100;
+    public float stamina = 100;
     private float jumpChargeTime = 0;
     private float moveSpeed;
     private bool canJump = true;
 
-    //private AnimationManager animationManager;
+    private AnimationController animationController;
 
     // Start is called before the first frame update
     public void IntializeMovementController()
@@ -27,6 +27,7 @@ public class MovementController : MonoBehaviour
         moveSpeed = movementData.walkSpeed;
         playerCol = GetComponent<CapsuleCollider>();
         playerRB = GetComponent<Rigidbody>();
+        animationController = AnimationController.Instance;
     }
 
     public void ToggleSprint()
@@ -86,7 +87,6 @@ public class MovementController : MonoBehaviour
         if (isMoving)
         {
             direction = Camera.main.transform.forward.normalized;
-            //transform.forward = Vector3.Lerp(transform.forward, Camera.main.transform.forward, 5f * Time.deltaTime);
 
             Vector3 forwardDirection = Vector3.ProjectOnPlane(Camera.main.transform.forward * vertical, Vector3.up);
             Vector3 sideDirection = Vector3.ProjectOnPlane(Camera.main.transform.right * horizontal, Vector3.up);
@@ -110,6 +110,10 @@ public class MovementController : MonoBehaviour
                 moveSpeed = movementData.crouchSpeed;
         }
 
+        // Set player to falling if falling
+        if (playerRB.velocity.y <= -0.5f)
+            animationController.ChangeAnimation(animationController.Falling, 0.1f, 0, 0);
+
         // If run out of stamina
         if (stamina <= 0f && isSprinting)
         {
@@ -120,6 +124,10 @@ public class MovementController : MonoBehaviour
         // Recharge stamina
         if (!isSprinting && stamina < movementData.maxStamina)
             stamina += movementData.staminaRegenRate * Time.deltaTime;
+
+        // Update facing direction
+        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, targetAngle, 0), moveSpeed * Time.deltaTime);
     }
 
     public void ChargeJump()
@@ -146,38 +154,28 @@ public class MovementController : MonoBehaviour
         playerRB.velocity = new Vector3(playerRB.velocity.x, 0, playerRB.velocity.z);
         playerRB.AddForce(transform.up * (movementData.baseJumpForce + jumpChargeTime * movementData.jumpChargeMultiplier), ForceMode.Impulse);
 
+        animationController.ChangeAnimation(animationController.Jump, 0f, 0, 0);
+
         jumpChargeTime = 0;
     }
 
-    //public void UpdateAnimation(bool isADS)
-    //{
-    //    if (!isGrounded || isDodging || isSwimming)
-    //        return;
+    public void UpdateAnimation()
+    {
+        if (!isGrounded)
+            return;
 
-    //    if (isMoving && !isADS)
-    //    {
-    //        StopIdleRoutine();
-
-    //        if (!isSprinting && !isCrouching) animationManager.ChangeAnimation(animationManager.DefaultWalk, 0.2f, 0, 0);
-    //        if (isSprinting && !isCrouching) animationManager.ChangeAnimation(animationManager.Sprint, 0.2f, 0, 0);
-    //        if (!isSprinting && isCrouching) animationManager.ChangeAnimation(animationManager.CrouchWalk, 0.2f, 0, 0);
-    //    }
-    //    else if (isMoving && isADS)
-    //    {
-    //        StopIdleRoutine();
-
-    //        if (!isSprinting && !isCrouching) animationManager.ChangeAnimation(animationManager.PistolWalk, 0.2f, 0, 0);
-    //        if (isSprinting && !isCrouching) animationManager.ChangeAnimation(animationManager.PistolSprint, 0.2f, 0, 0);
-    //        if (!isSprinting && isCrouching) animationManager.ChangeAnimation(animationManager.PistolCrouchWalk, 0.2f, 0, 0);
-    //    }
-    //    else if (!isMoving)
-    //    {
-    //        if (!isCrouching && idleRoutine == null && !isADS) idleRoutine = StartCoroutine(DoIdleAnimation());
-    //        if (!isCrouching && !isIdling && !isADS) animationManager.ChangeAnimation(animationManager.DefaultIdle, 0.2f, 0, 0);
-    //        if (!isCrouching && !isIdling && isADS) animationManager.ChangeAnimation(animationManager.PistolIdle, 0.2f, 0, 0);
-    //        if (isCrouching && idleRoutine == null) animationManager.ChangeAnimation(animationManager.CrouchIdle, 0.2f, 0, 0);
-    //    }
-    //}
+        if (isMoving)
+        {
+            if (!isSprinting && !isCrouching) animationController.ChangeAnimation(animationController.Walk, 0.15f, 0, 0);
+            if (isSprinting && !isCrouching) animationController.ChangeAnimation(animationController.Sprint, 0.15f, 0, 0);
+            if (!isSprinting && isCrouching) animationController.ChangeAnimation(animationController.CrouchWalk, 0.15f, 0, 0);
+        }
+        else
+        {
+            if (!isCrouching) animationController.ChangeAnimation(animationController.Idle, 0.15f, 0, 0);
+            if (isCrouching) animationController.ChangeAnimation(animationController.CrouchIdle, 0.15f, 0, 0);
+        }
+    }
 
     public void MovePlayer()
     {

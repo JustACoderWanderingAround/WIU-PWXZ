@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [Header("Camera")]
-    public Camera firstPersonCamera;
-
+    private Camera firstPersonCamera;
     public float mouseSensitivity = 2.0f;
     private Vector2 _mousePosition = Vector2.zero;
+    [SerializeField] private Transform camFollow;
 
     //This Region Should ONLY be used when InputController is Not Done
     #region DebugOnly
@@ -29,8 +28,7 @@ public class CameraController : MonoBehaviour
 
     public void Initialise()
     {
-        //Locks the Canvas to the Cursor 
-        Cursor.lockState = CursorLockMode.Locked;
+        firstPersonCamera = Camera.main;
     }
 
     public void ReadMouseAxisCommand(float MouseX, float MouseY)
@@ -54,5 +52,6 @@ public class CameraController : MonoBehaviour
     private void UpdateCamera()
     {
         firstPersonCamera.transform.localRotation = Quaternion.Euler(_mousePosition.y, _mousePosition.x, 0);
+        firstPersonCamera.transform.position = camFollow.position;
     }
 }

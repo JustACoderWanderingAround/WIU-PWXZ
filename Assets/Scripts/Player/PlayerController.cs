@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private MovementController movementController;
+    private UIController uiController;
 
     // Start is called before the first frame update
     void Start()
@@ -14,9 +15,14 @@ public class PlayerController : MonoBehaviour
 
         // Get player components
         movementController = GetComponent<MovementController>();
+        uiController = GetComponent<UIController>();
 
         // Initialize components
         movementController.IntializeMovementController();
+
+        // Hide cursor
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -35,6 +41,10 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
             movementController.ToggleSprint();
+
+        movementController.UpdateAnimation();
+
+        uiController.UpdateStaminaBar(movementController.stamina, 100);
     }
 
     private void FixedUpdate()
