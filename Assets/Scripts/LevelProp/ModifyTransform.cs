@@ -19,6 +19,7 @@ public class ModifyTransform : MonoBehaviour
     private void OnEnable()
     {
         start = false;
+        // get target transforms
         targetPos = objectToModify.transform.position + positionModification;
         targetRot = objectToModify.transform.rotation.eulerAngles + rotationModification;
         targetScale = objectToModify.transform.localScale + scaleModification;
@@ -28,6 +29,7 @@ public class ModifyTransform : MonoBehaviour
     {
         if (start)
         {
+            // lerp towards target transforms
             if (timer <= 1)
                 timer += speed * Time.deltaTime;
             objectToModify.transform.position = Vector3.Lerp(objectToModify.transform.position, targetPos, timer);
