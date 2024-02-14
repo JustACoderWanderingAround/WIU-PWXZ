@@ -21,7 +21,6 @@ public class MovePlayerMenu : MonoBehaviour
         float moveDistance = moveSpeed * Time.deltaTime;
 
         transform.Translate(Vector3.forward * moveDistance);
-        Debug.Log(moveDistance);
         if (transform.position.x > 1500.0f)
         {
             transform.position = waypoint.position;
