@@ -79,7 +79,13 @@ public class Guard : MonoBehaviour, IHear
                 break;
             case GuardState.PATROL:
                 if (aiNavigation.OnReachTarget(waypoints[waypointIndex]))
+                {
                     ChangeState(GuardState.IDLE);
+
+                    waypointIndex++;
+                    if (waypointIndex > waypoints.Length)
+                        waypointIndex = 0;
+                }
                 break;
             case GuardState.CHASE:
                 aiNavigation.SetNavMeshTarget(fov.target, 4f);

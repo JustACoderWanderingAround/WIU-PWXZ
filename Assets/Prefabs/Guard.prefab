@@ -1894,11 +1894,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d96cb38383482743bdca8e96169d291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoints:
-  - {fileID: 3645973507840355667}
-  - {fileID: 844957831981856058}
-  - {fileID: 2762749674448890981}
-  - {fileID: 4412583929989566322}
 --- !u!114 &3107928510762099838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1920,7 +1915,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 64
-  targets: []
+  target: {fileID: 0}
 --- !u!114 &366180070842781322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1934,6 +1929,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 5017658044028356814}
+  waypoints:
+  - {fileID: 3645973507840355667}
+  - {fileID: 844957831981856058}
+  - {fileID: 2762749674448890981}
+  - {fileID: 4412583929989566322}
   currentState: 0
 --- !u!1 &6329047237763425566
 GameObject:
