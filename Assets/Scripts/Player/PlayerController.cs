@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Hide cursor
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -19,10 +20,6 @@ public class PlayerController : MonoBehaviour
 
         // Initialize components
         movementController.IntializeMovementController();
-
-        // Hide cursor
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
