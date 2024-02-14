@@ -186,6 +186,74 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &541140710
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1902417122014842280, guid: 23b5eed8189d5104eb3b23da15c55a69,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902417122014842280, guid: 23b5eed8189d5104eb3b23da15c55a69,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.242
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902417122014842280, guid: 23b5eed8189d5104eb3b23da15c55a69,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902417122014842280, guid: 23b5eed8189d5104eb3b23da15c55a69,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.92387956
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902417122014842280, guid: 23b5eed8189d5104eb3b23da15c55a69,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902417122014842280, guid: 23b5eed8189d5104eb3b23da15c55a69,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902417122014842280, guid: 23b5eed8189d5104eb3b23da15c55a69,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.38268343
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902417122014842280, guid: 23b5eed8189d5104eb3b23da15c55a69,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902417122014842280, guid: 23b5eed8189d5104eb3b23da15c55a69,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902417122014842280, guid: 23b5eed8189d5104eb3b23da15c55a69,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305274235474220461, guid: 23b5eed8189d5104eb3b23da15c55a69,
+        type: 3}
+      propertyPath: m_Name
+      value: MetalPipe
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 23b5eed8189d5104eb3b23da15c55a69, type: 3}
 --- !u!1001 &701536083
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -878,3 +946,4 @@ SceneRoots:
   - {fileID: 1388387430}
   - {fileID: 1266635087}
   - {fileID: 87266026}
+  - {fileID: 541140710}

@@ -4,12 +4,26 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance = null;
     private MovementController movementController;
     private UIController uiController;
 
     // Temporary
     public GameObject metalPipe;
     public Transform itemHoldPoint;
+
+    [SerializeField]
+    private InventoryManager inventoryManager;
+
+    public bool AddItem(IInventoryItem item)
+    {
+        return inventoryManager.AddItem(item);
+    }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +38,7 @@ public class PlayerController : MonoBehaviour
 
         // Initialize components
         movementController.IntializeMovementController();
+        inventoryManager.Init();
     }
 
     // Update is called once per frame
@@ -45,9 +60,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            GameObject pipe = Instantiate(metalPipe, itemHoldPoint.position, Quaternion.identity);
-            pipe.GetComponent<MetalPipe>().OnUse();
-            pipe.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * 10f, ForceMode.Impulse);
+            inventoryManager.UseItem(inventoryManager.items[0].uid);
         }
 
         movementController.UpdateAnimation();

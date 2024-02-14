@@ -56,7 +56,7 @@ public class CameraCapture : MonoBehaviour
     public void Initialise()
     {
         constantFolderPath = System.IO.Path.Combine(Application.persistentDataPath, folderPath);
-        Debug.Log("Created ConstantFolderPath: " + constantFolderPath);
+        //Debug.Log("Created ConstantFolderPath: " + constantFolderPath);
         //Create folder path if such folder does not exists
         if (!System.IO.Directory.Exists(constantFolderPath))
         {
@@ -231,13 +231,13 @@ public class CameraCapture : MonoBehaviour
             }
         }
 
-        //Debug
-        Debug.Log("-----[UpdateRenderList] : Renderers without Collider Component Activated-----");
-        if (allRenderers.Count > 0)
-            Debug.LogWarning("IMPORTANT NOTE: If an object is hidden behind an object with no Collider Component, it will not be detected properly. " +
-                "Please Do Ensure that Collider is enabled if another object is to meant to be hidden under a certain angle");
-        allRenderers.ForEach((r) => Debug.Log("     >" + r));
-        Debug.Log("-----[UpdateRenderList] : End Print-----");
+        ////Debug
+        //Debug.Log("-----[UpdateRenderList] : Renderers without Collider Component Activated-----");
+        //if (allRenderers.Count > 0)
+        //    Debug.LogWarning("IMPORTANT NOTE: If an object is hidden behind an object with no Collider Component, it will not be detected properly. " +
+        //        "Please Do Ensure that Collider is enabled if another object is to meant to be hidden under a certain angle");
+        //allRenderers.ForEach((r) => Debug.Log("     >" + r));
+        //Debug.Log("-----[UpdateRenderList] : End Print-----");
     }
 
     private bool IsWithinViewArea(Plane[] planes, Bounds bounds)
