@@ -7,7 +7,7 @@ public class MetalPipe : MonoBehaviour, IConsumable
     private SoundEmitter soundEmitter;
     private Rigidbody pipeRB;
 
-    private void Start()
+    private void Awake()
     {
         pipeRB = GetComponent<Rigidbody>();
         soundEmitter = GetComponent<SoundEmitter>();
@@ -19,5 +19,11 @@ public class MetalPipe : MonoBehaviour, IConsumable
 
     public void OnUse()
     {
+        pipeRB.isKinematic = false;
+    }
+
+    private void OnCollisionEnter(Collision col)
+    {
+        soundEmitter.EmitSound();
     }
 }

@@ -15,7 +15,7 @@ public class AINavigation : MonoBehaviour
     public bool OnReachTarget(Vector3 target)
     {
         // Distance check to be changed to the thing wayne sent in discord
-        if (Vector3.Distance(target, transform.position) <= 0.1f)
+        if (Vector3.Distance(target, transform.position) <= 0.2f)
             return true;
 
         return false;
