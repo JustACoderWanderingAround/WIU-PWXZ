@@ -165,7 +165,7 @@ public class CameraCapture : MonoBehaviour
         captureCamera.targetTexture = null;
 
         //Read necessary Data from JSON
-        string JSONPath = constantFolderPath + "/" + $"{fileName}Data.json";
+        string JSONPath = System.IO.Path.Combine(constantFolderPath, $"{fileName}Data.json");
         //Check if such JSON FIle exists
         if (!System.IO.File.Exists(JSONPath))
         {
