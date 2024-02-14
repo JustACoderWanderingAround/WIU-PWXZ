@@ -14,28 +14,25 @@ public class AINavigation : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
-    public void UpdateNavMeshAgent()
+    public bool OnReachWaypoint()
     {
         // Distance check to be changed to the thing wayne sent in discord
         if (Vector3.Distance(waypoints[waypointIndex].position, transform.position) <= 0.1f)
-        {
-            waypointIndex++;
-            if (waypointIndex > waypoints.Length - 1)
-                waypointIndex = 0;
-        }
+            return true;
 
+        return false;
+    }
+
+    public void UpdateNavMeshAgent(float speed)
+    {
+        navMeshAgent.speed = speed;
         navMeshAgent.destination = waypoints[waypointIndex].position;
-    }
 
-    // Temporary for testing
+        if (!OnReachWaypoint())
+            return;
 
-    private void Start()
-    {
-        InitNavMeshAgent();
-    }
-
-    private void Update()
-    {
-        UpdateNavMeshAgent();
+        waypointIndex++;
+        if (waypointIndex > waypoints.Length - 1)
+            waypointIndex = 0;
     }
 }
