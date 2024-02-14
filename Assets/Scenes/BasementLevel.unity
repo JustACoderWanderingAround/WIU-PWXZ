@@ -276,7 +276,7 @@ GameObject:
   - component: {fileID: 1266635086}
   - component: {fileID: 1266635085}
   - component: {fileID: 1266635084}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -775,6 +775,74 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!1001 &6746340203819505280
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3444719745576547380, guid: 4597fb41b9b11d2498312fa8d6e29cc2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444719745576547380, guid: 4597fb41b9b11d2498312fa8d6e29cc2,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444719745576547380, guid: 4597fb41b9b11d2498312fa8d6e29cc2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444719745576547380, guid: 4597fb41b9b11d2498312fa8d6e29cc2,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444719745576547380, guid: 4597fb41b9b11d2498312fa8d6e29cc2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444719745576547380, guid: 4597fb41b9b11d2498312fa8d6e29cc2,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444719745576547380, guid: 4597fb41b9b11d2498312fa8d6e29cc2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444719745576547380, guid: 4597fb41b9b11d2498312fa8d6e29cc2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444719745576547380, guid: 4597fb41b9b11d2498312fa8d6e29cc2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3444719745576547380, guid: 4597fb41b9b11d2498312fa8d6e29cc2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644402261511346662, guid: 4597fb41b9b11d2498312fa8d6e29cc2,
+        type: 3}
+      propertyPath: m_Name
+      value: Gaurd
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4597fb41b9b11d2498312fa8d6e29cc2, type: 3}
 --- !u!81 &7216642612512680446
 AudioListener:
   m_ObjectHideFlags: 0
@@ -805,6 +873,7 @@ SceneRoots:
   - {fileID: 1319693361}
   - {fileID: 8808938796472616826}
   - {fileID: 701536083}
+  - {fileID: 6746340203819505280}
   - {fileID: 1975561642}
   - {fileID: 1388387430}
   - {fileID: 1266635087}
