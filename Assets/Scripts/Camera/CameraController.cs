@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private Camera firstPersonCamera;
+    public Camera firstPersonCamera;
     public float mouseSensitivity = 2.0f;
     private Vector2 _mousePosition = Vector2.zero;
+
     [SerializeField] private Transform camFollow;
 
     //This Region Should ONLY be used when InputController is Not Done
@@ -29,6 +30,8 @@ public class CameraController : MonoBehaviour
     public void Initialise()
     {
         firstPersonCamera = Camera.main;
+        if (!firstPersonCamera)
+            Debug.LogWarning("There is no Main Camera in the Scene");
     }
 
     public void ReadMouseAxisCommand(float MouseX, float MouseY)

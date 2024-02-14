@@ -60,6 +60,11 @@ public class CameraCapture : MonoBehaviour
         {
             System.IO.Directory.CreateDirectory(constantFolderPath);
         }
+
+        if (captureCamera == null)
+        {
+            captureCamera = Camera.main;
+        }
     }
 
     //Subscribe to listener
