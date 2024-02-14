@@ -27,7 +27,7 @@ public class CameraCapture : MonoBehaviour
     void Start()
     {
         Initialise();
-        onCaptureActions += Test;
+        //onCaptureActions += Test;
         UpdateRendererList();
     }
 
@@ -178,10 +178,10 @@ public class CameraCapture : MonoBehaviour
         //Check if such JSON FIle exists
         if (!System.IO.File.Exists(JSONPath))
         {
-            new System.IO.FileInfo(JSONPath).Create();
+            System.IO.FileStream fs = new System.IO.FileInfo(JSONPath).Create();
+            fs.Close();
         }
 
-        //Read Text 
         string JSONText = System.IO.File.ReadAllText(JSONPath);
         //Overwrite Data and Create One if it is not initialised Properly
         ImageFolderData data = JsonUtility.FromJson<ImageFolderData>(JSONText) ?? new ImageFolderData();

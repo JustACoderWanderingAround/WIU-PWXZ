@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance = null;
     private MovementController movementController;
+    private CameraCapture cameraCapture;
     private UIController uiController;
 
     // Temporary
@@ -35,10 +36,28 @@ public class PlayerController : MonoBehaviour
         // Get player components
         movementController = GetComponent<MovementController>();
         uiController = GetComponent<UIController>();
+        cameraCapture = GetComponent<CameraCapture>();
+        cameraCapture.SubscribeOnCapture(OnScreenCapture);
 
         // Initialize components
         movementController.IntializeMovementController();
         inventoryManager.Init();
+    }
+
+    private void OnScreenCapture(GameObject[] gameObjects)
+    {
+        foreach(GameObject go in gameObjects)
+        {
+            IInventoryItem item;
+            if (go.TryGetComponent<IInventoryItem>(out item))
+            {
+                inventoryManager.AddItem(item);
+                if (item.GetItemIsStackable())
+                    Destroy(go);
+                else
+                    go.SetActive(false);
+            }
+        }
     }
 
     // Update is called once per frame

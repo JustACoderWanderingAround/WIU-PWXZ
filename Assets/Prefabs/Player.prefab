@@ -2509,7 +2509,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   folderPath: Screenshots
   fileName: CaptureImage
-  ifExistIncrement: 1
+  ifExistIncrement: 0
 --- !u!114 &7568238938542752847
 MonoBehaviour:
   m_ObjectHideFlags: 0
