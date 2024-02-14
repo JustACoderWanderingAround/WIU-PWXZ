@@ -18,7 +18,7 @@ public class MiniGamePicker : MonoBehaviour
     }
     void Activate()
     {
-        chosen = true;
+        //chosen = true;
         chosenGame = Random.Range(0, miniGameContainer.transform.childCount);
         miniGameContainer.transform.GetChild(chosenGame).gameObject.SetActive(true);
     }
@@ -31,11 +31,12 @@ public class MiniGamePicker : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 Activate();
+                chosen = true;
             }
         }
         else
         {
-            if (alertBoxCanvas.activeInHierarchy)
+            if (alertBoxCanvas.activeInHierarchy || chosen)
                 alertBoxCanvas.SetActive(false);
         }
     }
