@@ -4,12 +4,31 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance = null;
     private MovementController movementController;
     private UIController uiController;
+
+    // Temporary
+    public GameObject metalPipe;
+    public Transform itemHoldPoint;
+
+    [SerializeField]
+    private InventoryManager inventoryManager;
+
+    public bool AddItem(IInventoryItem item)
+    {
+        return inventoryManager.AddItem(item);
+    }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        // Hide cursor
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -19,10 +38,7 @@ public class PlayerController : MonoBehaviour
 
         // Initialize components
         movementController.IntializeMovementController();
-
-        // Hide cursor
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        inventoryManager.Init();
     }
 
     // Update is called once per frame
@@ -41,6 +57,11 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
             movementController.ToggleSprint();
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            inventoryManager.UseItem(inventoryManager.items[0].uid);
+        }
 
         movementController.UpdateAnimation();
 

@@ -6,6 +6,7 @@ public class MovementController : MonoBehaviour
     [SerializeField] private MovementData movementData;
     private CapsuleCollider playerCol;
     private Rigidbody playerRB;
+    private SoundEmitter soundEmitter;
 
     private bool isMoving = false;
     private bool isSprinting = false;
@@ -28,6 +29,7 @@ public class MovementController : MonoBehaviour
         playerCol = GetComponent<CapsuleCollider>();
         playerRB = GetComponent<Rigidbody>();
         animationController = AnimationController.Instance;
+        soundEmitter = GetComponent<SoundEmitter>();
     }
 
     public void ToggleSprint()
@@ -40,10 +42,12 @@ public class MovementController : MonoBehaviour
         if (isSprinting)
         {
             moveSpeed = movementData.sprintSpeed;
+            soundEmitter.SetEmissionRange(movementData.sprintNoiseRange);
         }
         else
         {
             moveSpeed = movementData.walkSpeed;
+            soundEmitter.SetEmissionRange(movementData.walkNoiseRange);
         }
     }
 
@@ -61,24 +65,19 @@ public class MovementController : MonoBehaviour
             playerCol.height = 0.8f;
             playerCol.center = new Vector3(playerCol.center.x, 0.4f, playerCol.center.z);
             playerRB.AddForce(new Vector3(0, 1, 0) * -10f, ForceMode.Impulse);
+            soundEmitter.SetEmissionRange(0);
         }
         else
         {
             moveSpeed = movementData.walkSpeed;
             playerCol.center = new Vector3(playerCol.center.x, 0.9f, playerCol.center.z);
             playerCol.height = 1.78f;
+            soundEmitter.SetEmissionRange(movementData.walkNoiseRange);
         }
     }
 
-    public void HandleMovment(/*MovementAxisCommand movementCommand*/)
+    public void HandleMovment()
     {
-        //if (movementCommand == null)
-        //    return;
-
-        // Get input axes
-        //float horizontal = movementCommand.HorizontalAxis;
-        //float vertical = movementCommand.VerticalAxis;
-
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
@@ -95,6 +94,10 @@ public class MovementController : MonoBehaviour
             // If player is sprinting and is moving
             if (isSprinting && playerRB.velocity.magnitude > 0.1f)
                 stamina -= movementData.sprintStaminaCost * Time.deltaTime;
+            else if (!isSprinting && !isCrouching)
+                soundEmitter.SetEmissionRange(movementData.walkNoiseRange);
+
+            soundEmitter.EmitSound();
         }
         else if (!isMoving && isGrounded)
         {
@@ -108,6 +111,8 @@ public class MovementController : MonoBehaviour
                 moveSpeed = movementData.walkSpeed;
             else if (isCrouching)
                 moveSpeed = movementData.crouchSpeed;
+
+            soundEmitter.SetEmissionRange(0);
         }
 
         // Set player to falling if falling
@@ -221,6 +226,9 @@ public class MovementController : MonoBehaviour
             isGrounded = true;
             canJump = true;
             playerRB.drag = movementData.groundDrag;
+
+            soundEmitter.SetEmissionRange(movementData.landNoiseRange);
+            soundEmitter.EmitSound();
         }
     }
 
