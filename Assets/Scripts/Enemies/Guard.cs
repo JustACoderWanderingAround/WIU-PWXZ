@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Guard : MonoBehaviour, IHear
+public class Guard : MonoBehaviour, IEventListener
 {
     private AINavigation aiNavigation;
     private FieldOfView fov;
+
     [SerializeField] private Animator animator;
 
     // Waypoints
     [SerializeField] private Transform[] waypoints;
     private int waypointIndex = 0;
+    private Vector3 positionOfInterest = Vector3.zero;
 
     // Animations
     public readonly int Idle = Animator.StringToHash("Idle");
@@ -23,7 +25,8 @@ public class Guard : MonoBehaviour, IHear
         IDLE,
         PATROL,
         CHASE,
-        LOOK_AROUND
+        LOOK_AROUND,
+        SEARCH
     }
     public GuardState currentState;
 
@@ -52,13 +55,18 @@ public class Guard : MonoBehaviour, IHear
                 break;
             case GuardState.PATROL:
                 animator.CrossFade(Walk, 0.1f);
-                aiNavigation.SetNavMeshTarget(waypoints[waypointIndex], 2f);
+                aiNavigation.SetNavMeshTarget(waypoints[waypointIndex].position, 2f);
                 break;
             case GuardState.CHASE:
+                aiNavigation.SetNavMeshTarget(fov.target.position, 4f);
                 animator.CrossFade(Sprint, 0.1f);
                 break;
             case GuardState.LOOK_AROUND:
                 animator.CrossFade(LookAround, 0.1f);
+                break;
+            case GuardState.SEARCH:
+                animator.CrossFade(Walk, 0.1f);
+                aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
                 break;
         }
     }
@@ -78,7 +86,7 @@ public class Guard : MonoBehaviour, IHear
 
                 break;
             case GuardState.PATROL:
-                if (aiNavigation.OnReachTarget(waypoints[waypointIndex]))
+                if (aiNavigation.OnReachTarget(waypoints[waypointIndex].position))
                 {
                     ChangeState(GuardState.IDLE);
 
@@ -86,9 +94,14 @@ public class Guard : MonoBehaviour, IHear
                     if (waypointIndex > waypoints.Length)
                         waypointIndex = 0;
                 }
+
                 break;
             case GuardState.CHASE:
-                aiNavigation.SetNavMeshTarget(fov.target, 4f);
+                if (!fov.CheckTargetInLineOfSight(out positionOfInterest, 10000))
+                    ChangeState(GuardState.SEARCH);
+
+                aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
+
                 break;
             case GuardState.LOOK_AROUND:
                 timer += Time.deltaTime;
@@ -99,15 +112,36 @@ public class Guard : MonoBehaviour, IHear
                 }
 
                 break;
+            case GuardState.SEARCH:
+                if (positionOfInterest == Vector3.zero)
+                    ChangeState(GuardState.PATROL);
+
+                if (aiNavigation.OnReachTarget(positionOfInterest))
+                {
+                    positionOfInterest = Vector3.zero;
+                    ChangeState(GuardState.LOOK_AROUND);
+                }
+
+                break;
             default:
                 break;
         }
 
-        fov.FindVisibleTargets();
+        if (fov.FindVisibleTargets() && currentState != GuardState.CHASE)
+            ChangeState(GuardState.CHASE);
     }
 
     public void RespondToSound(SoundWPosition sound)
     {
-        throw new System.NotImplementedException();
+        if (sound.soundType == SoundWPosition.SoundType.INTEREST)
+        {
+            positionOfInterest = sound.position;
+            ChangeState(GuardState.SEARCH);
+        }
+        else if (sound.soundType == SoundWPosition.SoundType.DANGER)
+        {
+            positionOfInterest = transform.forward - (sound.position - transform.position);
+            ChangeState(GuardState.SEARCH);
+        }
     }
 }

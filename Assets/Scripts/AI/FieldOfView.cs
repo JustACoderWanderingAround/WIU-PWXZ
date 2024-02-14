@@ -23,10 +23,8 @@ public class FieldOfView : MonoBehaviour
         return new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad), 0, Mathf.Cos(angle * Mathf.Deg2Rad));
     }
 
-    public void FindVisibleTargets()
+    public bool FindVisibleTargets()
     {
-        target = null;
-
         Collider[] colliders = Physics.OverlapSphere(viewPoint.position, viewRadius, targetMask);
         foreach(Collider col in colliders)
         {
@@ -37,8 +35,25 @@ public class FieldOfView : MonoBehaviour
                 float dist = Vector3.Distance(viewPoint.position, col.transform.position);
 
                 if (!Physics.Raycast(viewPoint.position, dir, dist, obstacleMask))
+                {
                     target = col.transform;
+                    return true;
+                }
             }
         }
+
+        return false;
+    }
+
+    public bool CheckTargetInLineOfSight(out Vector3 lastSeenPosition, float distance)
+    {
+        Vector3 dir = (target.position - viewPoint.position).normalized;
+        lastSeenPosition = target.position;
+
+        if (!Physics.Raycast(viewPoint.position, dir, distance, obstacleMask))
+            return true;
+
+        target = null;
+        return false;
     }
 }

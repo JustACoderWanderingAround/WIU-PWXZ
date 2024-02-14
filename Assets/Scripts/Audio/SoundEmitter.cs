@@ -19,7 +19,7 @@ public class SoundEmitter : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(sound.position, sound.range);
         foreach (Collider col in colliders)
         {
-            if (col.TryGetComponent(out IHear listener))
+            if (col.TryGetComponent(out IEventListener listener))
                 listener.RespondToSound(sound);
         }
     }

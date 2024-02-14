@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IHear
+public interface IEventListener
 {
     void RespondToSound(SoundWPosition sound);
 }
