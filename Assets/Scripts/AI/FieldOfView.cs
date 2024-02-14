@@ -12,7 +12,7 @@ public class FieldOfView : MonoBehaviour
     [SerializeField] private LayerMask targetMask;
     [SerializeField] private LayerMask obstacleMask;
 
-    public List<Transform> targets = new List<Transform>();
+    public Transform target;
 
     public Vector3 DirFromAngle(float angle, bool isAngleGlobal)
     {
@@ -24,7 +24,7 @@ public class FieldOfView : MonoBehaviour
 
     public void FindVisibleTargets()
     {
-        targets.Clear();
+        target = null;
 
         Collider[] colliders = Physics.OverlapSphere(viewPoint.position, viewRadius, targetMask);
         foreach(Collider col in colliders)
@@ -36,7 +36,7 @@ public class FieldOfView : MonoBehaviour
                 float dist = Vector3.Distance(viewPoint.position, col.transform.position);
 
                 if (!Physics.Raycast(viewPoint.position, dir, dist, obstacleMask))
-                    targets.Add(col.transform);
+                    target = col.transform;
             }
         }
     }

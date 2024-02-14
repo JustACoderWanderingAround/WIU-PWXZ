@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Guard : MonoBehaviour
+public class Guard : MonoBehaviour, IHear
 {
     private AINavigation aiNavigation;
     private FieldOfView fov;
     [SerializeField] private Animator animator;
+
+    // Waypoints
+    [SerializeField] private Transform[] waypoints;
+    private int waypointIndex = 0;
 
     // Animations
     public readonly int Idle = Animator.StringToHash("Idle");
@@ -41,7 +45,6 @@ public class Guard : MonoBehaviour
     {
         currentState = nextState;
 
-        // Update animation
         switch(currentState)
         {
             case GuardState.IDLE:
@@ -49,6 +52,7 @@ public class Guard : MonoBehaviour
                 break;
             case GuardState.PATROL:
                 animator.CrossFade(Walk, 0.1f);
+                aiNavigation.SetNavMeshTarget(waypoints[waypointIndex], 2f);
                 break;
             case GuardState.CHASE:
                 animator.CrossFade(Sprint, 0.1f);
@@ -74,18 +78,15 @@ public class Guard : MonoBehaviour
 
                 break;
             case GuardState.PATROL:
-                if (aiNavigation.OnReachWaypoint())
+                if (aiNavigation.OnReachTarget(waypoints[waypointIndex]))
                     ChangeState(GuardState.IDLE);
-                aiNavigation.UpdateNavMeshAgent(2f);
-
                 break;
             case GuardState.CHASE:
-                aiNavigation.UpdateNavMeshAgent(3f);
-
+                aiNavigation.SetNavMeshTarget(fov.target, 4f);
                 break;
             case GuardState.LOOK_AROUND:
                 timer += Time.deltaTime;
-                if (timer >= 1.5f)
+                if (timer >= 6f)
                 {
                     ChangeState(GuardState.PATROL);
                     timer = 0;
@@ -97,5 +98,10 @@ public class Guard : MonoBehaviour
         }
 
         fov.FindVisibleTargets();
+    }
+
+    public void RespondToSound(SoundWPosition sound)
+    {
+        throw new System.NotImplementedException();
     }
 }

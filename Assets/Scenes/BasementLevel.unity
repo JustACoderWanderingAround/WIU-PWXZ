@@ -669,11 +669,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3107928510762099838, guid: 4597fb41b9b11d2498312fa8d6e29cc2,
-        type: 3}
-      propertyPath: viewPoint
-      value: 
-      objectReference: {fileID: 8481780735819791767}
     - target: {fileID: 3749690455981673466, guid: 4597fb41b9b11d2498312fa8d6e29cc2,
         type: 3}
       propertyPath: m_Name
@@ -856,12 +851,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2392637614483997806}
   m_Enabled: 1
---- !u!4 &8481780735819791767 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 17387628110564311, guid: 4597fb41b9b11d2498312fa8d6e29cc2,
-    type: 3}
-  m_PrefabInstance: {fileID: 2334005714486778796}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8808938796472616826
 Transform:
   m_ObjectHideFlags: 0

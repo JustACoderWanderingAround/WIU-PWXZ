@@ -18,7 +18,6 @@ public class FOVVisualizer : Editor
         Handles.DrawLine(fov.viewPoint.position, fov.viewPoint.position + viewAngleB * fov.viewRadius);
 
         Handles.color = Color.red;
-        foreach(Transform target in fov.targets)
-            Handles.DrawLine(fov.viewPoint.position, target.position);
+        Handles.DrawLine(fov.viewPoint.position, fov.target.position);
     }
 }
