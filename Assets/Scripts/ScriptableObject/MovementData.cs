@@ -22,6 +22,5 @@ public class MovementData : ScriptableObject
 
     public float walkNoiseRange;
     public float sprintNoiseRange;
-    public float jumpNoiseRange;
     public float landNoiseRange;
 }

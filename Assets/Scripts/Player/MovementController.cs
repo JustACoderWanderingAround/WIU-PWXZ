@@ -162,9 +162,6 @@ public class MovementController : MonoBehaviour
         animationController.ChangeAnimation(animationController.Jump, 0f, 0, 0);
 
         jumpChargeTime = 0;
-
-        soundEmitter.SetEmissionRange(movementData.jumpNoiseRange);
-        soundEmitter.EmitSound();
     }
 
     public void UpdateAnimation()
