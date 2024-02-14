@@ -2214,7 +2214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 836ad3c64f1f92e4e8cff7261c903a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 0
+  viewRadius: 2.86
   viewAngle: 0
 --- !u!1 &6860535823131023542
 GameObject:
@@ -2589,7 +2589,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3444719745576547380}
   m_Layer: 0
-  m_Name: Gaurd
+  m_Name: Guard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
