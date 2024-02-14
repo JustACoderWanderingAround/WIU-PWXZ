@@ -12,6 +12,7 @@ public class FieldOfView : MonoBehaviour
     [SerializeField] private LayerMask targetMask;
     [SerializeField] private LayerMask obstacleMask;
 
+    [HideInInspector]
     public Transform target;
 
     public Vector3 DirFromAngle(float angle, bool isAngleGlobal)
