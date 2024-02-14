@@ -313,6 +313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxTimer: 0
+  gameCanvas: {fileID: 8418474382348954831}
   OnWinCallBack:
     m_PersistentCalls:
       m_Calls:

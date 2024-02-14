@@ -7,6 +7,7 @@ using UnityEngine;
 public class MiniGamePicker : MonoBehaviour
 {
     [SerializeField] GameObject miniGameContainer;
+    [SerializeField] GameObject alertBoxCanvas;
     int chosenGame;
     bool withinRange, chosen;
 
@@ -17,14 +18,25 @@ public class MiniGamePicker : MonoBehaviour
     }
     void Activate()
     {
+        chosen = true;
         chosenGame = Random.Range(0, miniGameContainer.transform.childCount);
         miniGameContainer.transform.GetChild(chosenGame).gameObject.SetActive(true);
     }
     void Update()
     {
-        if (withinRange && Input.GetKeyDown(KeyCode.E))
+        if (withinRange)
         {
-            Activate();
+            if (!alertBoxCanvas.activeInHierarchy && !chosen)
+                alertBoxCanvas.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Activate();
+            }
+        }
+        else
+        {
+            if (alertBoxCanvas.activeInHierarchy)
+                alertBoxCanvas.SetActive(false);
         }
     }
     private void OnTriggerEnter(Collider collision)

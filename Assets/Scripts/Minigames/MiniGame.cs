@@ -9,14 +9,17 @@ public class MiniGame : MonoBehaviour
     protected bool hasWon;
     public float maxTimer;
     protected float timer;
+    public GameObject gameCanvas;
     public EventTrigger.TriggerEvent OnWinCallBack;
     protected void OnEnable()
     {
         timer = maxTimer;
+        gameCanvas.SetActive(true);
     }
     protected virtual void OnStart() { }
-    protected void OnWin() 
+    protected virtual void OnWin() 
     {
+        gameCanvas.SetActive(false);
         BaseEventData eventData = new BaseEventData(EventSystem.current);
         eventData.selectedObject = this.gameObject;
         OnWinCallBack.Invoke(eventData);
