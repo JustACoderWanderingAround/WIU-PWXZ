@@ -8,8 +8,12 @@ public class MiniGame : MonoBehaviour
 {
     protected bool hasWon;
     public float maxTimer;
-    float timer;
+    protected float timer;
     public EventTrigger.TriggerEvent OnWinCallBack;
+    protected void OnEnable()
+    {
+        timer = maxTimer;
+    }
     protected virtual void OnStart() { }
     protected void OnWin() 
     {
