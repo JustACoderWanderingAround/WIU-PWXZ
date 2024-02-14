@@ -189,7 +189,7 @@ public class CameraCapture : MonoBehaviour
 
         //Update JSON
         data.imagePrefix = fileName;
-        data.imageCount = incremental + 1;
+        data.imageCount = data.imageCount < (incremental + 1) ? incremental + 1 : data.imageCount;
         data.lastSavedAt = System.DateTime.Now.ToString();
 
         //Convert back to string
