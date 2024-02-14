@@ -5,35 +5,45 @@ ModelImporter:
   internalIDToNameTable: []
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ch33_body
+    second: {fileID: 2100000, guid: 8c087690e136cdb4c8318436c9e250ef, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ch33_hair
+    second: {fileID: 2100000, guid: 5406edd86de6c8541a7a62224172c3d0, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Ch33_1001_Diffuse
-    second: {fileID: 2800000, guid: 82ea1d289c910364b80e05b767f1a046, type: 3}
+    second: {fileID: 2800000, guid: 3f0bc7223c785e14ab183b0bec453cef, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Ch33_1001_Glossiness
-    second: {fileID: 2800000, guid: 0e1902cc5a575a442921f792b34c2024, type: 3}
+    second: {fileID: 2800000, guid: 5aa0e513938da854e8329f33c2530f8b, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Ch33_1001_Normal
-    second: {fileID: 2800000, guid: aeab6d8e3e928f14a919a7c6dfaf8ac1, type: 3}
+    second: {fileID: 2800000, guid: 6ddc3134f0c9c1448978adace6ce9513, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Ch33_1001_Specular
-    second: {fileID: 2800000, guid: ca2ddf0cd65a6c24b89ad128605c3cb4, type: 3}
+    second: {fileID: 2800000, guid: d0775a659c230184b86039beac3a5d23, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Ch33_1002_Diffuse
-    second: {fileID: 2800000, guid: a99f49736cdf86d4ebb643d2a6197ebb, type: 3}
+    second: {fileID: 2800000, guid: cab9559a8d67ee947acab64d558e9477, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Ch33_1002_Normal
-    second: {fileID: 2800000, guid: dc9de68dc1d30bf4b8da12c19c7b9f4b, type: 3}
+    second: {fileID: 2800000, guid: b14b904b0a524a345a73bca0022b2600, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
