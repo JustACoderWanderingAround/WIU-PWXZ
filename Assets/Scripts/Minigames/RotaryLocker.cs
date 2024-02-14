@@ -12,6 +12,7 @@ public class RotaryLocker : MiniGame
     List<float> rotationModifer = new List<float>() { 1, -1, 1 };
 
     [SerializeField] TMP_Text mainText;
+    [SerializeField] TMP_Text timerText;
 
     float rotationSpeed = 50.0f;
     int curr;
@@ -27,7 +28,8 @@ public class RotaryLocker : MiniGame
 
     void Update()
     {
-       
+        timer -= Time.deltaTime;
+        timerText.text = Math.Truncate(timer).ToString();
         Vector3 angles = rotaryDial.transform.rotation.eulerAngles;
         if (curr < rotationModifer.Count)
             angles.z += (rotationSpeed * rotationModifer[curr] * speedModifier[curr]) * Time.deltaTime; // + rotationSpeed for right button
@@ -43,6 +45,10 @@ public class RotaryLocker : MiniGame
         if (curr >= 3)
         {
             OnWin();
+        }
+        if (timer < 0)
+        {
+            OnLose();
         }
     }
     void StopRotation()

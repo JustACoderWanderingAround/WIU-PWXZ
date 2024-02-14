@@ -48,4 +48,8 @@ public class MiniGamePicker : MonoBehaviour
     {
         withinRange = false;
     }
+    public void Reset()
+    {
+        chosen = false;
+    }
 }

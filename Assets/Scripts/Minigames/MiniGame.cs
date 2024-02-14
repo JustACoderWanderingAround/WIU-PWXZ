@@ -11,6 +11,7 @@ public class MiniGame : MonoBehaviour
     protected float timer;
     public GameObject gameCanvas;
     public EventTrigger.TriggerEvent OnWinCallBack;
+    public EventTrigger.TriggerEvent OnLoseCallBack;
     protected void OnEnable()
     {
         timer = maxTimer;
@@ -23,5 +24,12 @@ public class MiniGame : MonoBehaviour
         BaseEventData eventData = new BaseEventData(EventSystem.current);
         eventData.selectedObject = this.gameObject;
         OnWinCallBack.Invoke(eventData);
+    }
+    protected virtual void OnLose()
+    {
+        BaseEventData eventData = new BaseEventData(EventSystem.current);
+        eventData.selectedObject = this.gameObject;
+        OnLoseCallBack.Invoke(eventData);
+        gameObject.SetActive(false);
     }
 }
