@@ -133,7 +133,7 @@ public class Guard : MonoBehaviour, IEventListener
 
     public void RespondToSound(SoundWPosition sound)
     {
-        if (sound.soundType == SoundWPosition.SoundType.INTEREST)
+        if (sound.soundType == SoundWPosition.SoundType.INTEREST && currentState != GuardState.CHASE)
         {
             positionOfInterest = sound.position;
             ChangeState(GuardState.SEARCH);

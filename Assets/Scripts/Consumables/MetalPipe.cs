@@ -6,6 +6,7 @@ public class MetalPipe : MonoBehaviour, IConsumable
 {
     private SoundEmitter soundEmitter;
     private Rigidbody pipeRB;
+    private bool onCollide = false;
 
     private void Awake()
     {
@@ -24,6 +25,9 @@ public class MetalPipe : MonoBehaviour, IConsumable
 
     private void OnCollisionEnter(Collision col)
     {
-        soundEmitter.EmitSound();
+        if (!onCollide)
+            soundEmitter.EmitSound();
+
+        onCollide = true;
     }
 }
