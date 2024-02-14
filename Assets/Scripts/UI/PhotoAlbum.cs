@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Created by: Tan Xiang Feng Wayne
 public class PhotoAlbum : MonoBehaviour
 {
     public Image imageRenderer;
@@ -15,6 +16,8 @@ public class PhotoAlbum : MonoBehaviour
     private List<Sprite> images = new List<Sprite>();
 
     private int currentIndex = 0;
+
+    private Coroutine loadImageRoutine = null;
 
     #region DebugOnly
     // Start is called before the first frame update
@@ -43,7 +46,12 @@ public class PhotoAlbum : MonoBehaviour
 
     public void Reload()
     {
-        StartCoroutine(LoadImageRoutine());
+        if (loadImageRoutine != null)
+        {
+            Debug.LogWarning("PhotoAlbum: Please Wait Before it's done Loading before reloading again.");
+            return;
+        }
+        loadImageRoutine = StartCoroutine(LoadImageRoutine());
     }
 
     private IEnumerator LoadImageRoutine()
@@ -95,6 +103,8 @@ public class PhotoAlbum : MonoBehaviour
         }
         Debug.Log("PhotoAlbum: End Loading");
         RenderImage();
+
+        loadImageRoutine = null;
     }
 
     public void RenderImage()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Created by: Tan Xiang Feng Wayne
 public class CameraController : MonoBehaviour
 {
     public Camera firstPersonCamera;

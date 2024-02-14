@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Created by: Tan Xiang Feng Wayne
 public class CameraCapture : MonoBehaviour
 { 
     public static string constantFolderPath { get; private set; }
@@ -132,6 +133,14 @@ public class CameraCapture : MonoBehaviour
                 gameObjects.Add(pair.Key);
             }
         }
+
+        Debug.Log("IdentifyGameObject: Waiting for Image to render finish before Invoke");
+
+        //Wait for it to save, so it could save the image of the before affected (for eg. material change or gameobject missing)
+        while (captureHandler != null)
+            yield return null;
+
+        Debug.Log("IdentifyGameObject: Invoking onCaptureActions");
 
         //Invoke Listener
         onCaptureActions.Invoke(gameObjects.ToArray());
