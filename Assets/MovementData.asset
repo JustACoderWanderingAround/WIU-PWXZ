@@ -23,3 +23,7 @@ MonoBehaviour:
   jumpStaminaCost: 15
   maxStamina: 100
   staminaRegenRate: 18
+  walkNoiseRange: 4
+  sprintNoiseRange: 8
+  jumpNoiseRange: 6
+  landNoiseRange: 8
