@@ -10,7 +10,7 @@ public class CameraCapture : MonoBehaviour
     public LayerMask itemLayer;
 
     [Header("Write To Files")]
-    public string folderPath = "/Screenshots";
+    public string folderPath = "Screenshots";
     public string fileName = "CaptureImage";
     public bool ifExistIncrement = false;
 
@@ -54,7 +54,8 @@ public class CameraCapture : MonoBehaviour
 
     public void Initialise()
     {
-        constantFolderPath = Application.persistentDataPath + folderPath;
+        constantFolderPath = System.IO.Path.Combine(Application.persistentDataPath, folderPath);
+        Debug.Log("Created ConstantFolderPath: " + constantFolderPath);
         //Create folder path if such folder does not exists
         if (!System.IO.Directory.Exists(constantFolderPath))
         {
@@ -163,21 +164,43 @@ public class CameraCapture : MonoBehaviour
 
         captureCamera.targetTexture = null;
 
-        int incremental = 0;
-        string capturePath, nextCapturePath;
-        nextCapturePath = constantFolderPath + "/" + fileName + ".png";
+        //Read necessary Data from JSON
+        string JSONPath = constantFolderPath + "/" + $"{fileName}Data.json";
+        //Check if such JSON FIle exists
+        if (!System.IO.File.Exists(JSONPath))
+        {
+            new System.IO.FileInfo(JSONPath).Create();
+        }
+
+        //Read Text 
+        string JSONText = System.IO.File.ReadAllText(JSONPath);
+        //Overwrite Data and Create One if it is not initialised Properly
+        ImageFolderData data = JsonUtility.FromJson<ImageFolderData>(JSONText) ?? new ImageFolderData();
+
+        //BackTrack by one to allow for increase value in do.while loop (if incremental)
+        int incremental = ifExistIncrement ? data.imageCount - 1 : -1;
+        string capturePath;
         do
         {
-            capturePath = nextCapturePath;
-            nextCapturePath = constantFolderPath + "/" + fileName + $"({incremental})" + ".png";
             incremental++;
+            capturePath = System.IO.Path.Combine(constantFolderPath, fileName + incremental + ".png");
         }
         while (System.IO.File.Exists(capturePath) && ifExistIncrement);
 
+        //Update JSON
+        data.imagePrefix = fileName;
+        data.imageCount = incremental + 1;
+        data.lastSavedAt = System.DateTime.Now.ToString();
+
+        //Convert back to string
+        JSONText = JsonUtility.ToJson(data);
+
         //Write to the path
         System.IO.File.WriteAllBytes(capturePath, byteArray);
+        System.IO.File.WriteAllText(JSONPath, JSONText);
 
         Debug.Log($"File {fileName} has been saved in {capturePath}");
+        Debug.Log($"JSONFIle {JSONPath} has been Updated! : {JSONText}");
 
         captureHandler = null;
     }
@@ -225,5 +248,23 @@ public class CameraCapture : MonoBehaviour
             }
         }
         return false;
+    }
+}
+
+[System.Serializable]
+public class ImageFolderData
+{
+    public string imagePrefix = "";
+    public int imageCount = 0;
+    public string lastSavedAt = System.DateTime.MinValue.ToString();
+
+    public ImageFolderData(string name, int count)
+    {
+
+    }
+
+    public ImageFolderData()
+    {
+
     }
 }

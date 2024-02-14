@@ -789,7 +789,7 @@ MonoBehaviour:
   itemLayer:
     serializedVersion: 2
     m_Bits: 4294967295
-  folderPath: /Screenshots
+  folderPath: Screenshots
   fileName: CaptureImage
   ifExistIncrement: 0
 --- !u!1660057539 &9223372036854775807
