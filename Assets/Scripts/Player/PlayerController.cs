@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     private MovementController movementController;
     private CameraCapture cameraCapture;
     private UIController uiController;
+    
+  
 
     // Temporary
     public GameObject metalPipe;
@@ -38,6 +40,9 @@ public class PlayerController : MonoBehaviour
         uiController = GetComponent<UIController>();
         cameraCapture = GetComponent<CameraCapture>();
         cameraCapture.SubscribeOnCapture(OnScreenCapture);
+
+        
+
 
         // Initialize components
         movementController.IntializeMovementController();
@@ -83,6 +88,7 @@ public class PlayerController : MonoBehaviour
         }
 
         movementController.UpdateAnimation();
+        movementController.UpdateFootprints();
 
         uiController.UpdateStaminaBar(movementController.stamina, 100);
     }
@@ -90,6 +96,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         movementController.MovePlayer();
+
     }
 
     private void OnCollisionEnter(Collision col)

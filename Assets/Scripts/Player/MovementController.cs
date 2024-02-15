@@ -7,6 +7,7 @@ public class MovementController : MonoBehaviour
     private CapsuleCollider playerCol;
     private Rigidbody playerRB;
     private SoundEmitter soundEmitter;
+    private FootprintController footprintController;
 
     private bool isMoving = false;
     private bool isSprinting = false;
@@ -30,6 +31,7 @@ public class MovementController : MonoBehaviour
         playerRB = GetComponent<Rigidbody>();
         animationController = AnimationController.Instance;
         soundEmitter = GetComponent<SoundEmitter>();
+        footprintController = GetComponent<FootprintController>();
     }
 
     public void ToggleSprint()
@@ -179,6 +181,17 @@ public class MovementController : MonoBehaviour
         {
             if (!isCrouching) animationController.ChangeAnimation(animationController.Idle, 0.15f, 0, 0);
             if (isCrouching) animationController.ChangeAnimation(animationController.CrouchIdle, 0.15f, 0, 0);
+        }
+    }
+
+    public void UpdateFootprints()
+    {
+        if (!isGrounded)
+            return;
+
+        if (isMoving)
+        {
+            footprintController.CheckFootprint(playerCol);
         }
     }
 
