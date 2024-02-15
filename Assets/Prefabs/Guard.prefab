@@ -1934,6 +1934,7 @@ MonoBehaviour:
   - {fileID: 844957831981856058}
   - {fileID: 2762749674448890981}
   - {fileID: 4412583929989566322}
+  listenerType: 1
   currentState: 0
 --- !u!1 &6329047237763425566
 GameObject:

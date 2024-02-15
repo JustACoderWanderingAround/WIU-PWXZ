@@ -20,6 +20,9 @@ public class Guard : MonoBehaviour, IEventListener
     public readonly int Sprint = Animator.StringToHash("Sprint");
     public readonly int LookAround = Animator.StringToHash("LookAround");
 
+    // for postoffice
+    public LISTENER_TYPE listenerType = LISTENER_TYPE.GUARD;
+
     public enum GuardState
     {
         IDLE,
@@ -36,12 +39,14 @@ public class Guard : MonoBehaviour, IEventListener
     {
         aiNavigation = GetComponent<AINavigation>();
         fov = GetComponent<FieldOfView>();
+        listenerType = LISTENER_TYPE.GUARD;
     }
 
     void Start()
     {
         aiNavigation.InitNavMeshAgent();
         currentState = GuardState.IDLE;
+        PostOffice.Instance.Subscribe(this);
     }
 
     private void ChangeState(GuardState nextState)
