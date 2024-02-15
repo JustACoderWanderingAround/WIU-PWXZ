@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
         foreach(GameObject go in gameObjects)
         {
             IInventoryItem item;
-            if (go.TryGetComponent<IInventoryItem>(out item))
+            if (go.TryGetComponent(out item))
             {
                 inventoryManager.AddItem(item);
                 if (item.GetItemIsStackable())
@@ -82,9 +82,17 @@ public class PlayerController : MonoBehaviour
             inventoryManager.UseItem(inventoryManager.items[0].uid);
         }
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            inventoryManager.UseItem(inventoryManager.items[0].uid);
+        }
+
         movementController.UpdateAnimation();
 
         uiController.UpdateStaminaBar(movementController.stamina, 100);
+
+        transform.forward = Camera.main.transform.forward;
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
     }
 
     private void FixedUpdate()
