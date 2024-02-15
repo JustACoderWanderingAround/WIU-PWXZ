@@ -38,7 +38,6 @@ public class InventoryHandler : MonoBehaviour
     //5 slots
     private InventorySlot[] inventorySlots = new InventorySlot[5];
 
-    #region DebugOnly
     // Start is called before the first frame update
     void Start()
     {
@@ -91,17 +90,49 @@ public class InventoryHandler : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(0) && selectedSlot?.Slot != null)
+        if (!inventoryCanvas.gameObject.activeInHierarchy)
         {
-            manager.UseItem(selectedSlot.Slot.uid);
+            if (Input.GetMouseButtonDown(0) && selectedSlot?.Slot != null)
+            {
+                if (!selectedSlot.Slot.isStackable)
+                {
+                    GameObject f = selectedSlot.Slot.goRef;
+                    f.GetComponent<Collider>().enabled = true;
+                    f.transform.SetParent(null);
+                }
 
-            if (selectedSlot.Slot.itemCount <= 0)
-                selectedSlot.Initialise(null);
+                manager.UseItem(selectedSlot.Slot.uid);
 
-            selectedSlot.UpdateTransform();
+                if (selectedSlot.Slot.itemCount <= 0)
+                    selectedSlot.Initialise(null);
+
+                selectedSlot.UpdateTransform();
+            }
+
+            if (selectedSlot?.Slot != null)
+            {
+                if (activeObjectTransform.childCount > 0 + (selectedSlot.Slot.isStackable ? 0 : 1))
+                {
+                    List<Transform> trToR = new List<Transform>();
+                    int c = activeObjectTransform.childCount;
+                    for (int i = 0; i < c; i++)
+                    {
+                        trToR.Add(activeObjectTransform.GetChild(i));
+                    }
+                    trToR.ForEach((t) => t.SetParent(inventoryTransform));
+                }
+
+                GameObject go = selectedSlot.Slot.goRef;
+                //not a static func
+                if (!selectedSlot.Slot.isStackable)
+                {
+                    go.SetActive(true);
+                    go.transform.SetParent(activeObjectTransform);
+                    go.transform.localPosition = Vector3.zero;
+                }
+            }
         }
     }
-    #endregion
 
     private bool isActive(InventorySlot compare)
     {

@@ -76,22 +76,24 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
             movementController.ToggleSprint();
 
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            inventoryManager.UseItem(inventoryManager.items[0].uid);
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            inventoryManager.UseItem(inventoryManager.items[0].uid);
-        }
-
         movementController.UpdateAnimation();
 
         uiController.UpdateStaminaBar(movementController.stamina, 100);
 
         transform.forward = Camera.main.transform.forward;
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+    }
+
+    public void SetDontUseStamina(float duration)
+    {
+        StartCoroutine(DontUseStamina(duration));
+    }
+
+    private IEnumerator DontUseStamina(float duration)
+    {
+        movementController.SetUseStamina(false);
+        yield return new WaitForSeconds(duration);
+        movementController.SetUseStamina(true);
     }
 
     private void FixedUpdate()

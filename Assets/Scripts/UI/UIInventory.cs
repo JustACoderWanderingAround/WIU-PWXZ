@@ -34,7 +34,6 @@ public class UIInventory : MonoBehaviour
             if (!itemCanvas.gameObject.activeInHierarchy)
             {
                 itemCanvas.gameObject.SetActive(true);
-                LayoutRebuilder.ForceRebuildLayoutImmediate(itemCanvas.transform as RectTransform);
                 return;
             }
 
@@ -43,6 +42,8 @@ public class UIInventory : MonoBehaviour
             RectTransform rt = itemCanvas.transform as RectTransform;
             CanvasScaler scaler = itemCanvas.GetComponentInParent<CanvasScaler>();
             rt.anchoredPosition = new Vector2(Input.mousePosition.x * scaler.referenceResolution.x / Screen.width, Input.mousePosition.y * scaler.referenceResolution.y / Screen.height) - new Vector2(-rt.sizeDelta.x, rt.sizeDelta.y) * 0.5f;
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(itemCanvas.transform as RectTransform);
         }
         else
         {

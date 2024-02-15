@@ -17,6 +17,7 @@ public class MovementController : MonoBehaviour
     public float stamina = 100;
     private float jumpChargeTime = 0;
     private float moveSpeed;
+    private bool useStamina = true;
     private bool canJump = true;
 
     private AnimationController animationController;
@@ -30,6 +31,11 @@ public class MovementController : MonoBehaviour
         playerRB = GetComponent<Rigidbody>();
         animationController = AnimationController.Instance;
         soundEmitter = GetComponent<SoundEmitter>();
+    }
+
+    public void SetUseStamina(bool isUsing)
+    {
+        useStamina = isUsing;
     }
 
     public void ToggleSprint()
@@ -92,7 +98,7 @@ public class MovementController : MonoBehaviour
             direction = (forwardDirection + sideDirection).normalized;
 
             // If player is sprinting and is moving
-            if (isSprinting && playerRB.velocity.magnitude > 0.1f)
+            if (isSprinting && playerRB.velocity.magnitude > 0.1f && useStamina)
                 stamina -= movementData.sprintStaminaCost * Time.deltaTime;
             else if (!isSprinting && !isCrouching)
                 soundEmitter.SetEmissionRange(movementData.walkNoiseRange);
@@ -154,7 +160,8 @@ public class MovementController : MonoBehaviour
         float totalJumpCost = (movementData.jumpStaminaCost * (jumpChargeTime * movementData.jumpChargeMultiplier)) * 0.75f;
         if (totalJumpCost < movementData.jumpStaminaCost)
             totalJumpCost = movementData.jumpStaminaCost;
-        stamina -= totalJumpCost;
+        if (useStamina)
+            stamina -= totalJumpCost;
 
         playerRB.velocity = new Vector3(playerRB.velocity.x, 0, playerRB.velocity.z);
         playerRB.AddForce(transform.up * (movementData.baseJumpForce + jumpChargeTime * movementData.jumpChargeMultiplier), ForceMode.Impulse);

@@ -7,7 +7,7 @@ public class EnergyDrink : MonoBehaviour, IInventoryItem
 {
     private Rigidbody drinkRB;
     private Collider drinkCol;
-    private bool isPickup = false;
+    [SerializeField] private Sprite itemDisplayImage = null;
 
     private void Awake()
     {
@@ -27,27 +27,33 @@ public class EnergyDrink : MonoBehaviour, IInventoryItem
 
     public Sprite GetItemDisplaySprite()
     {
-        return null;
+        return itemDisplayImage;
     }
 
     public Action GetItemEffect()
     {
         return delegate
         {
+            PlayerController.Instance.SetDontUseStamina(10f);
         };
     }
 
     public bool GetItemIsStackable()
     {
-        return false;
+        return true;
     }
 
     private void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.CompareTag("Player"))
-        {
-            PlayerController.Instance.AddItem(this);
-            isPickup = true;
-        }
+    }
+
+    public bool GetItemIsConsumable()
+    {
+        return true;
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
     }
 }
