@@ -6,6 +6,7 @@ using UnityEngine.UI;
 //Created By: Tan Xiang Feng Wayne
 /// <summary>
 /// This Class Should be used as a intermediate step between ItemManager and BasePickable
+/// Handling of on trigger and on enter will be handled here
 /// </summary>
 public class InventoryHandler : MonoBehaviour
 {
@@ -21,12 +22,14 @@ public class InventoryHandler : MonoBehaviour
     //To show which to render on the ui
     private List<InventorySlot> notActiveSlots = new List<InventorySlot>();
 
+    //Preset 5 inventory slot
     public UIInventorySlot[] activeSlot = new UIInventorySlot[5];
     private UIInventorySlot selectedSlot = null;
 
     [SerializeField]
     private InventoryManager manager;
 
+    //Set keycodes for the 5 active slot
     private KeyCode[] keyCodes = {
         KeyCode.Alpha1,
         KeyCode.Alpha2,
@@ -44,9 +47,10 @@ public class InventoryHandler : MonoBehaviour
         Initialise();
     }
 
-    // Update is called once per frame
+    // Update: Non Command Pattern (requested)
     void Update()
     {
+        // toggle active keycode section
         //Loop through all the possible keycodes
         for (int i = 0; i < keyCodes.Length; i++) {
             if (Input.GetKeyDown(keyCodes[i])) {
@@ -70,6 +74,7 @@ public class InventoryHandler : MonoBehaviour
                     }
                 }
 
+                //Select and Unselect mechanic
                 selectedSlot?.Highlight(true);
                 selectedSlot = selectedSlot == newSlot ? null : newSlot;
                 selectedSlot?.Highlight();
@@ -77,45 +82,68 @@ public class InventoryHandler : MonoBehaviour
             }
         }
 
+        // toggle inventory section
+        //Open and Close Inventory
         if (Input.GetKeyDown(KeyCode.I))
         {
+            //If its not open
             if (!inventoryCanvas.gameObject.activeInHierarchy)
             {
+                //Open 
                 StartCoroutine(UIRenderRoutine());
             }
+            //If its open
             else
             {
+                //Clear all the generated object and set active to false
                 inventoryUIHandler.Clear();
                 inventoryCanvas.gameObject.SetActive(false);
             }
         }
 
+        // using item section
+        //Check if the inventory is open, if its open, dont use or toggle since
+        //player are switching the items around
         if (!inventoryCanvas.gameObject.activeInHierarchy)
         {
+            //Check if the player clicked and they have selected
             if (Input.GetMouseButtonDown(0) && selectedSlot?.Slot != null)
             {
+                //If the object is not stackable
+                //this means the object has not been destroyed previously as the effect is 
+                //gameobject dependent (such as throwing the object)
                 if (!selectedSlot.Slot.isStackable)
                 {
+                    //Get the object reference
                     GameObject f = selectedSlot.Slot.goRef;
+                    //Enable the collider
                     f.GetComponent<Collider>().enabled = true;
+                    //Set the parent to null (since we are using it)
                     f.transform.SetParent(null);
                 }
 
+                //Update the manager to know that we have used this item
                 manager.UseItem(selectedSlot.Slot.uid);
 
+                //if Item count is 0, set the item ref to null since such item will not exist anymore
                 if (selectedSlot.Slot.itemCount <= 0)
                     selectedSlot.Initialise(null);
 
+                //Update the text and image
                 selectedSlot.UpdateTransform();
             }
 
+            //If an item is selected (visualisation)
             if (selectedSlot?.Slot != null)
             {
+                //Depending if its stackable, if its stackable, NO OBJECT SHOULD BE SHOWN
+                //Clear the transform
                 if (activeObjectTransform.childCount > 0 + (selectedSlot.Slot.isStackable ? 0 : 1))
                 {
                     List<Transform> trToR = new List<Transform>();
                     int c = activeObjectTransform.childCount;
-                    for (int i = 0; i < c; i++)
+                    //Set such as the last one is removed first
+                    for (int i = c - 1 ; i >= 0; i--)
                     {
                         trToR.Add(activeObjectTransform.GetChild(i));
                     }
@@ -126,7 +154,9 @@ public class InventoryHandler : MonoBehaviour
                 //not a static func
                 if (!selectedSlot.Slot.isStackable)
                 {
+                    //Show the object
                     go.SetActive(true);
+                    //Set parent to where it should be placed at
                     go.transform.SetParent(activeObjectTransform);
                     go.transform.localPosition = Vector3.zero;
                 }
@@ -149,19 +179,24 @@ public class InventoryHandler : MonoBehaviour
 
     private IEnumerator UIRenderRoutine()
     {
+        //Open the canvas
         inventoryCanvas.gameObject.SetActive(true);
         inventoryCanvas.interactable = false;
 
+        //Clear the previous list
         notActiveSlots.Clear();
+        //Add in list which can be shown
         manager.items.ForEach((x) =>
         {
             if (!isActive(x))
                 notActiveSlots.Add(x);
         });
-
+        
+        //Pass in and render it
         inventoryUIHandler.Initialise(notActiveSlots);
         inventoryUIHandler.Render();
 
+        //While its rendering, dont make the canvas interactable
         while (inventoryUIHandler.isRendering)
             yield return null;
 

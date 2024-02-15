@@ -21,9 +21,6 @@ public class Guard : MonoBehaviour, IEventListener
     public readonly int LookAround = Animator.StringToHash("LookAround");
     public readonly int Stunned = Animator.StringToHash("Stun");
 
-    // for postoffice
-    public LISTENER_TYPE listenerType = LISTENER_TYPE.GUARD;
-
     public enum GuardState
     {
         IDLE,
@@ -41,7 +38,6 @@ public class Guard : MonoBehaviour, IEventListener
     {
         aiNavigation = GetComponent<AINavigation>();
         fov = GetComponent<FieldOfView>();
-        listenerType = LISTENER_TYPE.GUARD;
     }
 
     void Start()
