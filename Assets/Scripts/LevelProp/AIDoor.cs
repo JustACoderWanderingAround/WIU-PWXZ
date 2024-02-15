@@ -4,25 +4,27 @@ using UnityEngine;
 
 public class AIDoor : MonoBehaviour
 {
-    ModifyTransform modTransform;
+    [SerializeField] ModifyTransform modTransform;
     // Start is called before the first frame update
     void Start()
     {
-        modTransform = GetComponent<ModifyTransform>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            modTransform.Activate();
+            Debug.Log("open");
+            if (!modTransform.open)
+                modTransform.AIActivate();
         }
     }
     private void OnTriggerExit(Collider other)
     {
-       if (other.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            modTransform.Reset();
+            if (!modTransform.open)
+                modTransform.Reset();
         }
     }
 }

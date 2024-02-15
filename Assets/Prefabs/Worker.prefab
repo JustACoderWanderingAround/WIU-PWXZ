@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 5033667787267694394}
   m_Layer: 0
   m_Name: WorkerAgent
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -164,7 +164,7 @@ Transform:
   m_GameObject: {fileID: 3620933034087113243}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.87, y: 0, z: -3.25}
+  m_LocalPosition: {x: -1.02, y: 0, z: -4.637}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -470,7 +470,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: be529cf08db98384ba02e0ef4f0b9b79,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: be529cf08db98384ba02e0ef4f0b9b79,
         type: 3}

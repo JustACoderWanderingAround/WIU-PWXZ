@@ -16,9 +16,11 @@ public class ModifyTransform : MonoBehaviour
     float timer;
     public float speed;
     public bool start;
+    public bool open;
     bool reset;
     private void OnEnable()
     {
+        open = false;
         reset = false;
         start = false;
         // get target transforms
@@ -45,6 +47,11 @@ public class ModifyTransform : MonoBehaviour
         }
     }
     public void Activate()
+    {
+        start = true;
+        open = true;
+    }
+    public void AIActivate()
     {
         start = true;
     }
