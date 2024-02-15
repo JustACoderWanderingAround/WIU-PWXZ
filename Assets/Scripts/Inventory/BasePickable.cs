@@ -33,6 +33,10 @@ public class BasePickable : MonoBehaviour, IInventoryItem
     /// <returns></returns>
     public System.Action GetItemEffect()
     {
+        //Constant Example Start
+        if (isStackable)
+            return ExampleEffect;
+        //Constant Example End
         //GameObject Specifc Example Start
         return delegate { 
             Debug.Log($"{gameObject.name} has Invoked Item Effect");
@@ -40,17 +44,16 @@ public class BasePickable : MonoBehaviour, IInventoryItem
             Destroy(gameObject);
         };
         //GameObject Specifc Example End
-
-        //Constant Example Start
-        //return ExampleEffect;
-        //Constant Example End
     }
 
     private static void ExampleEffect()
     {
-        Debug.Log("Static Variable constantFolderPath = " + CameraCapture.constantFolderPath);
+        Debug.Log("Static Effect Has Been Called");
     }
 
+
+    //no more using enter here, all collider will be handled by handler
+    /*
     private void OnTriggerEnter(Collider other)
     {
         //Place into player's inventory if it is Player
@@ -66,12 +69,12 @@ public class BasePickable : MonoBehaviour, IInventoryItem
             //GameObject Specifc Example End
 
             //GameObject Specifc Example Start
-            /*if (hasAdded)
-                Destroy(gameObject);
-            */
+            //if (hasAdded)
+                //Destroy(gameObject);
+            //
             //GameObject Specifc Example End
         }
-    }
+    */
 
     public string GetItemName()
     {
@@ -91,5 +94,15 @@ public class BasePickable : MonoBehaviour, IInventoryItem
     public Sprite GetItemDisplaySprite()
     {
         return itemDisplayImage;
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    public bool GetItemIsConsumable()
+    {
+        return true;
     }
 }

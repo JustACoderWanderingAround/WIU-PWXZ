@@ -7,6 +7,8 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
 {
     private SoundEmitter soundEmitter;
     private Rigidbody pipeRB;
+    [SerializeField] private Sprite itemDisplayImage = null;
+
     private bool onCollide = false;
 
     private void Awake()
@@ -22,7 +24,7 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
 
     public string GetItemDescription()
     {
-        return "Metal Pipe";
+        return "A sturdy metal pipe. Makes a funny noise when dropped!";
     }
 
     public bool GetItemIsStackable()
@@ -32,27 +34,34 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
 
     public Sprite GetItemDisplaySprite()
     {
-        return null;
+        return itemDisplayImage;
     }
 
     public Action GetItemEffect()
     {
-        return delegate { pipeRB.isKinematic = false; pipeRB.transform.position = PlayerController.Instance.itemHoldPoint.position; gameObject.SetActive(true); pipeRB.AddForce(Camera.main.transform.forward * 10f + Camera.main.transform.up, ForceMode.Impulse); };
+        return delegate 
+        {
+            pipeRB.isKinematic = false;
+            pipeRB.AddForce(Camera.main.transform.forward * 10f + Camera.main.transform.up * 10f, ForceMode.Impulse);
+        };
     }
 
     private void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.CompareTag("Player"))
-        {
-            PlayerController.Instance.AddItem(this);
-            gameObject.SetActive(false);
-        }
-        else
+        if (!col.gameObject.CompareTag("Player"))
         {
             if (!onCollide)
                 soundEmitter.EmitSound();
-
-            onCollide = true;
         }
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    public bool GetItemIsConsumable()
+    {
+        return true;
     }
 }
