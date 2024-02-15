@@ -77,6 +77,17 @@ public class InventoryHandler : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            manager.Save();
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            manager.Load();
+        }
+
+
         if (Input.GetKeyDown(KeyCode.I))
         {
             if (!inventoryCanvas.gameObject.activeInHierarchy)
