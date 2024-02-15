@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: InventoryManager
   m_EditorClassIdentifier: 
   maxItemsPerSlot: 5
-  maxSlots: 5
-  itemsJSON: '{"list":[{"itemDisplayImage":{"instanceID":62582},"uid":706820049,"itemName":"BasePickable","itemDescription":"","isStackable":true,"itemCount":2},{"itemDisplayImage":{"instanceID":62582},"uid":1041259262,"itemName":"BasePickable","itemDescription":"","isStackable":true,"itemCount":1}]}'
+  maxSlots: 100
+  itemsJSON: '{"list":[{"itemDisplayImage":{"instanceID":33796},"uid":1745205671,"itemName":"BasePickable","itemDescription":"","isStackable":false,"isConsumable":true,"itemCount":1},{"itemDisplayImage":{"instanceID":33796},"uid":1148314447,"itemName":"BasePickable","itemDescription":"","isStackable":false,"isConsumable":true,"itemCount":1},{"itemDisplayImage":{"instanceID":33796},"uid":860599013,"itemName":"BasePickable","itemDescription":"","isStackable":false,"isConsumable":true,"itemCount":1},{"itemDisplayImage":{"instanceID":33796},"uid":17197253,"itemName":"BasePickable","itemDescription":"","isStackable":false,"isConsumable":true,"itemCount":1},{"itemDisplayImage":{"instanceID":33796},"uid":1149972931,"itemName":"BasePickable","itemDescription":"","isStackable":false,"isConsumable":true,"itemCount":1},{"itemDisplayImage":{"instanceID":33796},"uid":254531975,"itemName":"BasePickable","itemDescription":"","isStackable":false,"isConsumable":true,"itemCount":1}]}'

@@ -26,14 +26,13 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        // Hide cursor
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Start is called before the first frame update
     void Start()
-    {
-        // Hide cursor
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+    { 
 
         // Get player components
         movementController = GetComponent<MovementController>();
@@ -54,7 +53,7 @@ public class PlayerController : MonoBehaviour
         foreach(GameObject go in gameObjects)
         {
             IInventoryItem item;
-            if (go.TryGetComponent<IInventoryItem>(out item))
+            if (go.TryGetComponent(out item))
             {
                 inventoryManager.AddItem(item);
                 if (item.GetItemIsStackable())
@@ -82,15 +81,25 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
             movementController.ToggleSprint();
 
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            inventoryManager.UseItem(inventoryManager.items[0].uid);
-        }
-
         movementController.UpdateAnimation();
         movementController.UpdateFootprints();
 
         uiController.UpdateStaminaBar(movementController.stamina, 100);
+
+        transform.forward = Camera.main.transform.forward;
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+    }
+
+    public void SetDontUseStamina(float duration)
+    {
+        StartCoroutine(DontUseStamina(duration));
+    }
+
+    private IEnumerator DontUseStamina(float duration)
+    {
+        movementController.SetUseStamina(false);
+        yield return new WaitForSeconds(duration);
+        movementController.SetUseStamina(true);
     }
 
     private void FixedUpdate()
