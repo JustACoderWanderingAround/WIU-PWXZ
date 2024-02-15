@@ -50,7 +50,7 @@ public class InventoryHandler : MonoBehaviour
     // Update: Non Command Pattern (requested)
     void Update()
     {
-        #region toggle active keycode section
+        // toggle active keycode section
         //Loop through all the possible keycodes
         for (int i = 0; i < keyCodes.Length; i++) {
             if (Input.GetKeyDown(keyCodes[i])) {
@@ -58,7 +58,7 @@ public class InventoryHandler : MonoBehaviour
                 UIInventorySlot newSlot = activeSlot[i];
 
                 //Pressed the second time
-                if (!selectedSlot && selectedSlot == newSlot)
+                if (selectedSlot != null && selectedSlot == newSlot)
                 {
                     //Case 1: Inventory UI Open, Switch Items from bag to active
                     if (inventoryCanvas.gameObject.activeInHierarchy)
@@ -81,9 +81,8 @@ public class InventoryHandler : MonoBehaviour
                 break;
             }
         }
-        #endregion
 
-        #region toggle inventory section
+        // toggle inventory section
         //Open and Close Inventory
         if (Input.GetKeyDown(KeyCode.I))
         {
@@ -101,9 +100,8 @@ public class InventoryHandler : MonoBehaviour
                 inventoryCanvas.gameObject.SetActive(false);
             }
         }
-        #endregion
 
-        #region using item section
+        // using item section
         //Check if the inventory is open, if its open, dont use or toggle since
         //player are switching the items around
         if (!inventoryCanvas.gameObject.activeInHierarchy)
@@ -164,7 +162,6 @@ public class InventoryHandler : MonoBehaviour
                 }
             }
         }
-        #endregion
     }
 
     private bool isActive(InventorySlot compare)

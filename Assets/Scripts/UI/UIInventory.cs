@@ -61,7 +61,6 @@ public class UIInventory : MonoBehaviour
             //Default TopLeft of canvas follow mousePosition
             Vector2 offsetPosition = new Vector2(rt.sizeDelta.x, -rt.sizeDelta.y) * 0.5f;
             //Make sure it doesnt go out of screen
-            Debug.Log(mousePosition + offsetPosition * 2f);
             if (mousePosition.x + offsetPosition.x * 2f > scaler.referenceResolution.x)
             {
                 offsetPosition.x *= -1;
