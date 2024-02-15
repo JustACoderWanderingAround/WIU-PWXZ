@@ -59,7 +59,7 @@ public class EnemyWorker : MonoBehaviour, IEventListener
     {
         aiNavigation.InitNavMeshAgent();
         currentState = WorkerState.IDLE;
-        //PostOffice.Instance.Subscribe(this);
+        PostOffice.GetInstance().Subscribe(this);
     }
     private void ChangeState(WorkerState nextState)
     {

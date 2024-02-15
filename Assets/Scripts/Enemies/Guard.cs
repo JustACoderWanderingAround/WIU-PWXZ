@@ -46,7 +46,7 @@ public class Guard : MonoBehaviour, IEventListener
     {
         aiNavigation.InitNavMeshAgent();
         currentState = GuardState.IDLE;
-        PostOffice.Instance.Subscribe(this);
+        PostOffice.GetInstance().Subscribe(this);
     }
 
     private void ChangeState(GuardState nextState)
