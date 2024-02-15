@@ -14,7 +14,6 @@ public class AIDoor : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("open");
             if (!modTransform.open)
                 modTransform.AIActivate();
         }
