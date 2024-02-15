@@ -48,7 +48,7 @@ public class Guard : MonoBehaviour, IEventListener
     {
         aiNavigation.InitNavMeshAgent();
         currentState = GuardState.IDLE;
-        PostOffice.GetInstance().Subscribe(this);
+        PostOffice.GetInstance().Subscribe(this.gameObject);
     }
 
     public void ChangeState(GuardState nextState)
@@ -161,5 +161,10 @@ public class Guard : MonoBehaviour, IEventListener
             positionOfInterest = transform.forward - (sound.position - transform.position);
             ChangeState(GuardState.SEARCH);
         }
+    }
+
+    public LISTENER_TYPE GetListenerType()
+    {
+        return listenerType;
     }
 }

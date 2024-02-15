@@ -10,4 +10,5 @@ public interface IEventListener
 {
     
     void RespondToSound(SoundWPosition sound);
+    LISTENER_TYPE GetListenerType();
 }

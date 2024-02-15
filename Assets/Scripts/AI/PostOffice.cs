@@ -8,7 +8,7 @@ public class PostOffice : MonoBehaviour
 {
     public static PostOffice instance;
 
-    List<IEventListener> recipients = new List<IEventListener>();  
+    List<GameObject> recipients = new List<GameObject>();  
     private PostOffice()
     {
     }
@@ -23,11 +23,26 @@ public class PostOffice : MonoBehaviour
         }
         return instance;
     }
-    public void SendEvent(Message message)
+    public void SendToPostOffice(Message message)
     {
         MessagePlayerHere messagePlayerHere = message as MessagePlayerHere; 
+        if (messagePlayerHere != null)
+        {
+            foreach (GameObject go in recipients)
+            {
+                if (go.GetComponent<IEventListener>().GetListenerType() == LISTENER_TYPE.GUARD)
+                {
+                    if (Vector3.Distance(go.transform.position, messagePlayerHere.location) < messagePlayerHere.distThreshold)
+                    {
+                        SoundWPosition newSound = new SoundWPosition(null, messagePlayerHere.location, 1000);
+                        newSound.soundType = SoundWPosition.SoundType.INTEREST;
+                        go.GetComponent<IEventListener>().RespondToSound(newSound);
+                    }
+                }
+            }
+        }
     }
-    public void Subscribe(IEventListener newListener)
+    public void Subscribe(GameObject newListener)
     {
         recipients.Add(newListener);
     }
