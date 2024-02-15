@@ -5,15 +5,7 @@ using UnityEngine;
 
 public class EnergyDrink : MonoBehaviour, IInventoryItem
 {
-    private Rigidbody drinkRB;
-    private Collider drinkCol;
     [SerializeField] private Sprite itemDisplayImage = null;
-
-    private void Awake()
-    {
-        drinkRB = GetComponent<Rigidbody>();
-        drinkCol = GetComponent<Collider>();
-    }
 
     public string GetItemName()
     {
@@ -41,10 +33,6 @@ public class EnergyDrink : MonoBehaviour, IInventoryItem
     public bool GetItemIsStackable()
     {
         return true;
-    }
-
-    private void OnCollisionEnter(Collision col)
-    {
     }
 
     public bool GetItemIsConsumable()
