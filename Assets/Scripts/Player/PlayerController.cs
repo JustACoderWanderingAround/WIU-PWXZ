@@ -4,25 +4,60 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance = null;
     private MovementController movementController;
+    private CameraCapture cameraCapture;
     private UIController uiController;
+
+    // Temporary
+    public GameObject metalPipe;
+    public Transform itemHoldPoint;
+
+    [SerializeField]
+    private InventoryManager inventoryManager;
+
+    public bool AddItem(IInventoryItem item)
+    {
+        return inventoryManager.AddItem(item);
+    }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        // Hide cursor
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
         // Get player components
         movementController = GetComponent<MovementController>();
         uiController = GetComponent<UIController>();
+        cameraCapture = GetComponent<CameraCapture>();
+        cameraCapture.SubscribeOnCapture(OnScreenCapture);
 
         // Initialize components
         movementController.IntializeMovementController();
+        inventoryManager.Init();
+    }
 
-        // Hide cursor
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+    private void OnScreenCapture(GameObject[] gameObjects)
+    {
+        foreach(GameObject go in gameObjects)
+        {
+            IInventoryItem item;
+            if (go.TryGetComponent<IInventoryItem>(out item))
+            {
+                inventoryManager.AddItem(item);
+                if (item.GetItemIsStackable())
+                    Destroy(go);
+                else
+                    go.SetActive(false);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -41,6 +76,11 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
             movementController.ToggleSprint();
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            inventoryManager.UseItem(inventoryManager.items[0].uid);
+        }
 
         movementController.UpdateAnimation();
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Created by: Tan Xiang Feng Wayne
 public class CameraCapture : MonoBehaviour
 { 
     public static string constantFolderPath { get; private set; }
@@ -10,7 +11,7 @@ public class CameraCapture : MonoBehaviour
     public LayerMask itemLayer;
 
     [Header("Write To Files")]
-    public string folderPath = "/Screenshots";
+    public string folderPath = "Screenshots";
     public string fileName = "CaptureImage";
     public bool ifExistIncrement = false;
 
@@ -26,7 +27,7 @@ public class CameraCapture : MonoBehaviour
     void Start()
     {
         Initialise();
-        onCaptureActions += Test;
+        //onCaptureActions += Test;
         UpdateRendererList();
     }
 
@@ -54,11 +55,17 @@ public class CameraCapture : MonoBehaviour
 
     public void Initialise()
     {
-        constantFolderPath = Application.persistentDataPath + folderPath;
+        constantFolderPath = System.IO.Path.Combine(Application.persistentDataPath, folderPath);
+        //Debug.Log("Created ConstantFolderPath: " + constantFolderPath);
         //Create folder path if such folder does not exists
         if (!System.IO.Directory.Exists(constantFolderPath))
         {
             System.IO.Directory.CreateDirectory(constantFolderPath);
+        }
+
+        if (captureCamera == null)
+        {
+            captureCamera = Camera.main;
         }
     }
 
@@ -127,6 +134,14 @@ public class CameraCapture : MonoBehaviour
             }
         }
 
+        Debug.Log("IdentifyGameObject: Waiting for Image to render finish before Invoke");
+
+        //Wait for it to save, so it could save the image of the before affected (for eg. material change or gameobject missing)
+        while (captureHandler != null)
+            yield return null;
+
+        Debug.Log("IdentifyGameObject: Invoking onCaptureActions");
+
         //Invoke Listener
         onCaptureActions.Invoke(gameObjects.ToArray());
 
@@ -158,21 +173,43 @@ public class CameraCapture : MonoBehaviour
 
         captureCamera.targetTexture = null;
 
-        int incremental = 0;
-        string capturePath, nextCapturePath;
-        nextCapturePath = constantFolderPath + "/" + fileName + ".png";
+        //Read necessary Data from JSON
+        string JSONPath = System.IO.Path.Combine(constantFolderPath, $"{fileName}Data.json");
+        //Check if such JSON FIle exists
+        if (!System.IO.File.Exists(JSONPath))
+        {
+            System.IO.FileStream fs = new System.IO.FileInfo(JSONPath).Create();
+            fs.Close();
+        }
+
+        string JSONText = System.IO.File.ReadAllText(JSONPath);
+        //Overwrite Data and Create One if it is not initialised Properly
+        ImageFolderData data = JsonUtility.FromJson<ImageFolderData>(JSONText) ?? new ImageFolderData();
+
+        //BackTrack by one to allow for increase value in do.while loop (if incremental)
+        int incremental = ifExistIncrement ? data.imageCount - 1 : -1;
+        string capturePath;
         do
         {
-            capturePath = nextCapturePath;
-            nextCapturePath = constantFolderPath + "/" + fileName + $"({incremental})" + ".png";
             incremental++;
+            capturePath = System.IO.Path.Combine(constantFolderPath, fileName + incremental + ".png");
         }
         while (System.IO.File.Exists(capturePath) && ifExistIncrement);
 
+        //Update JSON
+        data.imagePrefix = fileName;
+        data.imageCount = data.imageCount < (incremental + 1) ? incremental + 1 : data.imageCount;
+        data.lastSavedAt = System.DateTime.Now.ToString();
+
+        //Convert back to string
+        JSONText = JsonUtility.ToJson(data);
+
         //Write to the path
         System.IO.File.WriteAllBytes(capturePath, byteArray);
+        System.IO.File.WriteAllText(JSONPath, JSONText);
 
         Debug.Log($"File {fileName} has been saved in {capturePath}");
+        Debug.Log($"JSONFIle {JSONPath} has been Updated! : {JSONText}");
 
         captureHandler = null;
     }
@@ -194,13 +231,13 @@ public class CameraCapture : MonoBehaviour
             }
         }
 
-        //Debug
-        Debug.Log("-----[UpdateRenderList] : Renderers without Collider Component Activated-----");
-        if (allRenderers.Count > 0)
-            Debug.LogWarning("IMPORTANT NOTE: If an object is hidden behind an object with no Collider Component, it will not be detected properly. " +
-                "Please Do Ensure that Collider is enabled if another object is to meant to be hidden under a certain angle");
-        allRenderers.ForEach((r) => Debug.Log("     >" + r));
-        Debug.Log("-----[UpdateRenderList] : End Print-----");
+        ////Debug
+        //Debug.Log("-----[UpdateRenderList] : Renderers without Collider Component Activated-----");
+        //if (allRenderers.Count > 0)
+        //    Debug.LogWarning("IMPORTANT NOTE: If an object is hidden behind an object with no Collider Component, it will not be detected properly. " +
+        //        "Please Do Ensure that Collider is enabled if another object is to meant to be hidden under a certain angle");
+        //allRenderers.ForEach((r) => Debug.Log("     >" + r));
+        //Debug.Log("-----[UpdateRenderList] : End Print-----");
     }
 
     private bool IsWithinViewArea(Plane[] planes, Bounds bounds)
@@ -220,5 +257,23 @@ public class CameraCapture : MonoBehaviour
             }
         }
         return false;
+    }
+}
+
+[System.Serializable]
+public class ImageFolderData
+{
+    public string imagePrefix = "";
+    public int imageCount = 0;
+    public string lastSavedAt = System.DateTime.MinValue.ToString();
+
+    public ImageFolderData(string name, int count)
+    {
+
+    }
+
+    public ImageFolderData()
+    {
+
     }
 }
