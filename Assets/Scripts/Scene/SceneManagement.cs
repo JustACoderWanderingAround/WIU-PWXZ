@@ -8,12 +8,28 @@ using TMPro;
 //Created By: Tan Xiang Feng Wayne
 public class SceneManagement : MonoBehaviour
 {
+    private static SceneManagement instance = null;
+    public static SceneManagement Instance { get {
+            if (instance == null)
+            {
+                GameObject newGO = new GameObject("SceneManager");
+                instance = newGO.AddComponent<SceneManagement>();
+                DontDestroyOnLoad(newGO);
+            }
+            return instance;
+        } }
     [Header("Scene Data")]
     public List<string> sceneNames;
 
     private void Awake()
     {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }   
         DontDestroyOnLoad(this);
+        instance = this;
     }
 
     public void LoadScene(string name)
