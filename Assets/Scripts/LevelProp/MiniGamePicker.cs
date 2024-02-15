@@ -42,11 +42,13 @@ public class MiniGamePicker : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
-        withinRange = true;
+        if (collision.gameObject.CompareTag("Player"))
+            withinRange = true;
     }
     private void OnTriggerExit(Collider other)
     {
-        withinRange = false;
+        if (other.gameObject.CompareTag("Player"))
+            withinRange = false;
     }
     public void Reset()
     {
