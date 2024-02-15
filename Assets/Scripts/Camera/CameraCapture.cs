@@ -213,9 +213,13 @@ public class CameraCapture : MonoBehaviour
 
         captureHandler = null;
     }
-
-    //This Function Should ONLY be called once at every Scene Init
-    //(Since FindObjectsOfType is very expensive) 
+    /// <summary>
+    /// This function updates the lists of renderer in the scene without a collider component
+    /// This Function Should ONLY be called once at every Scene Init
+    /// (Since FindObjectsOfType is very expensicve)
+    /// should a scene with no renderer that is without collider need to be checked
+    /// this function SHOULD not be called
+    /// </summary>
     public void UpdateRendererList()
     {
         allRenderers.Clear();

@@ -8,6 +8,8 @@ public class Taser : MonoBehaviour, IInventoryItem
     [SerializeField] private Transform raycastPoint;
     [SerializeField] private Transform[] arcPoints;
     [SerializeField] private GameObject electricArc;
+    [SerializeField] private Sprite itemDisplayImage = null;
+
     private Rigidbody taserRB;
     private Collider taserCol;
     private bool isPickup = false;
@@ -30,7 +32,7 @@ public class Taser : MonoBehaviour, IInventoryItem
 
     public Sprite GetItemDisplaySprite()
     {
-        return null;
+        return itemDisplayImage;
     }
 
     public Action GetItemEffect()
@@ -85,7 +87,6 @@ public class Taser : MonoBehaviour, IInventoryItem
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            PlayerController.Instance.AddItem(this);
             taserRB.isKinematic = true;
             taserCol.isTrigger = true;
             isPickup = true;
@@ -101,5 +102,15 @@ public class Taser : MonoBehaviour, IInventoryItem
 
         transform.localRotation = Quaternion.Euler(0, -90, 0);
         transform.right = Camera.main.transform.forward;
+    }
+
+    public bool GetItemIsConsumable()
+    {
+        return false;
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
     }
 }
