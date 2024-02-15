@@ -55,4 +55,14 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
             onCollide = true;
         }
     }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    public bool GetItemIsConsumable()
+    {
+        return true;
+    }
 }

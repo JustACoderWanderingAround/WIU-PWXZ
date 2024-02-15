@@ -24,14 +24,13 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        // Hide cursor
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Start is called before the first frame update
     void Start()
-    {
-        // Hide cursor
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+    { 
 
         // Get player components
         movementController = GetComponent<MovementController>();

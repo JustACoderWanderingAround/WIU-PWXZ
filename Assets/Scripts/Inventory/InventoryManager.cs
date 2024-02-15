@@ -34,7 +34,7 @@ public class InventoryManager : ScriptableObject
         if ((itemSlot == null) || (itemSlot.itemCount >= (itemSlot.isStackable ? maxItemsPerSlot : 1)))
         {
             //Cannot create new slot
-            if (items.Count > maxSlots)
+            if (items.Count >= maxSlots)
                 return false;
 
             //Create a unique ID
@@ -47,7 +47,8 @@ public class InventoryManager : ScriptableObject
 
             //Create a new slot
             itemSlot = new InventorySlot(uniqueID, newItem.GetItemName(), newItem.GetItemDescription(),
-                newItem.GetItemEffect(), newItem.GetItemDisplaySprite(), newItem.GetItemIsStackable(), 0);
+                newItem.GetItemEffect(), newItem.GetItemDisplaySprite(), newItem.GetGameObject(), newItem.GetItemIsStackable(),
+                newItem.GetItemIsConsumable(), 0);
 
             //Add it to the list
             items.Add(itemSlot);
@@ -89,8 +90,9 @@ public class InventoryManager : ScriptableObject
         if (slot == null || slot.itemCount <= 0)
             return false;
 
-        //Decrease the item count
-        slot.itemCount--;
+        if (slot.isConsumable)
+            //Decrease the item count
+            slot.itemCount--;
 
         if (slot.itemCount <= 0)
             items.Remove(slot);
