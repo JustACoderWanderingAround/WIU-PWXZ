@@ -26,4 +26,8 @@ public class AINavigation : MonoBehaviour
         navMeshAgent.speed = speed;
         navMeshAgent.destination = target;
     }
+    public void StopNavigation()
+    {
+        navMeshAgent.speed = 0;
+    }
 }

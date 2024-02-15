@@ -36,10 +36,11 @@ public class EnemyWorker : MonoBehaviour, IEventListener
         IDLE,
         MOVE, 
         RETREAT,
+        SEARCH,
         ALERT
     }
 
-    WorkerState currentState;
+    public WorkerState currentState;
     public enum WorkerIdleState
     {
         STAND,
@@ -70,6 +71,7 @@ public class EnemyWorker : MonoBehaviour, IEventListener
             {
                 case WorkerState.IDLE:
                     SetIdle();
+                    aiNavigation.StopNavigation();
                     break;
                 case WorkerState.MOVE:
                     animator.CrossFade(Walk, 0.1f);
@@ -82,6 +84,10 @@ public class EnemyWorker : MonoBehaviour, IEventListener
                 case WorkerState.ALERT:
                     animator.CrossFade(Alert, 0.1f);
                     break;
+                case WorkerState.SEARCH:
+                    animator.CrossFade(Walk, 0.1f);
+                    aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
+                    break;
             }
         }
     }
@@ -91,8 +97,7 @@ public class EnemyWorker : MonoBehaviour, IEventListener
         if (sound.soundType == SoundWPosition.SoundType.INTEREST)
         {
             positionOfInterest = sound.position;
-            aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
-            ChangeState(WorkerState.MOVE);
+            ChangeState(WorkerState.SEARCH);
         }
         else if (sound.soundType == SoundWPosition.SoundType.DANGER)
         {
@@ -128,18 +133,17 @@ public class EnemyWorker : MonoBehaviour, IEventListener
                 timer += Time.deltaTime;
                 if (timer >= 5f)
                 {
-                    ChangeState(WorkerState.MOVE);
                     timer = 0;
+                    ChangeState(WorkerState.MOVE);
                 }
                 break;
             case WorkerState.MOVE:
                 if (aiNavigation.OnReachTarget(waypoints[waypointIndex].position))
                 {
-                    ChangeState(WorkerState.IDLE);
-
                     waypointIndex++;
                     if (waypointIndex > waypoints.Length)
                         waypointIndex = 0;
+                    ChangeState(WorkerState.IDLE);
                     aiNavigation.SetNavMeshTarget(waypoints[waypointIndex].position, 2f);
                 }
                 break;
@@ -152,7 +156,17 @@ public class EnemyWorker : MonoBehaviour, IEventListener
                 break;
             case WorkerState.ALERT:
                 gameObject.transform.LookAt(positionOfInterest);
-                if (!fov.FindVisibleTargets())
+                if (Mathf.Abs((gameObject.transform.position - positionOfInterest).magnitude) > 5)
+                {
+                    ChangeState(WorkerState.IDLE);
+                }
+                break;
+            case WorkerState.SEARCH:
+                if (Mathf.Abs((gameObject.transform.position - positionOfInterest).magnitude) < 3)
+                {
+                    ChangeState(WorkerState.ALERT);
+                }
+                else if (!fov.FindVisibleTargets())
                 {
                     ChangeState(WorkerState.IDLE);
                 }
