@@ -470,31 +470,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5288510650979112154, guid: 626eacc701f99af4aa933d0488a54e34,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.34
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288510650979112154, guid: 626eacc701f99af4aa933d0488a54e34,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.56
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288510650979112154, guid: 626eacc701f99af4aa933d0488a54e34,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288510650979112154, guid: 626eacc701f99af4aa933d0488a54e34,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288510650979112154, guid: 626eacc701f99af4aa933d0488a54e34,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 1.5436976e-12
-      objectReference: {fileID: 0}
     - target: {fileID: 6436646676655637564, guid: 626eacc701f99af4aa933d0488a54e34,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1313,7 +1288,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
