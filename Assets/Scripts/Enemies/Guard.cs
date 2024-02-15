@@ -21,9 +21,6 @@ public class Guard : MonoBehaviour, IEventListener
     public readonly int LookAround = Animator.StringToHash("LookAround");
     public readonly int Stunned = Animator.StringToHash("Stun");
 
-    // for postoffice
-    public LISTENER_TYPE listenerType = LISTENER_TYPE.GUARD;
-
     public enum GuardState
     {
         IDLE,
@@ -41,14 +38,13 @@ public class Guard : MonoBehaviour, IEventListener
     {
         aiNavigation = GetComponent<AINavigation>();
         fov = GetComponent<FieldOfView>();
-        listenerType = LISTENER_TYPE.GUARD;
     }
 
     void Start()
     {
         aiNavigation.InitNavMeshAgent();
         currentState = GuardState.IDLE;
-        PostOffice.GetInstance().Subscribe(this);
+        PostOffice.GetInstance().Subscribe(gameObject);
     }
 
     public void ChangeState(GuardState nextState)
@@ -66,8 +62,8 @@ public class Guard : MonoBehaviour, IEventListener
                 aiNavigation.SetNavMeshTarget(waypoints[waypointIndex].position, 2f);
                 break;
             case GuardState.CHASE:
-                aiNavigation.SetNavMeshTarget(fov.target.position, 4f);
                 animator.CrossFade(Sprint, 0.1f);
+                aiNavigation.SetNavMeshTarget(positionOfInterest, 4f);
                 break;
             case GuardState.LOOK_AROUND:
                 animator.CrossFade(LookAround, 0.1f);
@@ -95,7 +91,7 @@ public class Guard : MonoBehaviour, IEventListener
 
                 break;
             case GuardState.PATROL:
-                if (aiNavigation.OnReachTarget(waypoints[waypointIndex].position))
+                if (aiNavigation.OnReachTarget(waypoints[waypointIndex].position, 0.3f))
                 {
                     ChangeState(GuardState.IDLE);
 
@@ -122,7 +118,7 @@ public class Guard : MonoBehaviour, IEventListener
                 if (positionOfInterest == Vector3.zero)
                     ChangeState(GuardState.PATROL);
 
-                if (aiNavigation.OnReachTarget(positionOfInterest))
+                if (aiNavigation.OnReachTarget(positionOfInterest, 0.3f))
                 {
                     positionOfInterest = Vector3.zero;
                     ChangeState(GuardState.LOOK_AROUND);
@@ -140,10 +136,42 @@ public class Guard : MonoBehaviour, IEventListener
                 break;
         }
 
-        if (fov.FindVisibleTargets() && 
-            currentState != GuardState.CHASE && 
+        if (fov.FindVisibleTargets(out List<Collider> targets) &&
+            currentState != GuardState.CHASE &&
             currentState != GuardState.STUNNED)
-            ChangeState(GuardState.CHASE);
+        {
+            Collider furthestTarget = null;
+            float maxDistance = 0f;
+
+            foreach (Collider col in targets)
+            {
+                if (col.CompareTag("Player"))
+                {
+                    fov.target = col.transform;
+                    positionOfInterest = col.transform.position;
+                    ChangeState(GuardState.CHASE);
+                    return;
+                }
+                else
+                {
+                    float distance = Vector3.Distance(transform.position, col.transform.position);
+
+                    if (distance > maxDistance)
+                    {
+                        furthestTarget = col;
+                        maxDistance = distance;
+                    }
+                }
+            }
+
+            if (furthestTarget != null)
+            {
+                positionOfInterest = furthestTarget.transform.position;
+                aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
+                if (currentState != GuardState.SEARCH)
+                    ChangeState(GuardState.SEARCH);
+            }
+        }
     }
 
     public void RespondToSound(SoundWPosition sound)
@@ -161,5 +189,10 @@ public class Guard : MonoBehaviour, IEventListener
             positionOfInterest = transform.forward - (sound.position - transform.position);
             ChangeState(GuardState.SEARCH);
         }
+    }
+
+    public LISTENER_TYPE GetListenerType()
+    {
+        return LISTENER_TYPE.GUARD;
     }
 }

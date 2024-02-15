@@ -7,7 +7,7 @@ using UnityEngine;
 public class InventoryManager : ScriptableObject
 {
     [Header("Settings")]
-    public int maxItemsPerSlot = 5;
+    public int maxItemsPerSlot = 30;
     public int maxSlots = 5; //this should be depending on the ui
 
     //So It Could be converted to json later on
@@ -28,10 +28,13 @@ public class InventoryManager : ScriptableObject
     public bool AddItem(IInventoryItem newItem)
     {
         //Try and find if there is such item in the inventory already
-        InventorySlot itemSlot = items.Find((item) => item.itemName == newItem.GetItemName());
+        //and find the first instance that can add the item
+        //If item is not stackable, just set as null so we can create later on
+        InventorySlot itemSlot = newItem.GetItemIsStackable() ? 
+            items.Find((item) => item.itemName == newItem.GetItemName() && (item.itemCount < maxItemsPerSlot)) : null;
 
         //If its a new and unique item or item has already exceeded max count
-        if ((itemSlot == null) || (itemSlot.itemCount >= (itemSlot.isStackable ? maxItemsPerSlot : 1)))
+        if (itemSlot == null)
         {
             //Cannot create new slot
             if (items.Count >= maxSlots)
@@ -39,6 +42,7 @@ public class InventoryManager : ScriptableObject
 
             //Create a unique ID
             int uniqueID;
+            //Loop through to make sure its a totally unique id
             do
             {
                 uniqueID = Random.Range(0, int.MaxValue);

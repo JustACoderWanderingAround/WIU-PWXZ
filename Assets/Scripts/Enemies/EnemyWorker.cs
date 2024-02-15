@@ -1,3 +1,4 @@
+using ConcreteMessages;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,7 +38,8 @@ public class EnemyWorker : MonoBehaviour, IEventListener
         MOVE, 
         RETREAT,
         SEARCH,
-        ALERT
+        ALERT,
+        LOOKAROUND
     }
 
     public WorkerState currentState;
@@ -59,47 +61,61 @@ public class EnemyWorker : MonoBehaviour, IEventListener
     {
         aiNavigation.InitNavMeshAgent();
         currentState = WorkerState.IDLE;
-        PostOffice.GetInstance().Subscribe(this);
+        PostOffice.GetInstance().Subscribe(this.gameObject);
     }
     private void ChangeState(WorkerState nextState)
     {
-        if (nextState != currentState)
-        {
-            currentState = nextState;
+        
+        currentState = nextState;
 
-            switch (currentState)
-            {
-                case WorkerState.IDLE:
-                    SetIdle();
-                    aiNavigation.StopNavigation();
-                    break;
-                case WorkerState.MOVE:
-                    animator.CrossFade(Walk, 0.1f);
-                    aiNavigation.SetNavMeshTarget(waypoints[waypointIndex].position, 2f);
-                    break;
-                case WorkerState.RETREAT:
-                    animator.CrossFade(Sprint, 0.1f);
-                    aiNavigation.SetNavMeshTarget(positionOfInterest, 2f);
-                    break;
-                case WorkerState.ALERT:
-                    animator.CrossFade(Alert, 0.1f);
-                    break;
-                case WorkerState.SEARCH:
-                    animator.CrossFade(Walk, 0.1f);
-                    aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
-                    break;
-            }
+        switch (currentState)
+        {
+            case WorkerState.IDLE:
+                
+                SetIdle();
+                aiNavigation.StopNavigation();
+                break;
+            case WorkerState.MOVE:
+                
+                animator.CrossFade(Walk, 0.1f);
+                aiNavigation.SetNavMeshTarget(waypoints[waypointIndex].position, 2f);
+                break;
+            case WorkerState.RETREAT:
+                
+                animator.CrossFade(Sprint, 0.1f);
+                aiNavigation.SetNavMeshTarget(positionOfInterest, 2f);
+                break;
+            case WorkerState.ALERT:
+                
+                aiNavigation.StopNavigation();
+                animator.CrossFade(Alert, 0.2f);
+                MessagePlayerHere alertMessage = new MessagePlayerHere(this, positionOfInterest, 50f);
+                PostOffice.GetInstance().SendToPostOffice(alertMessage);
+                //
+                break;
+            case WorkerState.SEARCH:
+                
+                animator.CrossFade(Walk, 0.1f);
+                aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
+                break;
+            case WorkerState.LOOKAROUND:
+                Debug.Log("workerLookAround");
+                aiNavigation.StopNavigation();
+                animator.CrossFade(LookAround, 0.1f);
+                break;
         }
+        
     }
     public void RespondToSound(SoundWPosition sound)
     {
 
-        if (sound.soundType == SoundWPosition.SoundType.INTEREST)
+        if (sound.soundType == SoundWPosition.SoundType.INTEREST && (currentState != WorkerState.SEARCH && currentState != WorkerState.ALERT && currentState != WorkerState.LOOKAROUND))
         {
+            Debug.Log("114");
             positionOfInterest = sound.position;
             ChangeState(WorkerState.SEARCH);
         }
-        else if (sound.soundType == SoundWPosition.SoundType.DANGER)
+        else if (sound.soundType == SoundWPosition.SoundType.DANGER && currentState != WorkerState.RETREAT)
         {
             positionOfInterest = transform.forward - (sound.position - transform.position);
             aiNavigation.SetNavMeshTarget(positionOfInterest, 5f);
@@ -127,6 +143,8 @@ public class EnemyWorker : MonoBehaviour, IEventListener
     }
     void Update()
     {
+        if (waypointIndex > waypoints.Length)
+            waypointIndex = 0;
         switch (currentState)
         {
             case WorkerState.IDLE:
@@ -138,11 +156,9 @@ public class EnemyWorker : MonoBehaviour, IEventListener
                 }
                 break;
             case WorkerState.MOVE:
-                if (aiNavigation.OnReachTarget(waypoints[waypointIndex].position))
+                if (aiNavigation.OnReachTarget(waypoints[waypointIndex].position, 0.3f))
                 {
                     waypointIndex++;
-                    if (waypointIndex > waypoints.Length)
-                        waypointIndex = 0;
                     ChangeState(WorkerState.IDLE);
                     aiNavigation.SetNavMeshTarget(waypoints[waypointIndex].position, 2f);
                 }
@@ -155,24 +171,42 @@ public class EnemyWorker : MonoBehaviour, IEventListener
                 }
                 break;
             case WorkerState.ALERT:
-                gameObject.transform.LookAt(positionOfInterest);
-                if (Mathf.Abs((gameObject.transform.position - positionOfInterest).magnitude) > 5)
+                if (!fov.FindVisibleTargets())
                 {
-                    ChangeState(WorkerState.IDLE);
+                    Debug.Log("175");
+                    ChangeState(WorkerState.LOOKAROUND);
                 }
                 break;
             case WorkerState.SEARCH:
-                if (Mathf.Abs((gameObject.transform.position - positionOfInterest).magnitude) < 3)
+                if (Vector3.Distance(gameObject.transform.position, positionOfInterest) < 3)
                 {
+                    Debug.Log("182");
+                    ChangeState(WorkerState.LOOKAROUND);
+                }
+                break;
+            case WorkerState.LOOKAROUND:
+                if (fov.FindVisibleTargets())
+                {
+                    Debug.Log("187");
                     ChangeState(WorkerState.ALERT);
                 }
-                else if (!fov.FindVisibleTargets())
+                else
                 {
-                    ChangeState(WorkerState.IDLE);
+                    timer += Time.deltaTime;
+                    if (timer > 5.0f)
+                    {
+                        timer = 0;
+                        ChangeState(WorkerState.IDLE);
+                    }
                 }
                 break;
         }
         if (fov.FindVisibleTargets() && currentState != WorkerState.ALERT)
             ChangeState(WorkerState.ALERT);
+    }
+
+    public LISTENER_TYPE GetListenerType()
+    {
+        return listenerType;
     }
 }
