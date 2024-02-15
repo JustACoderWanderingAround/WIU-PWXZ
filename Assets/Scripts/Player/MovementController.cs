@@ -20,6 +20,7 @@ public class MovementController : MonoBehaviour
     private float moveSpeed;
     private bool useStamina = true;
     private bool canJump = true;
+    float hazardMult = 0.5f;
 
     private AnimationController animationController;
 
@@ -90,7 +91,6 @@ public class MovementController : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
 
         isMoving = horizontal != 0 || vertical != 0;
-
         if (isMoving)
         {
             direction = Camera.main.transform.forward.normalized;
@@ -218,7 +218,7 @@ public class MovementController : MonoBehaviour
             force = Vector3.zero;
 
         // Move player
-        playerRB.AddForce(force, ForceMode.Force);
+        playerRB.AddForce(force * hazardMult, ForceMode.Force);
         SpeedControl();
     }
 
@@ -259,5 +259,15 @@ public class MovementController : MonoBehaviour
             isGrounded = false;
             playerRB.drag = 0;
         }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Hazard"))
+            hazardMult = 0.8f;
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Hazard"))
+            hazardMult = 1.0f;
     }
 }
