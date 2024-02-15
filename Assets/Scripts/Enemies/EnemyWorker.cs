@@ -156,7 +156,7 @@ public class EnemyWorker : MonoBehaviour, IEventListener
                 }
                 break;
             case WorkerState.MOVE:
-                if (aiNavigation.OnReachTarget(waypoints[waypointIndex].position))
+                if (aiNavigation.OnReachTarget(waypoints[waypointIndex].position, 0.3f))
                 {
                     waypointIndex++;
                     ChangeState(WorkerState.IDLE);

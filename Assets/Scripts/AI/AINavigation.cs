@@ -12,10 +12,10 @@ public class AINavigation : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
-    public bool OnReachTarget(Vector3 target)
+    public bool OnReachTarget(Vector3 target, float distance)
     {
         // Distance check to be changed to the thing wayne sent in discord
-        if (Vector3.Distance(target, transform.position) <= 0.3f)
+        if (Vector3.Distance(target, transform.position) <= distance)
             return true;
 
         return false;
@@ -26,6 +26,7 @@ public class AINavigation : MonoBehaviour
         navMeshAgent.speed = speed;
         navMeshAgent.destination = target;
     }
+
     public void StopNavigation()
     {
         navMeshAgent.speed = 0;
