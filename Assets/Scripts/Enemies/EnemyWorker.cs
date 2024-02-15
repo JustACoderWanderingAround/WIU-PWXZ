@@ -37,7 +37,8 @@ public class EnemyWorker : MonoBehaviour, IEventListener
         MOVE, 
         RETREAT,
         SEARCH,
-        ALERT
+        ALERT,
+        LOOKAROUND
     }
 
     public WorkerState currentState;
@@ -63,33 +64,37 @@ public class EnemyWorker : MonoBehaviour, IEventListener
     }
     private void ChangeState(WorkerState nextState)
     {
-        if (nextState != currentState)
-        {
-            currentState = nextState;
+        
+        currentState = nextState;
 
-            switch (currentState)
-            {
-                case WorkerState.IDLE:
-                    SetIdle();
-                    aiNavigation.StopNavigation();
-                    break;
-                case WorkerState.MOVE:
-                    animator.CrossFade(Walk, 0.1f);
-                    aiNavigation.SetNavMeshTarget(waypoints[waypointIndex].position, 2f);
-                    break;
-                case WorkerState.RETREAT:
-                    animator.CrossFade(Sprint, 0.1f);
-                    aiNavigation.SetNavMeshTarget(positionOfInterest, 2f);
-                    break;
-                case WorkerState.ALERT:
-                    animator.CrossFade(Alert, 0.1f);
-                    break;
-                case WorkerState.SEARCH:
-                    animator.CrossFade(Walk, 0.1f);
-                    aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
-                    break;
-            }
+        switch (currentState)
+        {
+            case WorkerState.IDLE:
+                SetIdle();
+                aiNavigation.StopNavigation();
+                break;
+            case WorkerState.MOVE:
+                animator.CrossFade(Walk, 0.1f);
+                aiNavigation.SetNavMeshTarget(waypoints[waypointIndex].position, 2f);
+                break;
+            case WorkerState.RETREAT:
+                animator.CrossFade(Sprint, 0.1f);
+                aiNavigation.SetNavMeshTarget(positionOfInterest, 2f);
+                break;
+            case WorkerState.ALERT:
+                aiNavigation.StopNavigation();
+                animator.CrossFade(Alert, 0.1f);
+                break;
+            case WorkerState.SEARCH:
+                animator.CrossFade(Walk, 0.1f);
+                aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
+                break;
+            case WorkerState.LOOKAROUND:
+                aiNavigation.StopNavigation();
+                animator.CrossFade(LookAround, 0.1f);
+                break;
         }
+        
     }
     public void RespondToSound(SoundWPosition sound)
     {
@@ -127,6 +132,8 @@ public class EnemyWorker : MonoBehaviour, IEventListener
     }
     void Update()
     {
+        if (waypointIndex > waypoints.Length)
+            waypointIndex = 0;
         switch (currentState)
         {
             case WorkerState.IDLE:
@@ -141,8 +148,6 @@ public class EnemyWorker : MonoBehaviour, IEventListener
                 if (aiNavigation.OnReachTarget(waypoints[waypointIndex].position))
                 {
                     waypointIndex++;
-                    if (waypointIndex > waypoints.Length)
-                        waypointIndex = 0;
                     ChangeState(WorkerState.IDLE);
                     aiNavigation.SetNavMeshTarget(waypoints[waypointIndex].position, 2f);
                 }
@@ -155,20 +160,30 @@ public class EnemyWorker : MonoBehaviour, IEventListener
                 }
                 break;
             case WorkerState.ALERT:
-                gameObject.transform.LookAt(positionOfInterest);
-                if (Mathf.Abs((gameObject.transform.position - positionOfInterest).magnitude) > 5)
+                if (!fov.FindVisibleTargets())
                 {
-                    ChangeState(WorkerState.IDLE);
+                    ChangeState(WorkerState.LOOKAROUND);
                 }
                 break;
             case WorkerState.SEARCH:
-                if (Mathf.Abs((gameObject.transform.position - positionOfInterest).magnitude) < 3)
+                if (aiNavigation.OnReachTarget(positionOfInterest))
+                {
+                    ChangeState(WorkerState.LOOKAROUND);
+                }
+                break;
+            case WorkerState.LOOKAROUND:
+                if (fov.FindVisibleTargets())
                 {
                     ChangeState(WorkerState.ALERT);
                 }
-                else if (!fov.FindVisibleTargets())
+                else
                 {
-                    ChangeState(WorkerState.IDLE);
+                    timer += Time.deltaTime;
+                    if (timer > 5.0f)
+                    {
+                        timer = 0;
+                        ChangeState(WorkerState.IDLE);
+                    }
                 }
                 break;
         }
