@@ -82,6 +82,9 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
             movementController.ToggleSprint();
 
+        if (Input.GetKeyDown(KeyCode.L))
+            checkpointController.Load();
+
         movementController.UpdateAnimation();
         movementController.UpdateFootprints();
 
