@@ -24,12 +24,12 @@ public class UIInventorySlot : MonoBehaviour
     {
         slot = _slot;
 
-        countText.text = (slot?.isStackable ?? false) ? "" + (slot?.itemCount ?? 0) : "";
-        itemImage.sprite = slot?.itemDisplayImage;
+        UpdateTransform();
     }
 
     public void UpdateTransform()
     {
+        //Set text accordingly depending if it stackable
         countText.text = (slot?.isStackable ?? false) ? "" + (slot?.itemCount ?? 0) : "";
         itemImage.sprite = slot?.itemDisplayImage;
     }
