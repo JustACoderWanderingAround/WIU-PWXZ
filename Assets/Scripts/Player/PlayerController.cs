@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     private MovementController movementController;
     private CameraCapture cameraCapture;
     private UIController uiController;
-    
+    private CheckpointController checkpointController;
   
 
     // Temporary
@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
         movementController = GetComponent<MovementController>();
         uiController = GetComponent<UIController>();
         cameraCapture = GetComponent<CameraCapture>();
+        checkpointController = GetComponent<CheckpointController>();
         cameraCapture.SubscribeOnCapture(OnScreenCapture);
 
         
@@ -116,5 +117,10 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionExit(Collision col)
     {
         movementController.ExitCollision(col);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        checkpointController.Save(other);
     }
 }

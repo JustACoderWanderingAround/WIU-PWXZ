@@ -108,26 +108,10 @@ public class InventoryManager : ScriptableObject
         return JsonUtility.ToJson(new SerializableList<InventorySlot>(items));
     }
 
-    public void Save()
+    public void SetItemsList(List<InventorySlot> rhs)
     {
-        string s = JsonUtility.ToJson(this);
-        if (FileManager.WriteToFile("playerdata.json", s))
-        {
-            Debug.Log("Save player data successful");
-        }
+        items = rhs;
     }
-
-    public void Load()
-    {
-        string s;
-        if (FileManager.LoadFromFile("playerdata.json",
-        out s))
-        {
-            JsonUtility.FromJsonOverwrite(s, this);
-            Debug.Log(s);
-        }
-    }
-
 }
 
 
