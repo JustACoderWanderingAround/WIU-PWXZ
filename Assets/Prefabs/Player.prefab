@@ -2243,6 +2243,7 @@ GameObject:
   - component: {fileID: 8016021365160787464}
   - component: {fileID: 3737218765727679668}
   - component: {fileID: 2971358888792039931}
+  - component: {fileID: 595706083038531443}
   m_Layer: 7
   m_Name: PlayerController
   m_TagString: Player
@@ -2464,9 +2465,20 @@ MonoBehaviour:
     type: 3}
   footprintRight: {fileID: 8265811069136600349, guid: e9eb065cb82772b499271cd9dfa79fad,
     type: 3}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 0
+--- !u!114 &595706083038531443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2742940542485384995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef5199c623118754ab0011690e6cb1ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryManager: {fileID: 11400000, guid: 564cbd8f240a2e44c9ccb932a83c0feb, type: 2}
+  inventoryCache: {fileID: 8233128157154526760}
 --- !u!1 &2747032173130957626
 GameObject:
   m_ObjectHideFlags: 0
