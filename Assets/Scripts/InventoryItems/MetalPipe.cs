@@ -42,7 +42,7 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
         return delegate 
         {
             pipeRB.isKinematic = false;
-            pipeRB.AddForce(Camera.main.transform.forward * 15f + Camera.main.transform.up * 10f, ForceMode.Impulse);
+            pipeRB.AddForce(Camera.main.transform.forward * 25f + Camera.main.transform.up * 10f, ForceMode.Impulse);
         };
     }
 

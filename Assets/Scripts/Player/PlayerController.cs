@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     private MovementController movementController;
     private CameraCapture cameraCapture;
     private UIController uiController;
-    
+    private CheckpointController checkpointController;
   
 
     // Temporary
@@ -25,6 +25,13 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        DontDestroyOnLoad(this);
+
         Instance = this;
         // Hide cursor
         Cursor.lockState = CursorLockMode.Locked;
@@ -38,6 +45,7 @@ public class PlayerController : MonoBehaviour
         movementController = GetComponent<MovementController>();
         uiController = GetComponent<UIController>();
         cameraCapture = GetComponent<CameraCapture>();
+        checkpointController = GetComponent<CheckpointController>();
         cameraCapture.SubscribeOnCapture(OnScreenCapture);
 
         
@@ -83,6 +91,9 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
             uiController.SkipThruText();
 
+        if (Input.GetKeyDown(KeyCode.L))
+            checkpointController.Load();
+
         movementController.UpdateAnimation();
         movementController.UpdateFootprints();
 
@@ -121,6 +132,8 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Checkpoint"))
+            checkpointController.Save(other);
         if (other.gameObject.CompareTag("ConversationalPartner")) {
             uiController.SetDialogueBoxActive(true);
             uiController.GetConversation(other.GetComponent<ConversationPartner>());

@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - Poop
   - ConversationalPartner
+  - Checkpoint
+  - Item
   layers:
   - Default
   - TransparentFX
