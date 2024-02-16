@@ -21,6 +21,10 @@ public class SceneManagement : MonoBehaviour
     [Header("Scene Data")]
     public List<string> sceneNames;
 
+    private AsyncOperation asyncHandler = null;
+    
+    public bool isLoading { get => asyncHandler != null; }
+
     private void Awake()
     {
         if (instance != null)
@@ -39,7 +43,7 @@ public class SceneManagement : MonoBehaviour
 
     private IEnumerator LoadSceneRoutine(string sceneName)
     {
-        AsyncOperation asyncHandler = SceneManager.LoadSceneAsync(sceneName);
+        asyncHandler = SceneManager.LoadSceneAsync(sceneName);
 
         //When the async progress is not done
         while (!asyncHandler.isDone)
@@ -47,6 +51,7 @@ public class SceneManagement : MonoBehaviour
             Debug.Log(string.Format("Load Scene {0} Progress: {1:P2}", sceneName, asyncHandler.progress));
             yield return null;
         }
+        asyncHandler = null;
 
         //Default set game time scale to 1 when a new scene is loaded
         Time.timeScale = 1;
