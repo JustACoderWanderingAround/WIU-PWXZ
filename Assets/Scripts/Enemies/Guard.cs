@@ -67,7 +67,6 @@ public class Guard : MonoBehaviour, IEventListener
                 break;
             case GuardState.CHASE:
                 animator.CrossFade(Sprint, 0.1f);
-                aiNavigation.SetNavMeshTarget(positionOfInterest, 4f);
                 break;
             case GuardState.LOOK_AROUND:
                 animator.CrossFade(LookAround, 0.1f);
@@ -107,9 +106,12 @@ public class Guard : MonoBehaviour, IEventListener
                 break;
             case GuardState.CHASE:
                 if (!fov.CheckTargetInLineOfSight(out positionOfInterest, 10000))
+                {
+                    enemyUIController.StartDecaySuspicion();
                     ChangeState(GuardState.SEARCH);
+                }
 
-                aiNavigation.SetNavMeshTarget(positionOfInterest, 3.5f);
+                aiNavigation.SetNavMeshTarget(positionOfInterest, 2f);
 
                 break;
             case GuardState.LOOK_AROUND:
@@ -194,9 +196,6 @@ public class Guard : MonoBehaviour, IEventListener
 
     private IEnumerator IncreaseSuspicion(float amount, Vector3 position, GuardState nextState)
     {
-        if (currentState == nextState)
-            yield break;
-
         enemyUIController.IncrementSuspicion(amount);
 
         if (enemyUIController.GetSuspicionLevel() >= 100)

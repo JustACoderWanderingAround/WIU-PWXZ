@@ -26,12 +26,11 @@ public class EnemyUIController : MonoBehaviour
             StopCoroutine(suspicionDecay);
             suspicionDecay = null;
         }
-        
+
         if (incrementSuspicion != null)
-        {
             StopCoroutine(incrementSuspicion);
-            incrementSuspicion = StartCoroutine(OnIncrementSuspicion());
-        }
+
+        incrementSuspicion = StartCoroutine(OnIncrementSuspicion());
     }
 
     private IEnumerator OnIncrementSuspicion()
@@ -41,11 +40,16 @@ public class EnemyUIController : MonoBehaviour
         suspicionDecay = StartCoroutine(DecaySuspicion());
     }
 
+    public void StartDecaySuspicion()
+    {
+        suspicionAmount -= 100;
+        suspicionDecay = StartCoroutine(DecaySuspicion());
+    }
+
     private IEnumerator DecaySuspicion()
     {
         while (suspicionMeter.value > 0)
         {
-            Debug.Log("CALLINg");
             suspicionAmount -= suspicionDecayRate;
             yield return null;
         }
@@ -72,7 +76,5 @@ public class EnemyUIController : MonoBehaviour
         }
         else
             suspicionMeter.gameObject.SetActive(false);
-
-        Debug.Log(suspicionAmount);
     }
 }
