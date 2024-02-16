@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class HeartbeatBeater : MiniGame
@@ -15,7 +16,7 @@ public class HeartbeatBeater : MiniGame
     bool spawnLeft;
     List<GameObject> halfQueue = new List<GameObject>();
     float totalScore;
-
+    [SerializeField] TMP_Text mainScore;
     private void OnEnable()
     {
         timer = 0;
@@ -43,6 +44,7 @@ public class HeartbeatBeater : MiniGame
         {
             DestroyHalf(false);
         }
+        mainScore.text = "Score:" + System.MathF.Truncate(totalScore).ToString();
     }
     void SpawnBeat()
     {
@@ -79,5 +81,7 @@ public class HeartbeatBeater : MiniGame
     {
         float score = Vector3.Distance(go.transform.position, gameObject.transform.position);
         totalScore += score;
+        Destroy(go);
+        
     }
 }

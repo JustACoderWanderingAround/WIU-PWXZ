@@ -10,6 +10,8 @@ TagManager:
   - ConversationalPartner
   - Checkpoint
   - Item
+  - LeftHalf
+  - RightHalf
   layers:
   - Default
   - TransparentFX
