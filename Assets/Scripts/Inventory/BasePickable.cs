@@ -41,7 +41,7 @@ public class BasePickable : MonoBehaviour, IInventoryItem
         return delegate { 
             Debug.Log($"{gameObject.name} has Invoked Item Effect");
             //Remember to delete the gameobject after it ended
-            Destroy(gameObject);
+            //Destroy(gameObject);
         };
         //GameObject Specifc Example End
     }
