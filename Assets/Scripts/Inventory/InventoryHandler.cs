@@ -257,18 +257,10 @@ public class InventoryHandler : MonoBehaviour
                 //Check if can add
                 if (manager.AddItem(item))
                 {
-                    //If stackable, means static effect
-                    if (!item.GetItemIsStackable())
-                    {
-                        other.gameObject.SetActive(false);
-                        //Set collider to inactive
-                        other.enabled = false;
-                        other.gameObject.transform.SetParent(inventoryTransform);
-                    }
-                    else
-                    {
-                        Destroy(other.gameObject);
-                    }
+                    other.gameObject.SetActive(false);
+                    //Set collider to inactive
+                    other.enabled = false;
+                    other.gameObject.transform.SetParent(inventoryTransform);
                 }
             }
         }

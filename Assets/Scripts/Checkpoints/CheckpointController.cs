@@ -21,7 +21,9 @@ public class CheckpointController : MonoBehaviour
        
         sceneManagement = SceneManagement.Instance;
         ItemsList = new List<ItemState>();
+        DontDestroyOnLoad(this);
     }
+
 
 
     public void Save(Collider other)
@@ -64,10 +66,20 @@ public class CheckpointController : MonoBehaviour
 
     public void Load()
     {
+        StartCoroutine(LoadRoutine());
+    }
+
+    public IEnumerator LoadRoutine()
+    {
         DontDestroyOnLoad(Camera.main);
         sceneManagement.LoadScene(PlayerPrefs.GetString("SceneName"));
         transform.position = StringToVector3(PlayerPrefs.GetString("CheckpointPos"));
         transform.position = new Vector3 (transform.position.x + 2.0f, transform.position.y, transform.position.z);
+
+        while (sceneManagement.isLoading)
+        {
+            yield return null;
+        }
 
         string s;
         if (FileManager.LoadFromFile("playerdata.json", out s))
@@ -75,7 +87,6 @@ public class CheckpointController : MonoBehaviour
             SerializableList<InventorySlot> listRef = JsonUtility.FromJson<SerializableList<InventorySlot>>(s);
             inventoryManager.SetItemsList(listRef.list);
             Debug.Log("Load player data successful");
-            //DontDestroyOnLoad(gameObject);
         }
 
         string _s;
