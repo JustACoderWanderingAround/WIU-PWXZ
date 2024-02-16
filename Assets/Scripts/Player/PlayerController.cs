@@ -80,6 +80,8 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
             movementController.ToggleSprint();
+        if (Input.GetKeyDown(KeyCode.F))
+            uiController.SkipThruText();
 
         movementController.UpdateAnimation();
         movementController.UpdateFootprints();

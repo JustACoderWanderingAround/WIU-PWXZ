@@ -2451,8 +2451,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   staminaBar: {fileID: 8981042384662580208}
-  dialogueBox: {fileID: 3581586957311014768}
+  dialogueBox: {fileID: 1591911233360595127}
   activeInventory: {fileID: 8041831255551993122}
+  playerDialogueBox: {fileID: 3581586957311014768}
   speakerNameText: {fileID: 1328353327085238202}
   speechContent: {fileID: 4869662900499813531}
 --- !u!114 &8075146580654361967
@@ -7485,6 +7486,7 @@ GameObject:
   - component: {fileID: 2437789160080086797}
   - component: {fileID: 3149732639400080904}
   - component: {fileID: 4869662900499813531}
+  - component: {fileID: 1591911233360595127}
   m_Layer: 7
   m_Name: SpeechText
   m_TagString: Untagged
@@ -7608,6 +7610,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1591911233360595127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8628026773320167005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb92c951e0a876e4ca0add6aa2df0145, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textSpeed: 0.1
+  mainText: {fileID: 4869662900499813531}
 --- !u!1 &8703960073346402252
 GameObject:
   m_ObjectHideFlags: 0

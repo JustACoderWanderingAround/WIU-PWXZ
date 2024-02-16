@@ -7,8 +7,9 @@ using TMPro;
 public class UIController : MonoBehaviour
 {
     [SerializeField] private Slider staminaBar;
-    [SerializeField] private GameObject dialogueBox;
+    [SerializeField] private DialogueBox dialogueBox;
     [SerializeField] private GameObject activeInventory;
+    [SerializeField] private GameObject playerDialogueBox;
     [SerializeField] private TMP_Text speakerNameText;
     [SerializeField] private TMP_Text speechContent;
 
@@ -16,15 +17,21 @@ public class UIController : MonoBehaviour
     {
         staminaBar.value = currentStamina;
         staminaBar.maxValue = maxStamina;
+        if (dialogueBox.finished)
+            SetDialogueBoxActive(false);
     }
     public void SetDialogueBoxActive(bool active)
     {
-        dialogueBox.SetActive(active);
+        playerDialogueBox.SetActive(active);
         activeInventory.SetActive(!active);
     }
     public void GetConversation(ConversationPartner convoPartner)
     {
         speakerNameText.text = convoPartner.GetData().speakerName;
-        speechContent.text = convoPartner.GetData().dialogues[0];
+        dialogueBox.InitDialogue(convoPartner.GetData().dialogues);
+    }
+    public void SkipThruText()
+    {
+        dialogueBox.SkipThrough();
     }
 }
