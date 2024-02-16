@@ -40,6 +40,7 @@ public class SceneManagement : MonoBehaviour
     private IEnumerator LoadSceneRoutine(string sceneName)
     {
         AsyncOperation asyncHandler = SceneManager.LoadSceneAsync(sceneName);
+
         //When the async progress is not done
         while (!asyncHandler.isDone)
         {

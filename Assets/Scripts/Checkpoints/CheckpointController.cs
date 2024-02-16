@@ -5,19 +5,22 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using static UnityEditor.Progress;
 using UnityEngine.SceneManagement;
+using UnityEditor.UIElements;
 
 public class CheckpointController : MonoBehaviour
 {
     public InventoryManager inventoryManager;
+    public GameObject inventoryCache;
     private SceneManagement sceneManagement;
-    public static GameObject[] CheckPointsList;
+    public List<ItemState> ItemsList { get; private set; }
     private Vector3 lastCheckpointPos;
 
     void Start()
     {
         // We search all the checkpoints in the current scene
-        CheckPointsList = GameObject.FindGameObjectsWithTag("Checkpoint");
+       
         sceneManagement = SceneManagement.Instance;
+        ItemsList = new List<ItemState>();
     }
 
 
@@ -32,21 +35,30 @@ public class CheckpointController : MonoBehaviour
                 Debug.Log("Save player data successful");
             }
 
+            foreach (Transform g in inventoryCache.transform)
+            {
+                ItemState itemState = new ItemState(g.gameObject.name, g.gameObject.GetInstanceID(), g.gameObject.activeSelf, g.transform.position, g.transform.rotation.x, g.transform.rotation.y, g.transform.rotation.z);
+                ItemsList.Add(itemState);
+            }
+
+
+            foreach (GameObject item in GameObject.FindGameObjectsWithTag("Item"))
+            {
+                
+                ItemState itemState = new ItemState(item.name,item.GetInstanceID(),item.activeSelf, item.transform.position, item.transform.rotation.x, item.transform.rotation.y, item.transform.rotation.z);
+                ItemsList.Add(itemState);
+            }
+            
+            string items = JsonUtility.ToJson(new SerializableList<ItemState> (ItemsList));
+
+            if (FileManager.WriteToFile("scenedata.json", items))
+            {
+                Debug.Log("Save scene data successful");
+            }
+
             PlayerPrefs.SetString("SceneName", SceneManager.GetActiveScene().name);
             PlayerPrefs.SetString("CheckpointPos", other.transform.position.ToString());
             PlayerPrefs.Save();
-            Debug.Log(PlayerPrefs.GetString("SceneName"));
-            Debug.Log(PlayerPrefs.GetString("CheckpointPos"));
-
-            //string info = JsonUtility.ToJson(SceneManager.GetActiveScene().name);
-            //info += JsonUtility.ToJson(other.transform.position);
-
-            //if (FileManager.WriteToFile("checkpointinfo.json", info))
-            //{
-            //    Debug.Log("Save player data successful");
-            //}
-
-
         }
     }
 
@@ -64,10 +76,28 @@ public class CheckpointController : MonoBehaviour
             inventoryManager.SetItemsList(listRef.list);
             Debug.Log("Load player data successful");
             //DontDestroyOnLoad(gameObject);
-
-
         }
-       
+
+        string _s;
+        if (FileManager.LoadFromFile("scenedata.json", out _s))
+        {
+            List<ItemState> listItems = JsonUtility.FromJson<SerializableList<ItemState>>(_s).list;
+            Debug.Log("Load scene data successful");
+
+            GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Item");
+
+            foreach (GameObject item in GameObject.FindGameObjectsWithTag("Item"))
+            {
+                foreach (ItemState itemState in listItems)
+                {
+                    if (item.name == itemState.name && !itemState.isActive)
+                    {
+                        Destroy(item);
+                    }
+                }
+            }
+        }
+        
     }
 
     public static Vector3 StringToVector3(string sVector)
