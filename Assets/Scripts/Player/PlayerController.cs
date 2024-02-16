@@ -25,6 +25,13 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        DontDestroyOnLoad(this);
+
         Instance = this;
         // Hide cursor
         Cursor.lockState = CursorLockMode.Locked;
