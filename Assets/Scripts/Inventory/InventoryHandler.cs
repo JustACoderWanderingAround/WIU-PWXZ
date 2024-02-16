@@ -114,12 +114,7 @@ public class InventoryHandler : MonoBehaviour
                 //gameobject dependent (such as throwing the object)
                 if (!selectedSlot.Slot.isStackable)
                 {
-                    //Get the object reference
-                    GameObject f = selectedSlot.Slot.goRef;
-                    //Enable the collider
-                    f.GetComponent<Collider>().enabled = true;
-                    //Set the parent to null (since we are using it)
-                    f.transform.SetParent(null);
+
                 }
 
                 //Update the manager to know that we have used this item
@@ -152,7 +147,7 @@ public class InventoryHandler : MonoBehaviour
 
                 GameObject go = selectedSlot.Slot.goRef;
                 //not a static func
-                if (!selectedSlot.Slot.isStackable)
+                if (!selectedSlot.Slot.isStackable && !go.activeInHierarchy)
                 {
                     //Show the object
                     go.SetActive(true);
