@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     private CameraCapture cameraCapture;
     private UIController uiController;
     private CheckpointController checkpointController;
-  
+    private GameObject collidedInteractable;
 
     // Temporary
     public GameObject metalPipe;
@@ -47,9 +47,6 @@ public class PlayerController : MonoBehaviour
         cameraCapture = GetComponent<CameraCapture>();
         checkpointController = GetComponent<CheckpointController>();
         cameraCapture.SubscribeOnCapture(OnScreenCapture);
-
-        
-
 
         // Initialize components
         movementController.IntializeMovementController();
@@ -92,6 +89,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
             checkpointController.Load();
 
+        if (Input.GetKeyDown(KeyCode.E) && collidedInteractable != null)
+            if (collidedInteractable.TryGetComponent(out IInteractable interactable))
+                interactable.OnInteract();
+
         movementController.UpdateAnimation();
         movementController.UpdateFootprints();
 
@@ -116,7 +117,6 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         movementController.MovePlayer();
-
     }
 
     private void OnCollisionEnter(Collision col)
@@ -129,8 +129,17 @@ public class PlayerController : MonoBehaviour
         movementController.ExitCollision(col);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider col)
     {
-        checkpointController.Save(other);
+        checkpointController.Save(col);
+
+        if (col.CompareTag("Interactable"))
+            collidedInteractable = col.gameObject;
+    }
+
+    private void OnTriggerExit(Collider col)
+    {
+        if (col.CompareTag("Interactable"))
+            collidedInteractable = null;
     }
 }

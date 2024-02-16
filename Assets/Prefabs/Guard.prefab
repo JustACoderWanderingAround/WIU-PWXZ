@@ -777,7 +777,7 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 100
   m_Range: 7.3
   m_SpotAngle: 84.629265
@@ -2247,6 +2247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 5017658044028356814}
+  light: {fileID: 4638794685573735119}
   waypoints:
   - {fileID: 3645973507840355667}
   - {fileID: 844957831981856058}

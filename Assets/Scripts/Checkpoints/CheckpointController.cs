@@ -2,10 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
-using static UnityEditor.Progress;
 using UnityEngine.SceneManagement;
-using UnityEditor.UIElements;
 
 public class CheckpointController : MonoBehaviour
 {

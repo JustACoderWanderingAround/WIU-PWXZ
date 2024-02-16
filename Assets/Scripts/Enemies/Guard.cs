@@ -9,6 +9,8 @@ public class Guard : MonoBehaviour, IEventListener
     private EnemyUIController enemyUIController;
 
     [SerializeField] private Animator animator;
+    [SerializeField] private Light light;
+    private Color lightColor = Color.white;
 
     // Waypoints
     [SerializeField] private Transform[] waypoints;
@@ -55,6 +57,28 @@ public class Guard : MonoBehaviour, IEventListener
         PostOffice.GetInstance().Subscribe(gameObject);
     }
 
+    private void ChangeColor(Color newColor)
+    {
+        StartCoroutine(DoChangeColor(newColor));
+    }
+
+    private IEnumerator DoChangeColor(Color newColor)
+    {
+        Color startColor = light.color;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < 0.5f)
+        {
+            float t = elapsedTime / 0.5f;
+            light.color = Color.Lerp(startColor, newColor, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        light.color = newColor;
+        lightColor = newColor;
+    }
+
     public void ChangeState(GuardState nextState)
     {
         currentState = nextState;
@@ -66,20 +90,24 @@ public class Guard : MonoBehaviour, IEventListener
                 animator.CrossFade(Idle, 0.1f);
                 break;
             case GuardState.PATROL:
+                ChangeColor(Color.white);
                 animator.CrossFade(Walk, 0.1f);
                 aiNavigation.SetNavMeshTarget(waypoints[waypointIndex].position, 2f);
                 break;
             case GuardState.CHASE:
+                ChangeColor(Color.red);
                 animator.CrossFade(Sprint, 0.1f);
                 break;
             case GuardState.LOOK_AROUND:
                 animator.CrossFade(LookAround, 0.1f);
                 break;
             case GuardState.SEARCH:
+                ChangeColor(Color.red);
                 animator.CrossFade(Walk, 0.1f);
                 aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
                 break;
             case GuardState.STUNNED:
+                ChangeColor(Color.yellow);
                 animator.CrossFade(Stunned, 0.1f);
                 aiNavigation.StopNavigation();
                 break;
@@ -194,6 +222,9 @@ public class Guard : MonoBehaviour, IEventListener
 
     private void OnSuspicionIncrease(float amount, Vector3 position, GuardState nextState)
     {
+        if (currentState == GuardState.STUNNED)
+            return;
+
         if (increaseSuspicion == null)
             increaseSuspicion = StartCoroutine(IncreaseSuspicion(amount, position, nextState));
     }
