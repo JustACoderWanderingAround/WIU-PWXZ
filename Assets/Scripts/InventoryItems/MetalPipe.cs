@@ -64,4 +64,9 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
     {
         return true;
     }
+
+    public Transform GetHandlerTransform()
+    {
+        throw new NotImplementedException();
+    }
 }

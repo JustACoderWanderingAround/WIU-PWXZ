@@ -12,7 +12,7 @@ public class Taser : MonoBehaviour, IInventoryItem
 
     private Rigidbody taserRB;
     private Collider taserCol;
-    private bool canShoot = false;
+    private bool canShoot = true;
 
     private void Awake()
     {

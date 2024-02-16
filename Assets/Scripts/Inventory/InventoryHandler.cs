@@ -159,6 +159,7 @@ public class InventoryHandler : MonoBehaviour
                     //Set parent to where it should be placed at
                     go.transform.SetParent(activeObjectTransform);
                     go.transform.localPosition = Vector3.zero;
+                    go.transform.localRotation = Quaternion.identity;
                 }
             }
         }
