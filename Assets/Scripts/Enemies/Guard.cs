@@ -25,6 +25,7 @@ public class Guard : MonoBehaviour, IEventListener
     public readonly int Stunned = Animator.StringToHash("Stun");
 
     private Coroutine increaseSuspicion = null;
+    private bool caughtPlayer = false;
 
     public enum GuardState
     {
@@ -143,7 +144,13 @@ public class Guard : MonoBehaviour, IEventListener
                     ChangeState(GuardState.SEARCH);
                 }
 
-                aiNavigation.SetNavMeshTarget(positionOfInterest, 2f);
+                if (Vector3.Distance(transform.position, positionOfInterest) <= 1f && !caughtPlayer)
+                {
+                    caughtPlayer = true;
+                    CheckpointController.Instance.Load();
+                }
+
+                aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
 
                 break;
             case GuardState.LOOK_AROUND:

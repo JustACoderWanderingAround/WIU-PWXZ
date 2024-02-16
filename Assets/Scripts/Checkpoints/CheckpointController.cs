@@ -9,6 +9,8 @@ public class CheckpointController : MonoBehaviour
     public InventoryManager inventoryManager;
     public GameObject inventoryCache;
     private SceneManagement sceneManagement;
+    public static CheckpointController Instance;
+
     public List<ItemState> ItemsList { get; private set; }
     private Vector3 lastCheckpointPos;
 
@@ -18,8 +20,8 @@ public class CheckpointController : MonoBehaviour
        
         sceneManagement = SceneManagement.Instance;
         ItemsList = new List<ItemState>();
+        Instance = this;
     }
-
 
     public void Save(Collider other)
     {
