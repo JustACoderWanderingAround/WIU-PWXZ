@@ -111,7 +111,14 @@ public class InventoryManager : ScriptableObject
     {
         return JsonUtility.ToJson(new SerializableList<InventorySlot>(items));
     }
+
+    public void SetItemsList(List<InventorySlot> rhs)
+    {
+        items = rhs;
+    }
 }
+
+
 
 [System.Serializable]
 public class SerializableList<Type>

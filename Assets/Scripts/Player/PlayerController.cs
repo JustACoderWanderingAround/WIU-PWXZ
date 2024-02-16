@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     private MovementController movementController;
     private CameraCapture cameraCapture;
     private UIController uiController;
-    
+    private CheckpointController checkpointController;
   
 
     // Temporary
@@ -25,6 +25,13 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        DontDestroyOnLoad(this);
+
         Instance = this;
         // Hide cursor
         Cursor.lockState = CursorLockMode.Locked;
@@ -38,6 +45,7 @@ public class PlayerController : MonoBehaviour
         movementController = GetComponent<MovementController>();
         uiController = GetComponent<UIController>();
         cameraCapture = GetComponent<CameraCapture>();
+        checkpointController = GetComponent<CheckpointController>();
         cameraCapture.SubscribeOnCapture(OnScreenCapture);
 
         
@@ -81,6 +89,9 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
             movementController.ToggleSprint();
 
+        if (Input.GetKeyDown(KeyCode.L))
+            checkpointController.Load();
+
         movementController.UpdateAnimation();
         movementController.UpdateFootprints();
 
@@ -116,5 +127,10 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionExit(Collision col)
     {
         movementController.ExitCollision(col);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        checkpointController.Save(other);
     }
 }

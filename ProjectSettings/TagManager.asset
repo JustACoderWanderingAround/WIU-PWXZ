@@ -7,6 +7,8 @@ TagManager:
   - Hazard
   - Enemy
   - Poop
+  - Checkpoint
+  - Item
   layers:
   - Default
   - TransparentFX

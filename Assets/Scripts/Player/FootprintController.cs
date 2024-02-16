@@ -7,7 +7,6 @@ public class FootprintController : MonoBehaviour
 {
     [SerializeField] private GameObject footprintLeft;
     [SerializeField] private GameObject footprintRight;
-    [SerializeField] private LayerMask layerMask;
     private bool isFootLeft = false;
     private float footprintSpacer = 0.5f;
     private Vector3 lastFootprint;
