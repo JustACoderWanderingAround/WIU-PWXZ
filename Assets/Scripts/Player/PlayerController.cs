@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     private CameraCapture cameraCapture;
     private UIController uiController;
     private CheckpointController checkpointController;
-  
+    private ShopController shopController;
 
     // Temporary
     public GameObject metalPipe;
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
         cameraCapture = GetComponent<CameraCapture>();
         checkpointController = GetComponent<CheckpointController>();
         cameraCapture.SubscribeOnCapture(OnScreenCapture);
-
+        shopController = GetComponent<ShopController>();
         
 
 
@@ -132,5 +132,11 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         checkpointController.Save(other);
+        shopController.SetShopNameActive(other,true);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        shopController.SetShopNameActive(other,false);
     }
 }

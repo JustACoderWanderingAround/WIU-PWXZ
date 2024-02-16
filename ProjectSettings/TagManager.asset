@@ -9,6 +9,7 @@ TagManager:
   - Poop
   - Checkpoint
   - Item
+  - Shop
   layers:
   - Default
   - TransparentFX
