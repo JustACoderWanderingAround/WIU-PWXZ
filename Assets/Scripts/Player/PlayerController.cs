@@ -11,8 +11,6 @@ public class PlayerController : MonoBehaviour
     private CheckpointController checkpointController;
     private GameObject collidedInteractable;
 
-    // Temporary
-    public GameObject metalPipe;
     public Transform itemHoldPoint;
 
     [SerializeField]
@@ -32,15 +30,6 @@ public class PlayerController : MonoBehaviour
         }
         DontDestroyOnLoad(this);
 
-        Instance = this;
-        // Hide cursor
-        Cursor.lockState = CursorLockMode.Locked;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    { 
-
         // Get player components
         movementController = GetComponent<MovementController>();
         uiController = GetComponent<UIController>();
@@ -51,6 +40,10 @@ public class PlayerController : MonoBehaviour
         // Initialize components
         movementController.IntializeMovementController();
         inventoryManager.Init();
+
+        Instance = this;
+        // Hide cursor
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void OnScreenCapture(GameObject[] gameObjects)
@@ -121,7 +114,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision col)
     {
-        movementController.EnterCollision(col);
+        if (movementController != null)
+            movementController.EnterCollision(col);
     }
 
     private void OnCollisionExit(Collision col)
@@ -131,7 +125,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        checkpointController.Save(col);
+        if (checkpointController != null)
+            checkpointController.Save(col);
 
         if (col.CompareTag("Interactable"))
             collidedInteractable = col.gameObject;
