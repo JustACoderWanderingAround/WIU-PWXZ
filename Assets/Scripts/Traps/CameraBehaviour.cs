@@ -104,13 +104,13 @@ public class CameraBehaviour : MonoBehaviour
             targetGO = DetectPlayer();
             //Detect Player for the first time
             if (targetGO != null)
-                onCaptureActions.Invoke(targetGO.transform.position);
+                onCaptureActions?.Invoke(targetGO.transform.position);
         }
         else if(!IsWithinViewArea(GeometryUtility.CalculateFrustumPlanes(cameraFOV), targetBounds)
                 || !CanSee(targetGO))
         {
             //Send last known position
-            onCaptureActions.Invoke(targetGO.transform.position);
+            onCaptureActions?.Invoke(targetGO.transform.position);
 
             targetGO = null;
             currState = CameraState.Camera_Idle;
