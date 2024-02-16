@@ -17,10 +17,10 @@ public class FOVVisualizer : Editor
         Handles.DrawLine(fov.viewPoint.position, fov.viewPoint.position + viewAngleA * fov.viewRadius);
         Handles.DrawLine(fov.viewPoint.position, fov.viewPoint.position + viewAngleB * fov.viewRadius);
 
-        if (fov.target == null)
+        if (fov.targetPos == Vector3.zero)
             return;
 
         Handles.color = Color.red;
-        Handles.DrawLine(fov.viewPoint.position, fov.target.position);
+        Handles.DrawLine(fov.viewPoint.position, fov.targetPos);
     }
 }

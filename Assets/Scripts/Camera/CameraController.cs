@@ -39,6 +39,8 @@ public class CameraController : MonoBehaviour
     {
         _mousePosition.x += MouseX * mouseSensitivity;
         _mousePosition.y -= MouseY * mouseSensitivity;
+
+        transform.Rotate(0, MouseX, 0);
     }
 
     public void UpdateTransform()

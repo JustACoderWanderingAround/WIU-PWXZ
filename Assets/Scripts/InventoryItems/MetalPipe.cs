@@ -51,7 +51,7 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
         if (!col.gameObject.CompareTag("Player"))
         {
             if (!onCollide)
-                soundEmitter.EmitSound();
+                soundEmitter.EmitSound(SoundWPosition.SoundType.IMPORTANT);
         }
     }
 

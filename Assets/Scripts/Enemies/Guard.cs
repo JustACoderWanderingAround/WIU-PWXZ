@@ -6,6 +6,7 @@ public class Guard : MonoBehaviour, IEventListener
 {
     private AINavigation aiNavigation;
     private FieldOfView fov;
+    private EnemyUIController enemyUIController;
 
     [SerializeField] private Animator animator;
 
@@ -20,6 +21,8 @@ public class Guard : MonoBehaviour, IEventListener
     public readonly int Sprint = Animator.StringToHash("Sprint");
     public readonly int LookAround = Animator.StringToHash("LookAround");
     public readonly int Stunned = Animator.StringToHash("Stun");
+
+    private Coroutine increaseSuspicion = null;
 
     public enum GuardState
     {
@@ -38,6 +41,7 @@ public class Guard : MonoBehaviour, IEventListener
     {
         aiNavigation = GetComponent<AINavigation>();
         fov = GetComponent<FieldOfView>();
+        enemyUIController = GetComponent<EnemyUIController>();
     }
 
     void Start()
@@ -147,9 +151,8 @@ public class Guard : MonoBehaviour, IEventListener
             {
                 if (col.CompareTag("Player"))
                 {
-                    fov.target = col.transform;
-                    positionOfInterest = col.transform.position;
-                    ChangeState(GuardState.CHASE);
+                    fov.targetPos = col.transform.position;
+                    OnSuspicionIncrease(100f, col.transform.position, GuardState.CHASE);
                     return;
                 }
                 else
@@ -166,10 +169,8 @@ public class Guard : MonoBehaviour, IEventListener
 
             if (furthestTarget != null)
             {
-                positionOfInterest = furthestTarget.transform.position;
+                OnSuspicionIncrease(100f, furthestTarget.transform.position, GuardState.SEARCH);
                 aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
-                if (currentState != GuardState.SEARCH)
-                    ChangeState(GuardState.SEARCH);
             }
         }
     }
@@ -179,16 +180,35 @@ public class Guard : MonoBehaviour, IEventListener
         if (currentState == GuardState.STUNNED)
             return;
 
-        if (sound.soundType == SoundWPosition.SoundType.INTEREST && currentState != GuardState.CHASE)
+        if (sound.soundType == SoundWPosition.SoundType.MOVEMENT)
+            OnSuspicionIncrease(8f, sound.position, GuardState.CHASE);
+        else if (sound.soundType == SoundWPosition.SoundType.IMPORTANT)
+            OnSuspicionIncrease(100f, sound.position, GuardState.SEARCH);
+    }
+
+    private void OnSuspicionIncrease(float amount, Vector3 position, GuardState nextState)
+    {
+        if (increaseSuspicion == null)
+            increaseSuspicion = StartCoroutine(IncreaseSuspicion(amount, position, nextState));
+    }
+
+    private IEnumerator IncreaseSuspicion(float amount, Vector3 position, GuardState nextState)
+    {
+        if (currentState == nextState)
+            yield break;
+
+        enemyUIController.IncrementSuspicion(amount);
+
+        if (enemyUIController.GetSuspicionLevel() >= 100)
         {
-            positionOfInterest = sound.position;
-            ChangeState(GuardState.SEARCH);
+            positionOfInterest = position;
+            fov.targetPos = positionOfInterest;
+            ChangeState(nextState);
         }
-        else if (sound.soundType == SoundWPosition.SoundType.DANGER)
-        {
-            positionOfInterest = transform.forward - (sound.position - transform.position);
-            ChangeState(GuardState.SEARCH);
-        }
+
+        yield return new WaitForSeconds(0.1f);
+
+        increaseSuspicion = null;
     }
 
     public LISTENER_TYPE GetListenerType()

@@ -6,7 +6,8 @@ public class SoundWPosition
 {
     public enum SoundType
     {
-        INTEREST,
+        MOVEMENT,
+        IMPORTANT,
         DANGER
     }
 
@@ -16,10 +17,11 @@ public class SoundWPosition
     public readonly Vector3 position;
     public readonly float range;
 
-    public SoundWPosition(AudioSource src, Vector3 pos, float radius)
+    public SoundWPosition(AudioSource src, SoundType type, Vector3 pos, float radius)
     {
         position = pos;
         range = radius;
         source = src;
+        soundType = type;
     }
 }

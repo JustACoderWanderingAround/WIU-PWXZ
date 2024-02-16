@@ -12,7 +12,7 @@ public class Taser : MonoBehaviour, IInventoryItem
 
     private Rigidbody taserRB;
     private Collider taserCol;
-    private bool isPickup = false;
+    private bool canShoot = false;
 
     private void Awake()
     {
@@ -45,7 +45,8 @@ public class Taser : MonoBehaviour, IInventoryItem
 
     private void ShootTaser()
     {
-        StartCoroutine(OnShoot());
+        if (canShoot)
+            StartCoroutine(OnShoot());
     }
 
     private IEnumerator OnShoot()
@@ -73,9 +74,15 @@ public class Taser : MonoBehaviour, IInventoryItem
         if (hit.collider.TryGetComponent(out Guard guard))
             guard.ChangeState(Guard.GuardState.STUNNED);
 
+        canShoot = false;
+
         yield return new WaitForSeconds(0.75f);
 
         electricArc.SetActive(false);
+
+        yield return new WaitForSeconds(5f);
+
+        canShoot = true;
     }
 
     public bool GetItemIsStackable()
@@ -89,19 +96,10 @@ public class Taser : MonoBehaviour, IInventoryItem
         {
             taserRB.isKinematic = true;
             taserCol.isTrigger = true;
-            isPickup = true;
             transform.localPosition = Vector3.zero;
             transform.SetParent(PlayerController.Instance.itemHoldPoint);
+            transform.right = Camera.main.transform.forward;
         }
-    }
-
-    private void LateUpdate()
-    {
-        if (!isPickup)
-            return;
-
-        transform.localRotation = Quaternion.Euler(0, -90, 0);
-        transform.right = Camera.main.transform.forward;
     }
 
     public bool GetItemIsConsumable()

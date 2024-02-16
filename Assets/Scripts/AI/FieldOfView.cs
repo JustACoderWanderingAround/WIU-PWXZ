@@ -13,7 +13,7 @@ public class FieldOfView : MonoBehaviour
     [SerializeField] private LayerMask obstacleMask;
 
     [HideInInspector]
-    public Transform target;
+    public Vector3 targetPos;
 
     public Vector3 DirFromAngle(float angle, bool isAngleGlobal)
     {
@@ -64,7 +64,7 @@ public class FieldOfView : MonoBehaviour
 
                 if (!Physics.Raycast(viewPoint.position, dir, dist, obstacleMask))
                 {
-                    target = col.transform;
+                    targetPos = col.transform.position;
                     return true;
                 }
             }
@@ -75,18 +75,13 @@ public class FieldOfView : MonoBehaviour
 
     public bool CheckTargetInLineOfSight(out Vector3 lastSeenPosition, float distance)
     {
-        Vector3 dir = (target.position - viewPoint.position).normalized;
-        lastSeenPosition = target.position;
+        Vector3 dir = (targetPos - viewPoint.position).normalized;
+        lastSeenPosition = targetPos;
 
         if (!Physics.Raycast(viewPoint.position, dir, distance, obstacleMask))
             return true;
 
-        target = null;
+        targetPos = Vector3.zero;
         return false;
-    }
-
-    public void SetTarget(Transform newTarget)
-    {
-        target = newTarget;
     }
 }

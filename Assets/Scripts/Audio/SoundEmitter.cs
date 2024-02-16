@@ -12,7 +12,7 @@ public class SoundEmitter : MonoBehaviour
         emissionRange = newRange;
     }
 
-    public void EmitSound()
+    public void EmitSound(SoundWPosition.SoundType soundType)
     {
         if (audioSource != null)
         {
@@ -22,7 +22,7 @@ public class SoundEmitter : MonoBehaviour
             audioSource.Play();
         }
 
-        SoundWPosition sound = new SoundWPosition(audioSource, transform.position, emissionRange);
+        SoundWPosition sound = new SoundWPosition(audioSource, soundType, transform.position, emissionRange);
 
         Collider[] colliders = Physics.OverlapSphere(sound.position, sound.range);
         foreach (Collider col in colliders)
