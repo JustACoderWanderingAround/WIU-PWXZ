@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Instance != null)
         {
-            Destroy(gameObject);
+            Destroy(gameObject.transform.parent.gameObject);
             return;
         }
         DontDestroyOnLoad(this);
