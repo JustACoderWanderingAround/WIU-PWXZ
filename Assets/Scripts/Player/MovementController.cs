@@ -263,7 +263,7 @@ public class MovementController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Hazard"))
-            hazardMult = 0.8f;
+            hazardMult = 0.5f;
     }
     private void OnTriggerExit(Collider other)
     {

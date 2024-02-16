@@ -143,7 +143,7 @@ public class EnemyWorker : MonoBehaviour, IEventListener
     }
     void Update()
     {
-        if (waypointIndex > waypoints.Length)
+        if (waypointIndex > waypoints.Length - 1)
             waypointIndex = 0;
         switch (currentState)
         {
