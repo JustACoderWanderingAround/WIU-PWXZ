@@ -92,6 +92,9 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
             checkpointController.Load();
 
+        if (Input.GetKeyDown(KeyCode.E))
+            shopController.SetShopCatalogueActive();
+
         movementController.UpdateAnimation();
         movementController.UpdateFootprints();
 
@@ -132,11 +135,11 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         checkpointController.Save(other);
-        shopController.SetShopNameActive(other,true);
+        shopController.SetShopNameActive(other);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        shopController.SetShopNameActive(other,false);
+        shopController.SetShopNameActive(other);
     }
 }

@@ -7,6 +7,9 @@ public class ShopController : MonoBehaviour
     [SerializeField] private GameObject shopNameCanvas;
     [SerializeField] private GameObject shopCatalogueCanvas;
 
+    bool isShopNameActive;
+    bool isShopCatalogueActive;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,20 +22,33 @@ public class ShopController : MonoBehaviour
         
     }
 
-    public void SetShopNameActive(Collider other,bool isActive)
+    public void SetShopNameActive(Collider other)
     {
         if (other.gameObject.tag == "Shop")
         {
-            shopNameCanvas.SetActive(isActive);
+            isShopNameActive = !isShopNameActive;
+            shopNameCanvas.SetActive(isShopNameActive);
         }
         
     }
 
-    public void SetShopCatalogueActive(bool isActive)
+    public void SetShopCatalogueActive()
     {
         if (shopNameCanvas.activeSelf)
         {
-            shopCatalogueCanvas.SetActive(isActive);
+            isShopCatalogueActive = !isShopCatalogueActive;
+            shopCatalogueCanvas.SetActive(isShopCatalogueActive);
+            if (isShopCatalogueActive)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = isShopCatalogueActive;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = isShopCatalogueActive;
+            }
+            
         }
     }
 
