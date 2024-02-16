@@ -117,4 +117,12 @@ public class PlayerController : MonoBehaviour
     {
         movementController.ExitCollision(col);
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        
+    }
 }
