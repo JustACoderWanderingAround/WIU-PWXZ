@@ -124,4 +124,9 @@ public class CameraTracker : MonoBehaviour, IInventoryItem
             textureIndex = cameras.Count - 1;
         }
     }
+
+    public bool GetFollowHoldPoint()
+    {
+        return false;
+    }
 }

@@ -28,7 +28,8 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject.transform.parent.gameObject);
             return;
         }
-        DontDestroyOnLoad(this);
+        if (transform.parent == null)
+            DontDestroyOnLoad(this);
 
         // Get player components
         movementController = GetComponent<MovementController>();

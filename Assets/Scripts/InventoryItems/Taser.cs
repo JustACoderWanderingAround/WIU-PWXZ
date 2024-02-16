@@ -111,4 +111,9 @@ public class Taser : MonoBehaviour, IInventoryItem
     {
         return gameObject;
     }
+
+    public bool GetFollowHoldPoint()
+    {
+        return false;
+    }
 }

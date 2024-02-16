@@ -21,10 +21,9 @@ public class CheckpointController : MonoBehaviour
         sceneManagement = SceneManagement.Instance;
         ItemsList = new List<ItemState>();
         Instance = this;
-        DontDestroyOnLoad(this);
+        if (transform.parent == null)
+            DontDestroyOnLoad(this);
     }
-
-
 
     public void Save(Collider other)
     {

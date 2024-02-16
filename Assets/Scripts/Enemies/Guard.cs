@@ -141,6 +141,7 @@ public class Guard : MonoBehaviour, IEventListener
                 if (!fov.CheckTargetInLineOfSight(out positionOfInterest, 10000))
                 {
                     enemyUIController.StartDecaySuspicion();
+                    aiNavigation.StopNavigation();
                     ChangeState(GuardState.SEARCH);
                 }
 

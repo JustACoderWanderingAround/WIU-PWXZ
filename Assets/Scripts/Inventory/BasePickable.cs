@@ -105,4 +105,9 @@ public class BasePickable : MonoBehaviour, IInventoryItem
     {
         return true;
     }
+
+    public bool GetFollowHoldPoint()
+    {
+        return false;
+    }
 }
