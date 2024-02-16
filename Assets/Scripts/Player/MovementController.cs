@@ -20,6 +20,9 @@ public class MovementController : MonoBehaviour
     private float moveSpeed;
     private bool useStamina = true;
     private bool canJump = true;
+    float hazardMult = 0.5f;
+    float maxFPTimer = 10f;
+    float shitTimer;
 
     private AnimationController animationController;
 
@@ -33,6 +36,7 @@ public class MovementController : MonoBehaviour
         animationController = AnimationController.Instance;
         soundEmitter = GetComponent<SoundEmitter>();
         footprintController = GetComponent<FootprintController>();
+        shitTimer = 0;
     }
 
     public void SetUseStamina(bool isUsing)
@@ -90,7 +94,6 @@ public class MovementController : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
 
         isMoving = horizontal != 0 || vertical != 0;
-
         if (isMoving)
         {
             direction = Camera.main.transform.forward.normalized;
@@ -196,7 +199,7 @@ public class MovementController : MonoBehaviour
         if (!isGrounded)
             return;
 
-        if (isMoving)
+        if (isMoving && shitTimer > 0)
         {
             footprintController.CheckFootprint(playerCol);
         }
@@ -206,7 +209,10 @@ public class MovementController : MonoBehaviour
     {
         if (!isMoving)
             return;
-
+        if (shitTimer > 0)
+        {
+            shitTimer -= Time.deltaTime;
+        }
         Vector3 force;
 
         // Adjust drag & force
@@ -218,7 +224,7 @@ public class MovementController : MonoBehaviour
             force = Vector3.zero;
 
         // Move player
-        playerRB.AddForce(force, ForceMode.Force);
+        playerRB.AddForce(force * hazardMult, ForceMode.Force);
         SpeedControl();
     }
 
@@ -259,5 +265,17 @@ public class MovementController : MonoBehaviour
             isGrounded = false;
             playerRB.drag = 0;
         }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Hazard") || other.gameObject.CompareTag("Poop"))
+            hazardMult = 0.5f;
+        if (other.gameObject.CompareTag("Poop"))
+            shitTimer = maxFPTimer;
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Hazard"))
+            hazardMult = 1.0f;
     }
 }

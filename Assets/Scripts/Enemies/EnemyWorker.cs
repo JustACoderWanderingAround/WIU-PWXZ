@@ -99,7 +99,7 @@ public class EnemyWorker : MonoBehaviour, IEventListener
                 aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
                 break;
             case WorkerState.LOOKAROUND:
-                Debug.Log("workerLookAround");
+              
                 aiNavigation.StopNavigation();
                 animator.CrossFade(LookAround, 0.1f);
                 break;
@@ -111,7 +111,7 @@ public class EnemyWorker : MonoBehaviour, IEventListener
 
         if (sound.soundType == SoundWPosition.SoundType.MOVEMENT && (currentState != WorkerState.SEARCH && currentState != WorkerState.ALERT && currentState != WorkerState.LOOKAROUND))
         {
-            Debug.Log("114");
+          
             positionOfInterest = sound.position;
             ChangeState(WorkerState.SEARCH);
         }
@@ -143,7 +143,7 @@ public class EnemyWorker : MonoBehaviour, IEventListener
     }
     void Update()
     {
-        if (waypointIndex > waypoints.Length)
+        if (waypointIndex > waypoints.Length - 1)
             waypointIndex = 0;
         switch (currentState)
         {
@@ -173,21 +173,21 @@ public class EnemyWorker : MonoBehaviour, IEventListener
             case WorkerState.ALERT:
                 if (!fov.FindVisibleTargets())
                 {
-                    Debug.Log("175");
+                  
                     ChangeState(WorkerState.LOOKAROUND);
                 }
                 break;
             case WorkerState.SEARCH:
                 if (Vector3.Distance(gameObject.transform.position, positionOfInterest) < 3)
                 {
-                    Debug.Log("182");
+                  
                     ChangeState(WorkerState.LOOKAROUND);
                 }
                 break;
             case WorkerState.LOOKAROUND:
                 if (fov.FindVisibleTargets())
                 {
-                    Debug.Log("187");
+                  
                     ChangeState(WorkerState.ALERT);
                 }
                 else

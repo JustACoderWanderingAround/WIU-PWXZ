@@ -1,0 +1,384 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1550328768329040074
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7160008748797707259}
+  m_Layer: 0
+  m_Name: Poison Gas Leak
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7160008748797707259
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550328768329040074}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -36.07218, y: 3.12, z: 7.045933}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5420702364328019956}
+  - {fileID: 8064384153469319852}
+  - {fileID: 3443916413247452099}
+  - {fileID: 3458462415757980206}
+  - {fileID: 4027033263676138351}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1853436497132210932
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4027033263676138351}
+  - component: {fileID: 1164336198182989185}
+  m_Layer: 6
+  m_Name: EnemyCollider
+  m_TagString: Hazard
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4027033263676138351
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1853436497132210932}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7160008748797707259}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1164336198182989185
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1853436497132210932}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.7849998, y: 4.2591543, z: 6.0028257}
+  m_Center: {x: -0.21432686, y: -1.6295772, z: -0.5392852}
+--- !u!1 &3162821843640221602
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3458462415757980206}
+  - component: {fileID: 6912216889324252307}
+  - component: {fileID: 3670200482724095445}
+  m_Layer: 0
+  m_Name: PostFX
+  m_TagString: Hazard
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3458462415757980206
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3162821843640221602}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7160008748797707259}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6912216889324252307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3162821843640221602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 0
+  priority: 0
+  blendDistance: 1
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: d892bb67eb4e84d4ab7231b0b3a1d9e1, type: 2}
+--- !u!65 &3670200482724095445
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3162821843640221602}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.7849998, y: 4.2591543, z: 6.0028257}
+  m_Center: {x: -0.21432686, y: -1.6295772, z: -0.5392852}
+--- !u!1001 &964441200101266210
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7160008748797707259}
+    m_Modifications:
+    - target: {fileID: 1918460324982845112, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_Name
+      value: PoisonGas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6da7adc1b1c75af4987f5fe38be121b3, type: 3}
+--- !u!4 &5420702364328019956 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+    type: 3}
+  m_PrefabInstance: {fileID: 964441200101266210}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3004504123643932282
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7160008748797707259}
+    m_Modifications:
+    - target: {fileID: 1918460324982845112, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_Name
+      value: PoisonGas (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6da7adc1b1c75af4987f5fe38be121b3, type: 3}
+--- !u!4 &8064384153469319852 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+    type: 3}
+  m_PrefabInstance: {fileID: 3004504123643932282}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7607540223159674645
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7160008748797707259}
+    m_Modifications:
+    - target: {fileID: 1918460324982845112, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_Name
+      value: PoisonGas (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6da7adc1b1c75af4987f5fe38be121b3, type: 3}
+--- !u!4 &3443916413247452099 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5068896204493804758, guid: 6da7adc1b1c75af4987f5fe38be121b3,
+    type: 3}
+  m_PrefabInstance: {fileID: 7607540223159674645}
+  m_PrefabAsset: {fileID: 0}

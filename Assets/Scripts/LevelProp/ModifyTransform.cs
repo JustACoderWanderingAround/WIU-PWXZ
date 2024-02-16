@@ -16,8 +16,12 @@ public class ModifyTransform : MonoBehaviour
     float timer;
     public float speed;
     public bool start;
+    public bool open;
+    bool reset;
     private void OnEnable()
     {
+        open = false;
+        reset = false;
         start = false;
         // get target transforms
         targetPos = objectToModify.transform.position + positionModification;
@@ -35,10 +39,28 @@ public class ModifyTransform : MonoBehaviour
             objectToModify.transform.position = Vector3.Lerp(objectToModify.transform.position, targetPos, timer);
             objectToModify.transform.localScale = Vector3.Lerp(objectToModify.transform.localScale, targetScale, timer);
             objectToModify.transform.localRotation = Quaternion.Euler(Vector3.Lerp(objectToModify.transform.localRotation.eulerAngles, targetRot, timer));
+            if (reset && timer >= 1)
+            {
+                start = false;
+                reset = false;
+            }
         }
     }
     public void Activate()
     {
         start = true;
+        open = true;
+    }
+    public void AIActivate()
+    {
+        start = true;
+    }
+    public void Reset()
+    {
+        reset = true;
+        timer = 0;
+        targetPos = objectToModify.transform.position - positionModification;
+        targetRot = objectToModify.transform.rotation.eulerAngles - rotationModification;
+        targetScale = objectToModify.transform.localScale - scaleModification;
     }
 }

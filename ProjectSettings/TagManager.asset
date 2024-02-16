@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Hazard
+  - Enemy
+  - Poop
   layers:
   - Default
   - TransparentFX
