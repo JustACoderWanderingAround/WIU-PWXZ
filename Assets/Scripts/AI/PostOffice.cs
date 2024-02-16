@@ -34,8 +34,8 @@ public class PostOffice : MonoBehaviour
                 {
                     if (Vector3.Distance(go.transform.position, messagePlayerHere.location) < messagePlayerHere.distThreshold)
                     {
-                        SoundWPosition newSound = new SoundWPosition(null, messagePlayerHere.location, 1000);
-                        newSound.soundType = SoundWPosition.SoundType.INTEREST;
+                        SoundWPosition newSound = new SoundWPosition(null, messagePlayerHere.soundType, messagePlayerHere.location, 1000);
+                        newSound.soundType = SoundWPosition.SoundType.MOVEMENT;
                         go.GetComponent<IEventListener>().RespondToSound(newSound);
                     }
                 }

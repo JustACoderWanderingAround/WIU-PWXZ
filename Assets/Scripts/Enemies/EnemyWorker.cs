@@ -89,7 +89,7 @@ public class EnemyWorker : MonoBehaviour, IEventListener
                 
                 aiNavigation.StopNavigation();
                 animator.CrossFade(Alert, 0.2f);
-                MessagePlayerHere alertMessage = new MessagePlayerHere(this, positionOfInterest, 50f);
+                MessagePlayerHere alertMessage = new MessagePlayerHere(this, SoundWPosition.SoundType.IMPORTANT, positionOfInterest, 50f);
                 PostOffice.GetInstance().SendToPostOffice(alertMessage);
                 //
                 break;
@@ -109,7 +109,7 @@ public class EnemyWorker : MonoBehaviour, IEventListener
     public void RespondToSound(SoundWPosition sound)
     {
 
-        if (sound.soundType == SoundWPosition.SoundType.INTEREST && (currentState != WorkerState.SEARCH && currentState != WorkerState.ALERT && currentState != WorkerState.LOOKAROUND))
+        if (sound.soundType == SoundWPosition.SoundType.MOVEMENT && (currentState != WorkerState.SEARCH && currentState != WorkerState.ALERT && currentState != WorkerState.LOOKAROUND))
         {
           
             positionOfInterest = sound.position;

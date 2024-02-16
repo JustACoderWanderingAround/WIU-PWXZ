@@ -42,7 +42,7 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
         return delegate 
         {
             pipeRB.isKinematic = false;
-            pipeRB.AddForce(Camera.main.transform.forward * 10f + Camera.main.transform.up * 10f, ForceMode.Impulse);
+            pipeRB.AddForce(Camera.main.transform.forward * 15f + Camera.main.transform.up * 10f, ForceMode.Impulse);
         };
     }
 
@@ -51,7 +51,7 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
         if (!col.gameObject.CompareTag("Player"))
         {
             if (!onCollide)
-                soundEmitter.EmitSound();
+                soundEmitter.EmitSound(SoundWPosition.SoundType.IMPORTANT);
         }
     }
 
@@ -63,5 +63,10 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
     public bool GetItemIsConsumable()
     {
         return true;
+    }
+
+    public Transform GetHandlerTransform()
+    {
+        throw new NotImplementedException();
     }
 }

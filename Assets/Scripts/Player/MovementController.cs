@@ -108,7 +108,7 @@ public class MovementController : MonoBehaviour
             else if (!isSprinting && !isCrouching)
                 soundEmitter.SetEmissionRange(movementData.walkNoiseRange);
 
-            soundEmitter.EmitSound();
+            soundEmitter.EmitSound(SoundWPosition.SoundType.MOVEMENT);
         }
         else if (!isMoving && isGrounded)
         {
@@ -254,7 +254,7 @@ public class MovementController : MonoBehaviour
             playerRB.drag = movementData.groundDrag;
 
             soundEmitter.SetEmissionRange(movementData.landNoiseRange);
-            soundEmitter.EmitSound();
+            soundEmitter.EmitSound(SoundWPosition.SoundType.MOVEMENT);
         }
     }
 
