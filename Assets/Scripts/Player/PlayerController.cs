@@ -119,10 +119,13 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.gameObject.CompareTag("ConversationalPartner")) {
+            uiController.SetDialogueBoxActive(true);
+            uiController.GetConversation(other.GetComponent<ConversationPartner>());
+        }
     }
     private void OnTriggerExit(Collider other)
     {
-        
+        uiController.SetDialogueBoxActive(false);
     }
 }
