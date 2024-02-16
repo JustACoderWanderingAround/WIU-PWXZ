@@ -42,6 +42,10 @@ public class Guard : MonoBehaviour, IEventListener
         aiNavigation = GetComponent<AINavigation>();
         fov = GetComponent<FieldOfView>();
         enemyUIController = GetComponent<EnemyUIController>();
+
+        CameraBehaviour[] cameras = FindObjectsOfType<CameraBehaviour>();
+        foreach (CameraBehaviour camera in cameras)
+            camera.SubscribeOnCapture((pos) => OnSuspicionIncrease(100f, pos, GuardState.SEARCH));
     }
 
     void Start()

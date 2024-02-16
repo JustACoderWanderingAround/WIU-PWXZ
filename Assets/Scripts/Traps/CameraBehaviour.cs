@@ -30,6 +30,18 @@ public class CameraBehaviour : MonoBehaviour
 
     private float cooldown = 0f;
 
+    private System.Action<Vector3> onCaptureActions;
+
+    public void SubscribeOnCapture(System.Action<Vector3> onCaptureAction)
+    {
+        onCaptureActions += onCaptureAction;
+    }
+
+    public void UnsubscribeOnCapture(System.Action<Vector3> onCaptureAction)
+    {
+        onCaptureActions -= onCaptureAction;
+    }
+
     public enum CameraState
     {
         Camera_Idle,
@@ -90,10 +102,16 @@ public class CameraBehaviour : MonoBehaviour
         {
             //Detect once per physics frame to reduce calculation
             targetGO = DetectPlayer();
+            //Detect Player for the first time
+            if (targetGO != null)
+                onCaptureActions.Invoke(targetGO.transform.position);
         }
         else if(!IsWithinViewArea(GeometryUtility.CalculateFrustumPlanes(cameraFOV), targetBounds)
                 || !CanSee(targetGO))
         {
+            //Send last known position
+            onCaptureActions.Invoke(targetGO.transform.position);
+
             targetGO = null;
             currState = CameraState.Camera_Idle;
         }
@@ -146,7 +164,6 @@ public class CameraBehaviour : MonoBehaviour
             return;
         }
 
-        Debug.Log(targetGO.transform.position);
         //Calculate target direction
         Vector3 dir = (targetGO.transform.position - headTransform.position).normalized;
 
