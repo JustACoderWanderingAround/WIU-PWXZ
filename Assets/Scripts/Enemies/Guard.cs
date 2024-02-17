@@ -145,12 +145,6 @@ public class Guard : MonoBehaviour, IEventListener
                     ChangeState(GuardState.SEARCH);
                 }
 
-                if (Vector3.Distance(transform.position, positionOfInterest) <= 1f && !caughtPlayer)
-                {
-                    caughtPlayer = true;
-                    CheckpointController.Instance.Load();
-                }
-
                 aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
 
                 break;
@@ -182,6 +176,7 @@ public class Guard : MonoBehaviour, IEventListener
                 break;
         }
 
+        // Check if player is in visible range
         if (fov.FindVisibleTargets(out List<Collider> targets) &&
             currentState != GuardState.CHASE &&
             currentState != GuardState.STUNNED)
@@ -214,6 +209,13 @@ public class Guard : MonoBehaviour, IEventListener
                 OnSuspicionIncrease(100f, furthestTarget.transform.position, GuardState.SEARCH);
                 aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
             }
+        }
+
+        // Check if guard catch player
+        if (Vector3.Distance(transform.position, PlayerController.Instance.transform.position) <= 1f && !caughtPlayer)
+        {
+            caughtPlayer = true;
+            CheckpointController.Instance.Load();
         }
     }
 

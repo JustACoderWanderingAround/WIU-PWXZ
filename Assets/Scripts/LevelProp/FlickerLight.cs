@@ -6,11 +6,11 @@ using UnityEngine;
 public class FlickerLight : MonoBehaviour
 {
     [SerializeField] private Light light;
-    private float interval = 1;
-    private float flicker = 0.2f;
+    [SerializeField] private float interval = 1;
+    [SerializeField] private float flicker = 0.2f;
 
-    private float defaultIntensity;
-    private float minIntensity = 0.5f;
+    [SerializeField] private float defaultIntensity;
+    [SerializeField] private float minIntensity = 0.5f;
     private bool isOn;
     private float counter;
     private float delay;
