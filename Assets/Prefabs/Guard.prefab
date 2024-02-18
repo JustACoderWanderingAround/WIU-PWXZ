@@ -2247,7 +2247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 5017658044028356814}
-  light: {fileID: 4638794685573735119}
+  spotLight: {fileID: 4638794685573735119}
   waypoints:
   - {fileID: 3645973507840355667}
   - {fileID: 844957831981856058}

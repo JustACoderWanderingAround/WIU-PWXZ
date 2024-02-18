@@ -9,7 +9,7 @@ public class Guard : MonoBehaviour, IEventListener
     private EnemyUIController enemyUIController;
 
     [SerializeField] private Animator animator;
-    [SerializeField] private Light light;
+    [SerializeField] private Light spotLight;
     private Color lightColor = Color.white;
 
     // Waypoints
@@ -65,18 +65,18 @@ public class Guard : MonoBehaviour, IEventListener
 
     private IEnumerator DoChangeColor(Color newColor)
     {
-        Color startColor = light.color;
+        Color startColor = spotLight.color;
         float elapsedTime = 0f;
 
         while (elapsedTime < 0.5f)
         {
             float t = elapsedTime / 0.5f;
-            light.color = Color.Lerp(startColor, newColor, t);
+            spotLight.color = Color.Lerp(startColor, newColor, t);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        light.color = newColor;
+        spotLight.color = newColor;
         lightColor = newColor;
     }
 

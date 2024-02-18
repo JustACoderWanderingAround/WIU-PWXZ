@@ -22,7 +22,7 @@ public class LockPicker : MiniGame
     private void OnEnable()
     {
         timer = maxTimer;
-        base.OnEnable();
+        EnableMinigame();
         unlockedCount = 0;
         mainDecreaseRate = mainIncreaseRate * 0.2f;
         foreach (Slider slid in sliderList)
@@ -30,6 +30,7 @@ public class LockPicker : MiniGame
             slid.value = (Random.Range(0, 0.25f));
         }
     }
+        
     private void Update()
     {
         timer -= Time.deltaTime;

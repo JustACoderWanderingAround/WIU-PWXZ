@@ -12,7 +12,7 @@ public class MiniGame : MonoBehaviour
     public GameObject gameCanvas;
     public EventTrigger.TriggerEvent OnWinCallBack;
     public EventTrigger.TriggerEvent OnLoseCallBack;
-    protected void OnEnable()
+    protected void EnableMinigame()
     {
         timer = maxTimer;
         gameCanvas.SetActive(true);

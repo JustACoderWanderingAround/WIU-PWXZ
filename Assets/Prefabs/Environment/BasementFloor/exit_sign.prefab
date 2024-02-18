@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdba11b3ccc58c14d9f08fa18c06b1bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  light: {fileID: 6236233742598607885}
+  flickerLight: {fileID: 6236233742598607885}
   interval: 0.8
   flicker: 0.2
   defaultIntensity: 0.07
