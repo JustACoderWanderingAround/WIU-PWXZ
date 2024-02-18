@@ -33,9 +33,6 @@ public class ShopItemController : MonoBehaviour
     private int AMCount = 0;
 
     private int money = 0;
-    private int EDcost = 0;
-    private int TCcost = 0;
-    private int AMCost = 0;
     private int cost = 0;
 
     private void Awake()
