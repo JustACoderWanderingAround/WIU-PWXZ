@@ -7,8 +7,11 @@ TagManager:
   - Hazard
   - Enemy
   - Poop
+  - ConversationalPartner
   - Checkpoint
   - Item
+  - LeftHalf
+  - RightHalf
   - Interactable
   layers:
   - Default

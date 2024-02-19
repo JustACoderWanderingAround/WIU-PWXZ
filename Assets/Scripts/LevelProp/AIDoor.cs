@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AIDoor : MonoBehaviour
 {
+    GameObject activator;
     [SerializeField] ModifyTransform modTransform;
     // Start is called before the first frame update
     void Start()
@@ -14,16 +15,22 @@ public class AIDoor : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            if (!modTransform.open)
+            if (!modTransform.open && activator == null)
+            {
                 modTransform.AIActivate();
+                activator = other.gameObject;
+            }
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            if (!modTransform.open)
+            if (!modTransform.open && ((other == activator) && activator != null))
+            {
                 modTransform.Reset();
+                activator = null;
+            }
         }
     }
 }

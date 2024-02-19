@@ -79,6 +79,8 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
             movementController.ToggleSprint();
+        if (Input.GetKeyDown(KeyCode.F))
+            uiController.SkipThruText();
 
         if (Input.GetKeyDown(KeyCode.L))
             checkpointController.Load();
@@ -123,19 +125,21 @@ public class PlayerController : MonoBehaviour
     {
         movementController.ExitCollision(col);
     }
-
     private void OnTriggerEnter(Collider col)
     {
-        if (checkpointController != null)
+        if (col.gameObject.CompareTag("Checkpoint"))
             checkpointController.Save(col);
-
+        if (col.gameObject.CompareTag("ConversationalPartner")) {
+            uiController.SetDialogueBoxActive(true);
+            uiController.GetConversation(col.GetComponent<ConversationPartner>());
+        }
         if (col.CompareTag("Interactable"))
             collidedInteractable = col.gameObject;
     }
-
     private void OnTriggerExit(Collider col)
     {
-        if (col.CompareTag("Interactable"))
+        uiController.SetDialogueBoxActive(false);
+         if (col.CompareTag("Interactable"))
             collidedInteractable = null;
     }
 }
