@@ -51,6 +51,6 @@ public class SmallDollarBill : MonoBehaviour, IInventoryItem
 
     public bool GetFollowHoldPoint()
     {
-        throw new NotImplementedException();
+        return false;
     }
 }

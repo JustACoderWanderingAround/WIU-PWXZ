@@ -8,6 +8,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class CheckpointController : MonoBehaviour
 {
+    public static CheckpointController Instance;
     public InventoryManager inventoryManager;
     public GameObject inventoryCache;
     private SceneManagement sceneManagement;
@@ -23,6 +24,10 @@ public class CheckpointController : MonoBehaviour
         ItemsList = new List<ItemState>();
         EnemiesList = new List<EnemyState>();
         DontDestroyOnLoad(this);
+
+        Instance = this;
+        if (transform.parent == null)
+            DontDestroyOnLoad(this);
     }
 
 
