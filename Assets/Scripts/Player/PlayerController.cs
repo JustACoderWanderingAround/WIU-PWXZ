@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private GameObject collidedInteractable;
 
     public Transform itemHoldPoint;
+    public Transform leftHandPoint;
 
     [SerializeField]
     private InventoryManager inventoryManager;
