@@ -6,6 +6,16 @@ public class LaserBehaviour : MonoBehaviour, IEventListener
 {
     private static System.Action<Collider> onHit;
 
+    public static void OnSubscribeHit(System.Action<Collider> _onHit)
+    {
+        onHit += _onHit;
+    }
+
+    public static void OnUnsubscribeHit(System.Action<Collider> _onHit)
+    {
+        onHit -= _onHit;
+    }
+
     [Header("Physics")]
     [Range(0f, float.MaxValue)]
     public float maxDistance = 1000f;
@@ -96,7 +106,7 @@ public class LaserBehaviour : MonoBehaviour, IEventListener
         //If position is correct, do rotation
         if (Vector3.Distance(transform.position, waypoints[wayIndex].position) <= distanceOffset)
         {
-            if (Vector3.Distance(transform.eulerAngles, waypoints[wayIndex].eulerAngles) <= rotationOffset)
+            if (Quaternion.Angle(transform.rotation, waypoints[wayIndex].rotation) <= rotationOffset)
             {
                 //Set to next waypoint
                 wayIndex++;
@@ -165,5 +175,12 @@ public class LaserBehaviour : MonoBehaviour, IEventListener
     public LISTENER_TYPE GetListenerType()
     {
         return LISTENER_TYPE.GUARD;
+
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position, (transform.rotation * Vector3.up) * maxDistance + transform.position);
     }
 }

@@ -2364,6 +2364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemHoldPoint: {fileID: 6746570868712825529}
   leftHandPoint: {fileID: 7072438131518455314}
+  rightHandPoint: {fileID: 9210501615629717663}
   inventoryManager: {fileID: 11400000, guid: 564cbd8f240a2e44c9ccb932a83c0feb, type: 2}
 --- !u!114 &450732169239283216
 MonoBehaviour:
@@ -3008,7 +3009,7 @@ Transform:
   m_GameObject: {fileID: 3641272561063357311}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.29, y: 0.001, z: 0.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
