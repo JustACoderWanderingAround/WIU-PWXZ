@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MovePlayerMenu : MonoBehaviour
 {
-    private float moveSpeed = 400f;
+    private float moveSpeed = 800f;
     [SerializeField] private Transform waypoint;
     //[SerializeField] private Animator animator;
     private AnimationController animationController;
