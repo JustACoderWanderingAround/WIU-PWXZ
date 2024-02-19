@@ -95,11 +95,13 @@ public class InventoryManager : ScriptableObject
             return false;
 
         if (slot.isConsumable)
+        {
             //Decrease the item count
             slot.itemCount--;
 
-        //if (slot.itemCount <= 0)
-        //    items.Remove(slot);
+            if (slot.itemCount <= 0)
+                items.Remove(slot);
+        }
 
         //Invoke the item effect
         slot.itemEffect.Invoke();
