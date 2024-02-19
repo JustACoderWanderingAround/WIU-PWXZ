@@ -2628,6 +2628,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 937921267}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!108 &945825118 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 5211589000492870236, guid: eba40b33cd75dfc4e86e9604170d19f9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1580140401}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1004449906 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4808112024617680746, guid: 50f5436ff6f1276449a3240865d32a66,
@@ -5175,6 +5181,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8926031056451556313, guid: eba40b33cd75dfc4e86e9604170d19f9,
+        type: 3}
+      propertyPath: flickerLight
+      value: 
+      objectReference: {fileID: 945825118}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

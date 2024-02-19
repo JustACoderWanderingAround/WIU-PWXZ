@@ -125,18 +125,18 @@ public class PlayerController : MonoBehaviour
     {
         movementController.ExitCollision(col);
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider col)
     {
-        if (other.gameObject.CompareTag("Checkpoint"))
-            checkpointController.Save(other);
-        if (other.gameObject.CompareTag("ConversationalPartner")) {
+        if (col.gameObject.CompareTag("Checkpoint"))
+            checkpointController.Save(col);
+        if (col.gameObject.CompareTag("ConversationalPartner")) {
             uiController.SetDialogueBoxActive(true);
-            uiController.GetConversation(other.GetComponent<ConversationPartner>());
+            uiController.GetConversation(col.GetComponent<ConversationPartner>());
         }
         if (col.CompareTag("Interactable"))
             collidedInteractable = col.gameObject;
     }
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider col)
     {
         uiController.SetDialogueBoxActive(false);
          if (col.CompareTag("Interactable"))

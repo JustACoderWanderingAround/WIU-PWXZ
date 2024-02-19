@@ -17,6 +17,10 @@ public class UIController : MonoBehaviour
     {
         staminaBar.value = currentStamina;
         staminaBar.maxValue = maxStamina;
+        if (currentStamina >= maxStamina)
+            staminaBar.gameObject.SetActive(false);
+        else
+            staminaBar.gameObject.SetActive(true);
         if (dialogueBox.finished)
             SetDialogueBoxActive(false);
     }
@@ -34,9 +38,6 @@ public class UIController : MonoBehaviour
     {
         dialogueBox.SkipThrough();
 
-        if (currentStamina >= maxStamina)
-            staminaBar.gameObject.SetActive(false);
-        else
-            staminaBar.gameObject.SetActive(true);
+       
     }
 }
