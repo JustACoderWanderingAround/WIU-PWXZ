@@ -14,6 +14,8 @@ public class CheckpointController : MonoBehaviour
     public List<ItemState> ItemsList { get; private set; }
     private Vector3 lastCheckpointPos;
 
+    private Coroutine loadRoutine = null;
+
     void Start()
     {
         // We search all the checkpoints in the current scene
@@ -65,7 +67,8 @@ public class CheckpointController : MonoBehaviour
 
     public void Load()
     {
-        StartCoroutine(LoadRoutine());
+        if (loadRoutine == null)
+            loadRoutine = StartCoroutine(LoadRoutine());
     }
 
     public IEnumerator LoadRoutine()
@@ -107,7 +110,8 @@ public class CheckpointController : MonoBehaviour
                 }
             }
         }
-        
+
+        loadRoutine = null;
     }
 
     public static Vector3 StringToVector3(string sVector)

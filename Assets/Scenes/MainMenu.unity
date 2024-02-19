@@ -132,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6850511}
-  - component: {fileID: 6850510}
+  - component: {fileID: 6850512}
   m_Layer: 0
   m_Name: Scene
   m_TagString: Untagged
@@ -140,18 +140,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &6850510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6850509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f2d5d9612abc3d4dba84c482f6dfd16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &6850511
 Transform:
   m_ObjectHideFlags: 0
@@ -167,6 +155,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6850512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6850509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7641ada89e60d83449034f31049d2413, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneNames: []
 --- !u!1 &46424354
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,9 +251,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6850510}
-        m_TargetAssemblyTypeName: SceneManage, Assembly-CSharp
-        m_MethodName: GotoScene
+      - m_Target: {fileID: 6850512}
+        m_TargetAssemblyTypeName: SceneManagement, Assembly-CSharp
+        m_MethodName: LoadScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -640,7 +641,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 240678613}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6850512}
+        m_TargetAssemblyTypeName: SceneManagement, Assembly-CSharp
+        m_MethodName: Exit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &240678613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2422,7 +2435,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdba11b3ccc58c14d9f08fa18c06b1bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  light: {fileID: 1320081104}
+  flickerLight: {fileID: 1320081104}
+  interval: 1
+  flicker: 0.2
+  defaultIntensity: 0
+  minIntensity: 0.5
 --- !u!1001 &1354714049
 PrefabInstance:
   m_ObjectHideFlags: 0

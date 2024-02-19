@@ -68,6 +68,14 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
             pipeRB.AddForce(Camera.main.transform.forward * _force + Camera.main.transform.up * 5f, ForceMode.Impulse);
             isEnabled = false;
             _force = 0f;
+            hasRan = true;
+        }
+
+        if (!pipeRB.useGravity)
+        {
+            transform.SetParent(PlayerController.Instance.rightHandPoint);
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.identity;
         }
     }
 
@@ -94,6 +102,6 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
 
     public bool GetFollowHoldPoint()
     {
-        return true;
+        return false;
     }
 }

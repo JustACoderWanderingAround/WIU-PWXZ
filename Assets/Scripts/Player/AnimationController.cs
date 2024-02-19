@@ -20,6 +20,8 @@ public class AnimationController : MonoBehaviour
     public readonly int Sprint = Animator.StringToHash("Sprint");
     public readonly int Jump = Animator.StringToHash("Jump");
     public readonly int Falling = Animator.StringToHash("Falling");
+    // Others
+    public readonly int Drinking = Animator.StringToHash("Drinking");
 
     private void Awake()
     {

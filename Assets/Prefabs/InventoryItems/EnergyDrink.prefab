@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a82d5a458812ac645b19b2571a780851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemDisplayImage: {fileID: 21300000, guid: 2969d90b86698124696637a6df64a112, type: 3}
+  itemDisplayImage: {fileID: 21300000, guid: c054474d67ef324419fcc73750323ed6, type: 3}
 --- !u!54 &7595532925506335930
 Rigidbody:
   m_ObjectHideFlags: 0

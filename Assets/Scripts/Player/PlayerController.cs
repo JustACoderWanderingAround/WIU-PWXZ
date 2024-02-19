@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     private GameObject collidedInteractable;
 
     public Transform itemHoldPoint;
+    public Transform leftHandPoint;
+    public Transform rightHandPoint;
 
     [SerializeField]
     private InventoryManager inventoryManager;
@@ -45,6 +47,19 @@ public class PlayerController : MonoBehaviour
         Instance = this;
         // Hide cursor
         Cursor.lockState = CursorLockMode.Locked;
+
+        LaserBehaviour.OnSubscribeHit(OnDetectLaserCollision);
+    }
+
+    private void OnDisable()
+    {
+        LaserBehaviour.OnUnsubscribeHit(OnDetectLaserCollision);
+    }
+
+    public void OnDetectLaserCollision(Collider col)
+    {
+        if (col?.gameObject == gameObject)
+            CheckpointController.Instance.Load();
     }
 
     private void OnScreenCapture(GameObject[] gameObjects)

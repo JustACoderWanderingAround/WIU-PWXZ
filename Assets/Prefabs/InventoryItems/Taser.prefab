@@ -601,7 +601,7 @@ MonoBehaviour:
   - {fileID: 5914309108913144643}
   - {fileID: 1887434665436066250}
   electricArc: {fileID: 806323930569920269}
-  itemDisplayImage: {fileID: 21300000, guid: 6ec2f30100edd9f47a5c36f4c1f2beeb, type: 3}
+  itemDisplayImage: {fileID: 21300000, guid: c432159f62179cd4fbe5aba1872f3951, type: 3}
 --- !u!54 &809075886432875841
 Rigidbody:
   m_ObjectHideFlags: 0
