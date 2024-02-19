@@ -6313,6 +6313,26 @@ PrefabInstance:
       propertyPath: gameCanvas
       value: 
       objectReference: {fileID: 2023275056}
+    - target: {fileID: 150691386833728270, guid: 87f1e2b03698c5e40aef874dde64f4b3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -8.700012
+      objectReference: {fileID: 0}
+    - target: {fileID: 1397683042872457011, guid: 87f1e2b03698c5e40aef874dde64f4b3,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1397683042872457011, guid: 87f1e2b03698c5e40aef874dde64f4b3,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1397683042872457011, guid: 87f1e2b03698c5e40aef874dde64f4b3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -4.9128113
+      objectReference: {fileID: 0}
     - target: {fileID: 1536941080675099913, guid: 87f1e2b03698c5e40aef874dde64f4b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6361,6 +6381,11 @@ PrefabInstance:
     - target: {fileID: 1536941080675099913, guid: 87f1e2b03698c5e40aef874dde64f4b3,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6061796510683968051, guid: 87f1e2b03698c5e40aef874dde64f4b3,
+        type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7044646479171747281, guid: 87f1e2b03698c5e40aef874dde64f4b3,

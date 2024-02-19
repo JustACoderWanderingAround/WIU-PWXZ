@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HeartbeatBeater : MiniGame
 {
@@ -12,30 +13,33 @@ public class HeartbeatBeater : MiniGame
     [SerializeField] GameObject rightSpawner;
     [SerializeField] GameObject target;
     float spawnTimer = 0;
-    public float maxSpawnTimer = 1f;
+    public float maxSpawnTimer;
     bool spawnLeft;
     List<GameObject> halfQueue = new List<GameObject>();
     float totalScore;
-    [SerializeField] TMP_Text mainScore;
+    [SerializeField] Slider timerSlider;
     private void OnEnable()
     {
-        timer = 0;
-        totalScore = 1000f;
+        timer = 10;
+        totalScore = 0;
+        //mainScore.text = "Score: " + totalScore;
+        maxSpawnTimer = Random.Range(0.5f, 1f);
     }
     private void Update()
     {
-        if (totalScore < 0)
-            //OnLose();
-        if (timer < 0)
-            OnWin();
-        totalScore -= Time.deltaTime;
         timer -= Time.deltaTime;
         spawnTimer -= Time.deltaTime;
-        if (spawnTimer < 0)
+        if (timer < 0)
         {
+            OnWin();
+        }
+        if (spawnTimer < 0 && timer > 0)
+        {
+            maxSpawnTimer = Random.Range(0.5f, 1f);
             spawnTimer = maxSpawnTimer;
             SpawnBeat();
         }
+
         if (Input.GetKeyDown(KeyCode.Z))
         {
             DestroyHalf(true);
@@ -44,7 +48,7 @@ public class HeartbeatBeater : MiniGame
         {
             DestroyHalf(false);
         }
-        mainScore.text = "Score:" + System.MathF.Truncate(totalScore).ToString();
+        timerSlider.value = timer * 0.1f;
     }
     void SpawnBeat()
     {
@@ -52,12 +56,12 @@ public class HeartbeatBeater : MiniGame
         {
             spawnLeft = false;
             GameObject newHalf = Instantiate(leftHalf, leftSpawner.transform.position, Quaternion.identity, gameObject.transform);
-            newHalf.GetComponent<HeartHalf>().Init(target, 3.0f);
+            newHalf.GetComponent<HeartHalf>().Init(target, 2 + Random.Range(0, 3));
         } else
         {
             spawnLeft = true;
             GameObject newHalf = Instantiate(rightHalf, rightSpawner.transform.position, Quaternion.identity, gameObject.transform);
-            newHalf.GetComponent<HeartHalf>().Init(target, 3.0f);
+            newHalf.GetComponent<HeartHalf>().Init(target, 2 + Random.Range(0, 3));
         }
     }
     void DestroyHalf(bool isLeft)
@@ -74,12 +78,12 @@ public class HeartbeatBeater : MiniGame
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        totalScore -= 100f;
         Destroy(collision.gameObject);
+        OnLose();
     }
     void EvaluateScore(GameObject go)
     {
-        float score = Vector3.Distance(go.transform.position, gameObject.transform.position);
+        float score = 500 - Vector3.Distance(go.transform.position, gameObject.transform.position);
         totalScore += score;
         Destroy(go);
         
