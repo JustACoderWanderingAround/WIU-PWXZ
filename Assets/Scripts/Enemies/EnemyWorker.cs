@@ -159,6 +159,8 @@ public class EnemyWorker : MonoBehaviour, IEventListener
                 if (aiNavigation.OnReachTarget(waypoints[waypointIndex].position, 0.3f))
                 {
                     waypointIndex++;
+                    if (waypointIndex > waypoints.Length - 1)
+                        waypointIndex = 0;
                     ChangeState(WorkerState.IDLE);
                     aiNavigation.SetNavMeshTarget(waypoints[waypointIndex].position, 2f);
                 }

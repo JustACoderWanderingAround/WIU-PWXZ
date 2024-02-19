@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class HeartbeatBeater : MiniGame
@@ -50,6 +51,12 @@ public class HeartbeatBeater : MiniGame
         }
         timerSlider.value = timer * 0.1f;
     }
+    private void FixedUpdate()
+    {
+        Collider2D[] halfsToDestroy = Physics2D.OverlapCircleAll(gameObject.transform.position, 10);
+        if (halfsToDestroy.Length > 1)
+            OnLose();
+    }
     void SpawnBeat()
     {
         if (spawnLeft)
@@ -76,10 +83,17 @@ public class HeartbeatBeater : MiniGame
                 EvaluateScore(col.gameObject);
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnLose()
     {
-        Destroy(collision.gameObject);
-        OnLose();
+        Collider2D[] halfsToDestroy = Physics2D.OverlapCircleAll(gameObject.transform.position, 1920);
+        foreach (Collider2D col in halfsToDestroy)
+        {
+            if (col.gameObject.CompareTag("LeftHalf") || col.gameObject.CompareTag("RightHalf"))
+                Destroy(col.gameObject);
+        }
+        BaseEventData eventData = new BaseEventData(EventSystem.current);
+        eventData.selectedObject = this.gameObject;
+        OnLoseCallBack.Invoke(eventData);
     }
     void EvaluateScore(GameObject go)
     {
