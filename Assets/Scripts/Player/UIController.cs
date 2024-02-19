@@ -21,12 +21,12 @@ public class UIController : MonoBehaviour
             staminaBar.gameObject.SetActive(false);
         else
             staminaBar.gameObject.SetActive(true);
-        if (dialogueBox.finished)
+        if (dialogueBox?.finished  ?? false)
             SetDialogueBoxActive(false);
     }
     public void SetDialogueBoxActive(bool active)
     {
-        playerDialogueBox.SetActive(active);
+        playerDialogueBox?.SetActive(active);
         activeInventory.SetActive(!active);
     }
     public void GetConversation(ConversationPartner convoPartner)
