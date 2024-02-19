@@ -13,10 +13,8 @@ public class CameraBehaviour : MonoBehaviour
     [Header("Camera")]
     public Camera cameraFOV;
     public Transform headTransform;
-    public Light cameraSpotlight;
 
     private Vector3 originalEulerRotation;
-    private Color targetColor = Color.white;
 
     [Header("Rotation")]
     public float minRotationY;
@@ -76,9 +74,6 @@ public class CameraBehaviour : MonoBehaviour
         originalEulerRotation = headTransform.eulerAngles;
         currState = CameraState.Camera_Idle;
         targetRotationY = minRotationY;
-
-        RenderTexture renderTexture = new RenderTexture(640, 360, 8);
-        cameraFOV.targetTexture = renderTexture;
     }
 
     public void UpdateTransform()
@@ -99,11 +94,6 @@ public class CameraBehaviour : MonoBehaviour
                 ChaseState();
                 break;
         }
-
-        targetColor = targetGO != null ? Color.red : Color.white;
-        //Set Spot light Color to the specifc color
-        if (cameraSpotlight.color != targetColor)
-            cameraSpotlight.color = Color.Lerp(cameraSpotlight.color, targetColor, Time.deltaTime * 10f);
     }
 
     public void UpdatePhysics()

@@ -45,9 +45,6 @@ public class SceneManagement : MonoBehaviour
     {
         asyncHandler = SceneManager.LoadSceneAsync(sceneName);
 
-        if (asyncHandler == null)
-            yield break;
-
         //When the async progress is not done
         while (!asyncHandler.isDone)
         {

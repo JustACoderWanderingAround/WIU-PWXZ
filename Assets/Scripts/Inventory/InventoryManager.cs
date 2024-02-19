@@ -51,8 +51,8 @@ public class InventoryManager : ScriptableObject
 
             //Create a new slot
             itemSlot = new InventorySlot(uniqueID, newItem.GetItemName(), newItem.GetItemDescription(),
-                newItem.GetItemEffect(), newItem.GetItemDisplaySprite(), newItem.GetGameObject(), newItem.GetFollowHoldPoint(),
-                newItem.GetItemIsStackable(), newItem.GetItemIsConsumable(), 0);
+                newItem.GetItemEffect(), newItem.GetItemDisplaySprite(), newItem.GetGameObject(), newItem.GetItemIsStackable(),
+                newItem.GetItemIsConsumable(), 0);
 
             //Add it to the list
             items.Add(itemSlot);

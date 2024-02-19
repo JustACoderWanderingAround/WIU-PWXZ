@@ -76,22 +76,6 @@ public class InventoryHandler : MonoBehaviour
 
                 //Select and Unselect mechanic
                 selectedSlot?.Highlight(true);
-
-                //Unselect the previous
-                if (!selectedSlot?.Slot?.isStackable ?? false && selectedSlot == newSlot)
-                {
-                    GameObject go = selectedSlot.Slot.goRef;
-
-                    //if its active
-                    if (go?.activeInHierarchy ?? false)
-                    {
-                        //Show the object
-                        go.SetActive(false);
-                        //Set parent to where it should be placed at
-                        go.transform.SetParent(inventoryTransform);
-                    }
-                }
-
                 selectedSlot = selectedSlot == newSlot ? null : newSlot;
                 selectedSlot?.Highlight();
                 break;
@@ -107,22 +91,6 @@ public class InventoryHandler : MonoBehaviour
             {
                 //Open 
                 StartCoroutine(UIRenderRoutine());
-
-                //Unselect the previous
-                if (!selectedSlot?.Slot?.isStackable ?? false)
-                {
-                    GameObject go = selectedSlot.Slot.goRef;
-
-                    if (go?.activeInHierarchy ?? false)
-                    {
-                        //Show the object
-                        go.SetActive(false);
-                        //Set parent to where it should be placed at
-                        go.transform.SetParent(inventoryTransform);
-                    }
-                }
-                //Set selected slot to null
-                selectedSlot = null;
             }
             //If its open
             else
@@ -141,6 +109,19 @@ public class InventoryHandler : MonoBehaviour
             //Check if the player clicked and they have selected
             if (Input.GetMouseButtonDown(0) && selectedSlot?.Slot != null)
             {
+                //If the object is not stackable
+                //this means the object has not been destroyed previously as the effect is 
+                //gameobject dependent (such as throwing the object)
+                if (!selectedSlot.Slot.isStackable)
+                {
+                    //Get the object reference
+                    GameObject f = selectedSlot.Slot.goRef;
+                    //Enable the collider
+                    f.GetComponent<Collider>().enabled = true;
+                    //Set the parent to null (since we are using it)
+                    f.transform.SetParent(null);
+                }
+
                 //Update the manager to know that we have used this item
                 manager.UseItem(selectedSlot.Slot.uid);
 
@@ -171,7 +152,7 @@ public class InventoryHandler : MonoBehaviour
 
                 GameObject go = selectedSlot.Slot.goRef;
                 //not a static func
-                if (!selectedSlot.Slot.isStackable && (!(go?.activeInHierarchy ?? true) || selectedSlot.Slot.bFollowHoldPoint))
+                if (!selectedSlot.Slot.isStackable)
                 {
                     //Show the object
                     go.SetActive(true);

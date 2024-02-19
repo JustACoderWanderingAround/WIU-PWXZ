@@ -9,7 +9,6 @@ public interface IInventoryItem
     public string GetItemDescription();
     public bool GetItemIsStackable();
     public bool GetItemIsConsumable();
-    public bool GetFollowHoldPoint();
     public Sprite GetItemDisplaySprite();
     public System.Action GetItemEffect();
 

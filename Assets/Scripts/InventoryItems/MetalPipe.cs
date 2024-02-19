@@ -10,10 +10,7 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
     [SerializeField] private Sprite itemDisplayImage = null;
 
     private bool onCollide = false;
-    private bool isEnabled = false;
-    private bool hasRan = true;
 
-    private float _force = 0f;
     private void Awake()
     {
         pipeRB = GetComponent<Rigidbody>();
@@ -44,31 +41,9 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
     {
         return delegate 
         {
-            isEnabled = true;
-            hasRan = false;
-            _force = 5f;
+            pipeRB.isKinematic = false;
+            pipeRB.AddForce(Camera.main.transform.forward * 25f + Camera.main.transform.up * 10f, ForceMode.Impulse);
         };
-    }
-
-    private void Update()
-    {
-        if (isEnabled && Input.GetMouseButton(0))
-        {
-            _force += Time.deltaTime * 10f;
-            _force = Mathf.Clamp(_force, 5f, 15f);
-
-            transform.localPosition = Vector3.zero;
-            transform.localRotation = Quaternion.identity;
-        }
-        else if (!hasRan && isEnabled && !Input.GetMouseButton(0))
-        {
-            transform.parent = null;
-            GetComponent<Collider>().enabled = true;
-            pipeRB.useGravity = true;
-            pipeRB.AddForce(Camera.main.transform.forward * _force + Camera.main.transform.up * 5f, ForceMode.Impulse);
-            isEnabled = false;
-            _force = 0f;
-        }
     }
 
     private void OnCollisionEnter(Collision col)
@@ -78,8 +53,6 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
             if (!onCollide)
                 soundEmitter.EmitSound(SoundWPosition.SoundType.IMPORTANT);
         }
-        else
-            pipeRB.useGravity = false;
     }
 
     public GameObject GetGameObject()
@@ -92,8 +65,8 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
         return true;
     }
 
-    public bool GetFollowHoldPoint()
+    public Transform GetHandlerTransform()
     {
-        return true;
+        throw new NotImplementedException();
     }
 }

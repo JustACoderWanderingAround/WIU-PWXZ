@@ -4099,10 +4099,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.2892437
-  m_Height: 1.7429785
+  m_Radius: 0.1787735
+  m_Height: 1.7774857
   m_Direction: 1
-  m_Center: {x: -0.0071640015, y: 0.87444454, z: 0.028335154}
+  m_Center: {x: 0, y: 0.8916982, z: 0}
 --- !u!114 &2412446723295454380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4115,6 +4115,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee91313a010897b4abb44743d3ce18ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  metalPipe: {fileID: 7305274235474220461, guid: 23b5eed8189d5104eb3b23da15c55a69,
+    type: 3}
   itemHoldPoint: {fileID: 6746570868712825529}
   inventoryManager: {fileID: 11400000, guid: 564cbd8f240a2e44c9ccb932a83c0feb, type: 2}
 --- !u!114 &450732169239283216
@@ -4845,7 +4847,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2805097650269607318}
-  - component: {fileID: 1457348083930798533}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -8527,7 +8528,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6776031561765684770}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

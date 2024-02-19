@@ -44,9 +44,4 @@ public class EnergyDrink : MonoBehaviour, IInventoryItem
     {
         return gameObject;
     }
-
-    public bool GetFollowHoldPoint()
-    {
-        return false;
-    }
 }
