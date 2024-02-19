@@ -31,6 +31,7 @@ public class ShopUIController : MonoBehaviour
     public GameObject eDrink;
     public GameObject tCharge;
     public GameObject ammo;
+    public GameObject player;
 
 
     private int EDCount = 0;
@@ -175,17 +176,17 @@ public class ShopUIController : MonoBehaviour
             //Your code for button 3
             for (int i = 0; i < EDCount; i++)
             {
-                GameObject ed = Instantiate(eDrink, transform.position, Quaternion.identity);
+                GameObject ed = Instantiate(eDrink, player.transform.position, Quaternion.identity);
             }
 
             for (int i = 0; i < TCCount; i++)
             {
-                GameObject tc = Instantiate(tCharge, transform.position, Quaternion.identity);
+                GameObject tc = Instantiate(tCharge, player.transform.position, Quaternion.identity);
             }
 
             for (int i = 0; i < AMCount; i++)
             {
-                GameObject am = Instantiate(ammo, transform.position, Quaternion.identity);
+                GameObject am = Instantiate(ammo, player.transform.position, Quaternion.identity);
             }
 
             money -= cost;
