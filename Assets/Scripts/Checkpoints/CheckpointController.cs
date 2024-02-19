@@ -2,16 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
-using static UnityEditor.Progress;
 using UnityEngine.SceneManagement;
-using UnityEditor.UIElements;
 
 public class CheckpointController : MonoBehaviour
 {
     public InventoryManager inventoryManager;
     public GameObject inventoryCache;
     private SceneManagement sceneManagement;
+    public static CheckpointController Instance;
+
     public List<ItemState> ItemsList { get; private set; }
     private Vector3 lastCheckpointPos;
 
@@ -21,10 +20,10 @@ public class CheckpointController : MonoBehaviour
        
         sceneManagement = SceneManagement.Instance;
         ItemsList = new List<ItemState>();
-        DontDestroyOnLoad(this);
+        Instance = this;
+        if (transform.parent == null)
+            DontDestroyOnLoad(this);
     }
-
-
 
     public void Save(Collider other)
     {

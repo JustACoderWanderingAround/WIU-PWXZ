@@ -12,5 +12,10 @@ public class UIController : MonoBehaviour
     {
         staminaBar.value = currentStamina;
         staminaBar.maxValue = maxStamina;
+
+        if (currentStamina >= maxStamina)
+            staminaBar.gameObject.SetActive(false);
+        else
+            staminaBar.gameObject.SetActive(true);
     }
 }

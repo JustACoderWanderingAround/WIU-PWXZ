@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class FlickerLight : MonoBehaviour
 {
-    [SerializeField] private Light light;
-    private float interval = 1;
-    private float flicker = 0.2f;
+    [SerializeField] private Light flickerLight;
+    [SerializeField] private float interval = 1;
+    [SerializeField] private float flicker = 0.2f;
 
-    private float defaultIntensity;
-    private float minIntensity = 0.5f;
+    [SerializeField] private float defaultIntensity;
+    [SerializeField] private float minIntensity = 0.5f;
     private bool isOn;
     private float counter;
     private float delay;
@@ -18,7 +18,7 @@ public class FlickerLight : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        defaultIntensity = light.intensity;
+        defaultIntensity = flickerLight.intensity;
     }
 
     // Update is called once per frame
@@ -37,13 +37,13 @@ public class FlickerLight : MonoBehaviour
 
         if (isOn)
         {
-            light.intensity = defaultIntensity;
+            flickerLight.intensity = defaultIntensity;
             delay = Random.Range(0, interval);
         }
 
         else
         {
-            light.intensity = Random.Range(minIntensity, defaultIntensity);
+            flickerLight.intensity = Random.Range(minIntensity, defaultIntensity);
             delay = Random.Range(0, flicker);
         }
 

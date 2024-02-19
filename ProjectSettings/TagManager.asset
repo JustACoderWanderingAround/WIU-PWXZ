@@ -9,6 +9,7 @@ TagManager:
   - Poop
   - Checkpoint
   - Item
+  - Interactable
   layers:
   - Default
   - TransparentFX

@@ -266,6 +266,7 @@ public class MovementController : MonoBehaviour
             playerRB.drag = 0;
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Hazard") || other.gameObject.CompareTag("Poop"))
