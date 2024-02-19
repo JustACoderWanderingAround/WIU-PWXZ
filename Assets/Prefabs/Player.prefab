@@ -4277,6 +4277,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopNameCanvas: {fileID: 8692252108487938639}
   shopCatalogueCanvas: {fileID: 5124361581106287055}
+  buttonEDDec: {fileID: 8604251947761300611}
+  buttonEDInc: {fileID: 3681090446174203254}
+  buttonTCDec: {fileID: 1558577931732568582}
+  buttonTCInc: {fileID: 6681246246156093007}
+  buttonAMDec: {fileID: 2496180867459116577}
+  buttonAMInc: {fileID: 6562659117925459369}
+  buttonBuy: {fileID: 2494408879166518457}
+  EDCountText: {fileID: 909627297325673187}
+  TCCountText: {fileID: 1659007624545338830}
+  AMCountText: {fileID: 188411193089541256}
+  totalText: {fileID: 4678902978574740384}
+  moneyText: {fileID: 5601155258021704182}
+  eDrink: {fileID: 8553361999668326925, guid: 15f3451256154d54681f5d92c683d9c9, type: 3}
+  tCharge: {fileID: 8068978003744245330, guid: 9987bd3850fec10458c6af3df4773bc0, type: 3}
+  ammo: {fileID: 6365114412934605305, guid: 23b5eed8189d5104eb3b23da15c55a69, type: 3}
+  player: {fileID: 3390288682706650560}
 --- !u!114 &8417268553546557771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4284,7 +4300,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2742940542485384995}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0eaf1bcbc5b33594d9f23560c33ae2db, type: 3}
   m_Name: 

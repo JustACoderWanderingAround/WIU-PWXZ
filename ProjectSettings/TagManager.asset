@@ -10,6 +10,10 @@ TagManager:
   - Checkpoint
   - Item
   - Shop
+  - TCShop
+  - EDShop
+  - EDrinkShop
+  - AMShop
   layers:
   - Default
   - TransparentFX

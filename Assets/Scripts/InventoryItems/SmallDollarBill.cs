@@ -28,7 +28,7 @@ public class SmallDollarBill : MonoBehaviour, IInventoryItem
         return delegate
         {
             //ShopItemController.Instance.
-            ShopItemController.Instance.AddMoney(100);
+            ShopUIController.Instance.SetMoney(100);
             //shopItemController.AddMoney(100);
         };
     }

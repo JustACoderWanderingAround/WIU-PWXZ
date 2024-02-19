@@ -44,7 +44,10 @@ public class ShopItemController : MonoBehaviour
         //}
         //DontDestroyOnLoad(this);
 
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
         moneyText.text = "Money: $" + money.ToString();
         //moneyText.text = money.ToString();
     }
@@ -158,9 +161,14 @@ public class ShopItemController : MonoBehaviour
         }
     }
 
-    public void AddMoney(int moneyadded)
+    public void SetMoney(int moneyadded)
     {
         money += moneyadded;
+    }
+
+    public int GetMoney()
+    {
+        return money;
     }
 
     void OnDisable()
