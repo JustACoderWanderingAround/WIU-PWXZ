@@ -26,6 +26,7 @@ public class CameraBehaviour : MonoBehaviour
     [Header("States")]
     public float idleTime = 3f;
     public float speedMultiplier = 2f;
+    public bool isHostile = true;
 
     private GameObject targetGO;
     private Bounds targetBounds;
@@ -108,6 +109,10 @@ public class CameraBehaviour : MonoBehaviour
 
     public void UpdatePhysics()
     {
+        //If its not hostile, dont check for detect player
+        if (!isHostile)
+            return;
+
         if (targetGO == null)
         {
             //Detect once per physics frame to reduce calculation
