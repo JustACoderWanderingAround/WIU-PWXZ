@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private UIController uiController;
     private CheckpointController checkpointController;
     private GameObject collidedInteractable;
+    private ShopUIController shopController;
 
     public Transform itemHoldPoint;
     public Transform leftHandPoint;
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour
         cameraCapture = GetComponent<CameraCapture>();
         checkpointController = GetComponent<CheckpointController>();
         cameraCapture.SubscribeOnCapture(OnScreenCapture);
+        shopController = GetComponent<ShopUIController>();
 
         // Initialize components
         movementController.IntializeMovementController();
@@ -142,6 +144,12 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider col)
     {
+        if (col.gameObject.CompareTag("Shop"))
+        {
+            shopController.SetShopNameActive(col);
+        }
+       
+
         if (col.gameObject.CompareTag("Checkpoint"))
             checkpointController.Save(col);
         if (col.gameObject.CompareTag("ConversationalPartner")) {
@@ -156,5 +164,7 @@ public class PlayerController : MonoBehaviour
         uiController.SetDialogueBoxActive(false);
          if (col.CompareTag("Interactable"))
             collidedInteractable = null;
+        if (col.gameObject.CompareTag("Shop"))
+            shopController.SetShopNameActive(col);
     }
 }
