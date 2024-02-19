@@ -42,6 +42,8 @@ public class MovementController : MonoBehaviour
     public void SetUseStamina(bool isUsing)
     {
         useStamina = isUsing;
+        if (!useStamina)
+            stamina = 100;
     }
 
     public void ToggleSprint()
