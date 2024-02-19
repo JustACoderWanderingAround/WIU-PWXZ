@@ -18,9 +18,9 @@ public class RotaryLocker : MiniGame
     int curr;
     int tolerance = 3;
     int target;
-    private new void OnEnable()
+    private void OnEnable()
     {
-        base.OnEnable();
+        EnableMinigame();
         curr = 0;
         target = UnityEngine.Random.Range(0, 100);
         mainText.text = "Code: " + target + "\nNumbers left: " + (3 - curr).ToString();

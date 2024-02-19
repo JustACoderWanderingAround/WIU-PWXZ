@@ -11,8 +11,6 @@ public class PlayerController : MonoBehaviour
     private CheckpointController checkpointController;
     private ShopUIController shopController;
 
-    // Temporary
-    public GameObject metalPipe;
     public Transform itemHoldPoint;
 
     [SerializeField]
@@ -30,16 +28,8 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject.transform.parent.gameObject);
             return;
         }
-        DontDestroyOnLoad(this);
-
-        Instance = this;
-        // Hide cursor
-        Cursor.lockState = CursorLockMode.Locked;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    { 
+        if (transform.parent == null)
+            DontDestroyOnLoad(this);
 
         // Get player components
         movementController = GetComponent<MovementController>();
@@ -54,6 +44,10 @@ public class PlayerController : MonoBehaviour
         // Initialize components
         movementController.IntializeMovementController();
         inventoryManager.Init();
+
+        Instance = this;
+        // Hide cursor
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void OnScreenCapture(GameObject[] gameObjects)
@@ -94,6 +88,9 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
             shopController.SetShopCatalogueActive();
+        if (Input.GetKeyDown(KeyCode.E) && collidedInteractable != null)
+            if (collidedInteractable.TryGetComponent(out IInteractable interactable))
+                interactable.OnInteract();
 
         movementController.UpdateAnimation();
         movementController.UpdateFootprints();
@@ -119,12 +116,12 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         movementController.MovePlayer();
-
     }
 
     private void OnCollisionEnter(Collision col)
     {
-        movementController.EnterCollision(col);
+        if (movementController != null)
+            movementController.EnterCollision(col);
     }
 
     private void OnCollisionExit(Collision col)
@@ -132,7 +129,7 @@ public class PlayerController : MonoBehaviour
         movementController.ExitCollision(col);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider col)
     {
         checkpointController.Save(other);
         shopController.SetShopNameActive(other);
@@ -141,5 +138,10 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         shopController.SetShopNameActive(other);
+        if (checkpointController != null)
+            checkpointController.Save(col);
+
+        if (col.CompareTag("Interactable"))
+            collidedInteractable = col.gameObject;
     }
 }

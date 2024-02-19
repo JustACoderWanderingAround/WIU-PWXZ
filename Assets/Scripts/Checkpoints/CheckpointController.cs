@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEngine.EventSystems.EventTrigger;
-
 
 public class CheckpointController : MonoBehaviour
 {
     public InventoryManager inventoryManager;
     public GameObject inventoryCache;
     private SceneManagement sceneManagement;
+    public static CheckpointController Instance;
+
     public List<ItemState> ItemsList { get; private set; }
     public List<EnemyState> EnemiesList { get; private set; }
     private Vector3 lastCheckpointPos;
@@ -24,8 +24,6 @@ public class CheckpointController : MonoBehaviour
         EnemiesList = new List<EnemyState>();
         DontDestroyOnLoad(this);
     }
-
-
 
     public void Save(Collider other)
     {

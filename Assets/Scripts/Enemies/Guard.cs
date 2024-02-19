@@ -9,6 +9,8 @@ public class Guard : MonoBehaviour, IEventListener
     private EnemyUIController enemyUIController;
 
     [SerializeField] private Animator animator;
+    [SerializeField] private Light spotLight;
+    private Color lightColor = Color.white;
 
     // Waypoints
     [SerializeField] private Transform[] waypoints;
@@ -23,6 +25,7 @@ public class Guard : MonoBehaviour, IEventListener
     public readonly int Stunned = Animator.StringToHash("Stun");
 
     private Coroutine increaseSuspicion = null;
+    private bool caughtPlayer = false;
 
     public enum GuardState
     {
@@ -55,6 +58,28 @@ public class Guard : MonoBehaviour, IEventListener
         PostOffice.GetInstance().Subscribe(gameObject);
     }
 
+    private void ChangeColor(Color newColor)
+    {
+        StartCoroutine(DoChangeColor(newColor));
+    }
+
+    private IEnumerator DoChangeColor(Color newColor)
+    {
+        Color startColor = spotLight.color;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < 0.5f)
+        {
+            float t = elapsedTime / 0.5f;
+            spotLight.color = Color.Lerp(startColor, newColor, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        spotLight.color = newColor;
+        lightColor = newColor;
+    }
+
     public void ChangeState(GuardState nextState)
     {
         currentState = nextState;
@@ -66,20 +91,24 @@ public class Guard : MonoBehaviour, IEventListener
                 animator.CrossFade(Idle, 0.1f);
                 break;
             case GuardState.PATROL:
+                ChangeColor(Color.white);
                 animator.CrossFade(Walk, 0.1f);
                 aiNavigation.SetNavMeshTarget(waypoints[waypointIndex].position, 2f);
                 break;
             case GuardState.CHASE:
+                ChangeColor(Color.red);
                 animator.CrossFade(Sprint, 0.1f);
                 break;
             case GuardState.LOOK_AROUND:
                 animator.CrossFade(LookAround, 0.1f);
                 break;
             case GuardState.SEARCH:
+                ChangeColor(Color.red);
                 animator.CrossFade(Walk, 0.1f);
                 aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
                 break;
             case GuardState.STUNNED:
+                ChangeColor(Color.yellow);
                 animator.CrossFade(Stunned, 0.1f);
                 aiNavigation.StopNavigation();
                 break;
@@ -112,10 +141,11 @@ public class Guard : MonoBehaviour, IEventListener
                 if (!fov.CheckTargetInLineOfSight(out positionOfInterest, 10000))
                 {
                     enemyUIController.StartDecaySuspicion();
+                    aiNavigation.StopNavigation();
                     ChangeState(GuardState.SEARCH);
                 }
 
-                aiNavigation.SetNavMeshTarget(positionOfInterest, 2f);
+                aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
 
                 break;
             case GuardState.LOOK_AROUND:
@@ -146,6 +176,7 @@ public class Guard : MonoBehaviour, IEventListener
                 break;
         }
 
+        // Check if player is in visible range
         if (fov.FindVisibleTargets(out List<Collider> targets) &&
             currentState != GuardState.CHASE &&
             currentState != GuardState.STUNNED)
@@ -179,6 +210,13 @@ public class Guard : MonoBehaviour, IEventListener
                 aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
             }
         }
+
+        // Check if guard catch player
+        if (Vector3.Distance(transform.position, PlayerController.Instance.transform.position) <= 1f && !caughtPlayer)
+        {
+            caughtPlayer = true;
+            CheckpointController.Instance.Load();
+        }
     }
 
     public void RespondToSound(SoundWPosition sound)
@@ -194,6 +232,9 @@ public class Guard : MonoBehaviour, IEventListener
 
     private void OnSuspicionIncrease(float amount, Vector3 position, GuardState nextState)
     {
+        if (currentState == GuardState.STUNNED)
+            return;
+
         if (increaseSuspicion == null)
             increaseSuspicion = StartCoroutine(IncreaseSuspicion(amount, position, nextState));
     }
