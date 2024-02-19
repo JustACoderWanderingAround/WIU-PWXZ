@@ -22,23 +22,6 @@ public class MiniGamePicker : MonoBehaviour, IInteractable
         chosenGame = Random.Range(0, miniGameContainer.transform.childCount);
         miniGameContainer.transform.GetChild(chosenGame).gameObject.SetActive(true);
     }
-    void Update() { 
-    //{
-    //    if (withinRange)
-    //    {
-    //        if (!alertBoxCanvas.activeInHierarchy && !chosen)
-    //            alertBoxCanvas.SetActive(true);
-    //        if (Input.GetKeyDown(KeyCode.E))
-    //        {
-               
-    //        }
-    //    }
-    //    else
-    //    {
-    //        if (alertBoxCanvas.activeInHierarchy || chosen)
-    //            alertBoxCanvas.SetActive(false);
-    //    }
-    }
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Player"))  
