@@ -155,7 +155,7 @@ public class LaserBehaviour : MonoBehaviour, IEventListener
 
     public void RespondToSound(SoundWPosition sound)
     {
-        if (sound.soundType == SoundWPosition.SoundType.IMPORTANT)
+        if (sound.soundType == SoundWPosition.SoundType.MOVEMENT)
         {
             bIsActivated = true;
             activatedTime = 0f;

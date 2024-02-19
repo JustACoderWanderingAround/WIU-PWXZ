@@ -1697,7 +1697,7 @@ PrefabInstance:
     - target: {fileID: 1829159785429930611, guid: 4ecd19485db35de4199eb28a22ec0490,
         type: 3}
       propertyPath: bRespondToSound
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1829159785429930611, guid: 4ecd19485db35de4199eb28a22ec0490,
         type: 3}
