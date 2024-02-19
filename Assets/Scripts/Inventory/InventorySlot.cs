@@ -12,6 +12,7 @@ public class InventorySlot
     public string itemDescription;
     public bool isStackable;
     public bool isConsumable;
+    public bool bFollowHoldPoint;
     public int itemCount;
     public Action itemEffect;
 
@@ -19,12 +20,13 @@ public class InventorySlot
     public GameObject goRef { get; private set; }
 
     public InventorySlot(int _uid, string _itemName, string _itemDescription, 
-        Action _itemEffect, Sprite _itemDisplayImage, GameObject obj, bool _isStackable = false, bool _isConsumable = false, int _itemCount = 1)
+        Action _itemEffect, Sprite _itemDisplayImage, GameObject obj, bool _followHoldPoint, bool _isStackable = false, bool _isConsumable = false, int _itemCount = 1)
     {
         uid = _uid;
         itemName = _itemName;
         itemDescription = _itemDescription;
         itemEffect = _itemEffect;
+        bFollowHoldPoint = _followHoldPoint;
         isStackable = _isStackable;
         itemCount = _itemCount;
         itemDisplayImage = _itemDisplayImage;

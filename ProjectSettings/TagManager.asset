@@ -12,6 +12,7 @@ TagManager:
   - Item
   - LeftHalf
   - RightHalf
+  - Interactable
   layers:
   - Default
   - TransparentFX
