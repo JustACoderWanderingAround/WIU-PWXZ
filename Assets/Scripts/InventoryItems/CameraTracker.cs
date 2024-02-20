@@ -91,7 +91,7 @@ public class CameraTracker : MonoBehaviour, IInventoryItem
             UpdateTransform();
         }
         //Slowly change the position and make sure the parent is something
-        if (targetPosition != transform.localPosition && transform.parent != null)
+        if (targetPosition != transform.localPosition && (transform.parent?.name.Contains("HoldPoint") ?? false))
         {
             transform.localPosition = Vector3.Lerp(transform.localPosition, targetPosition, Time.deltaTime * 5f);
         }

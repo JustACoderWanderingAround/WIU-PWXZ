@@ -208,7 +208,6 @@ GameObject:
   - component: {fileID: 2161080861012581539}
   - component: {fileID: 6463891446382476799}
   - component: {fileID: 3390487855996667550}
-  - component: {fileID: 9182294612540697932}
   m_Layer: 0
   m_Name: tablet
   m_TagString: Untagged
@@ -272,20 +271,6 @@ MonoBehaviour:
   offsetY: 0.05
   defaultTexture: {fileID: 2800000, guid: b817c21b3dd3f2e449f88957c9cb76f4, type: 3}
   targetMaterial: {fileID: 2100000, guid: 470d31ae1110a9b42a30a6670890c93c, type: 2}
---- !u!114 &9182294612540697932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6739096975952077301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28c3f6d64f163e84ba58eaba36862dbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftHandGrabPosition: {fileID: 6067839145776435770}
-  rightHandGrabPosition: {fileID: 4561234679825653622}
 --- !u!1 &7924705995533378259
 GameObject:
   m_ObjectHideFlags: 0
