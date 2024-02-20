@@ -2828,7 +2828,7 @@ Animator:
   m_GameObject: {fileID: 2742940542485384995}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cecdf9d552926834fa39c9b09791551c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4350,7 +4350,7 @@ GameObject:
   - component: {fileID: 7447716024204286765}
   - component: {fileID: 1433075768991313522}
   m_Layer: 0
-  m_Name: AimRig
+  m_Name: HeadAim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4413,8 +4413,8 @@ MonoBehaviour:
         transform: {fileID: 0}
         weight: 0
     m_Offset: {x: 0, y: 0, z: 0}
-    m_MinLimit: -180
-    m_MaxLimit: 180
+    m_MinLimit: -80
+    m_MaxLimit: 80
     m_AimAxis: 4
     m_UpAxis: 2
     m_WorldUpType: 0
@@ -5828,7 +5828,7 @@ Transform:
   m_GameObject: {fileID: 6730109615410611494}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.105, z: 0.165}
+  m_LocalPosition: {x: 0, y: 0.177, z: 0.165}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8095,7 +8095,7 @@ GameObject:
   - component: {fileID: 8732226572650823562}
   - component: {fileID: 1398575007112106334}
   m_Layer: 0
-  m_Name: HeadAimRig
+  m_Name: AimRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
