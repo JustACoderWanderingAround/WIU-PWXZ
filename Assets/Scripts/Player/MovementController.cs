@@ -27,10 +27,10 @@ public class MovementController : MonoBehaviour
     float maxFPTimer = 10f;
     float shitTimer;
 
-    float subOffset = 1.0f;
-    float subRange = 2.0f;
+    float subOffset = 0.875f;
+    float subRange = 1.75f;
     float submergence;
-    float buoyancy = 1.75f;
+    float buoyancy = 2.25f;
     private float _y = 0f;
     Vector3 gravity;
     LayerMask waterMask;
@@ -110,12 +110,12 @@ public class MovementController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.R))
         {
-            _y = 1f;
+            _y = 1.5f;
         }
         // move down
         else if (Input.GetKey(KeyCode.F))
         {
-            _y = -1f;
+            _y = -1.5f;
         }
         else
         {
@@ -126,8 +126,7 @@ public class MovementController : MonoBehaviour
         if (inWater)
         {
             playerRB.velocity +=
-                gravity * ((1f - buoyancy * submergence) * Time.deltaTime) * 2f;
-           
+                gravity * ((1f - buoyancy * submergence) * Time.deltaTime);
         }
 
         isMoving = horizontal != 0 || vertical != 0;
@@ -265,10 +264,7 @@ public class MovementController : MonoBehaviour
         }
         Vector3 force;
 
-        //if (inWater)
-        //{
-        //    float z = 
-        //}
+
 
         // Adjust drag & force
         if (isGrounded)
@@ -303,20 +299,20 @@ public class MovementController : MonoBehaviour
 
     public void CheckSubmergence()
     {
-        if (Physics.Raycast(transform.position + Vector3.up * subOffset, 
-            -Vector3.up, 
-            out RaycastHit hit, subRange + 1f,
-            waterMask))
+        if (Physics.Raycast(transform.position + transform.up * subOffset,
+            -transform.up, out RaycastHit hit) )
         {
-            submergence = 1.0f - hit.distance / subRange;
-            Debug.Log(submergence);
+            if (hit.collider.tag == "Water")
+            {
+                submergence = 1.0f - hit.distance / subRange;
+            }
+            else
+            {
+                submergence = 1f;
+            }
         }
 
-        else
-        {
-            submergence = 1f;
-            Debug.Log(submergence);
-        }
+      
     }
 
     public bool GetInWater()
@@ -355,6 +351,8 @@ public class MovementController : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
         {
             CheckSubmergence();
+            moveSpeed = movementData.swimSpeed;
+            playerRB.drag = movementData.waterDrag;
         }
     }
 
@@ -365,14 +363,12 @@ public class MovementController : MonoBehaviour
             CheckSubmergence();
         }
     }
-
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Hazard"))
-            hazardMult = 1.0f;
         if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
         {
-            CheckSubmergence();
+            moveSpeed = movementData.walkSpeed;
+            playerRB.drag = movementData.groundDrag;
         }
     }
 }
