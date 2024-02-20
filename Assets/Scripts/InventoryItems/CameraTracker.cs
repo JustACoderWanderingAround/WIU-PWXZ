@@ -82,6 +82,13 @@ public class CameraTracker : MonoBehaviour, IInventoryItem
 
     private void OnDisable()
     {
+        if (isEnabled)
+        {
+            AudioManager.Instance.Play("TurnOff");
+            AudioManager.Instance.Stop("Static");
+        }
+
+        isEnabled = false;
         targetMaterial.SetTexture("_Texture2D", defaultTexture);
     }
 

@@ -122,6 +122,7 @@ public class InventoryHandler : MonoBehaviour
                     }
                 }
                 //Set selected slot to null
+                selectedSlot?.Highlight(true);
                 selectedSlot = null;
             }
             //If its open
@@ -167,6 +168,7 @@ public class InventoryHandler : MonoBehaviour
                         trToR.Add(activeObjectTransform.GetChild(i));
                     }
                     trToR.ForEach((t) => t.SetParent(inventoryTransform));
+                    trToR.ForEach((t) => SetLayer(t, LayerMask.NameToLayer("Default")));
                 }
 
                 GameObject go = selectedSlot.Slot.goRef;
@@ -175,6 +177,7 @@ public class InventoryHandler : MonoBehaviour
                 {
                     //Show the object
                     go.SetActive(true);
+                    SetLayer(go.transform, LayerMask.NameToLayer("ActiveInventory"));
                     //Set parent to where it should be placed at
                     go.transform.SetParent(activeObjectTransform);
                     go.transform.localPosition = Vector3.zero;
@@ -291,5 +294,12 @@ public class InventoryHandler : MonoBehaviour
         }
     }
 
-    
+    private void SetLayer(Transform tr, int layer)
+    {
+        tr.gameObject.layer = layer;
+        foreach(Transform child in tr.GetComponentsInChildren<Transform>())
+        {
+            child.gameObject.layer = layer;
+        }
+    }
 }
