@@ -41,6 +41,7 @@ public class EnergyDrink : MonoBehaviour, IInventoryItem
         AnimationController animationController = AnimationController.Instance;
         animationController.ChangeAnimation(animationController.Drinking, 0.1f, animationController.GetAnimationClip(animationController.Drinking).length, 0);
         PlayerController.Instance.SetDontUseStamina(10f);
+        AudioManager.Instance.Play("Drink");
 
         yield return new WaitForSeconds(animationController.GetAnimationClip(animationController.Drinking).length);
 

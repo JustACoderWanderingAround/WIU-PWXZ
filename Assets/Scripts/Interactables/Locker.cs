@@ -30,11 +30,13 @@ public class Locker : MonoBehaviour, IInteractable
         {
             doorCollider.isTrigger = true;
             animator.SetTrigger("open");
+            AudioManager.Instance.Play("LockerOpen");
         }
         else if (!isOpen)
         {
             doorCollider.isTrigger = false;
             animator.SetTrigger("close");
+            AudioManager.Instance.Play("LockerClose");
         }
     }
     public void ForceDoorOpen()

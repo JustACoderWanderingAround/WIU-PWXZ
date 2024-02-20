@@ -47,6 +47,16 @@ public class CameraTracker : MonoBehaviour, IInventoryItem
         targetPosition = new Vector3(0f, isEnabled ? 0f : offsetY, 0f);
 
         isEnabled = !isEnabled;
+        if (isEnabled)
+        {
+            AudioManager.Instance.Play("TurnOn");
+            AudioManager.Instance.Play("Static");
+        }
+        else
+        {
+            AudioManager.Instance.Play("TurnOff");
+            AudioManager.Instance.Stop("Static");
+        }
     }
 
     public bool GetItemIsConsumable()

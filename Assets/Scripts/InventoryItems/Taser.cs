@@ -75,10 +75,12 @@ public class Taser : MonoBehaviour, IInventoryItem
             guard.ChangeState(Guard.GuardState.STUNNED);
 
         canShoot = false;
+        AudioManager.Instance.Play("Taser");
 
         yield return new WaitForSeconds(0.75f);
 
         electricArc.SetActive(false);
+        AudioManager.Instance.Stop("Taser");
 
         yield return new WaitForSeconds(5f);
 
