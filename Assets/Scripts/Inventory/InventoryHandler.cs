@@ -122,6 +122,7 @@ public class InventoryHandler : MonoBehaviour
                     }
                 }
                 //Set selected slot to null
+                selectedSlot?.Highlight(true);
                 selectedSlot = null;
             }
             //If its open
