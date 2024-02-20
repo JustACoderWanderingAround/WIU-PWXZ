@@ -280,6 +280,8 @@ public class InventoryHandler : MonoBehaviour
                 //Check if can add
                 if (manager.AddItem(item))
                 {
+                    AudioManager.Instance.Play("PickupItem");
+
                     other.gameObject.SetActive(false);
                     //Set collider to inactive
                     other.enabled = false;
