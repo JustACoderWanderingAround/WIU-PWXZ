@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public Transform leftHandPoint;
     public Transform rightHandPoint;
 
+    LayerMask waterMask;
+
     [SerializeField]
     private InventoryManager inventoryManager;
 
@@ -53,6 +55,7 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         LaserBehaviour.OnSubscribeHit(OnDetectLaserCollision);
+        waterMask = LayerMask.NameToLayer("Water");
     }
 
     private void OnDisable()
@@ -157,7 +160,7 @@ public class PlayerController : MonoBehaviour
         {
             shopController.SetShopNameActive(col);
         }
-        if (col.gameObject.CompareTag("Water"))
+        if ((waterMask & (1 << col.gameObject.layer)) != 0)
             globalVolumeController.SetWaterEffect();
 
         if (col.gameObject.CompareTag("Checkpoint"))
@@ -169,6 +172,16 @@ public class PlayerController : MonoBehaviour
         if (col.CompareTag("Interactable"))
             collidedInteractable = col.gameObject;
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
+        {
+            movementController.CheckSubmergence();
+        }
+    }
+
+
     private void OnTriggerExit(Collider col)
     {
         uiController.SetDialogueBoxActive(false);

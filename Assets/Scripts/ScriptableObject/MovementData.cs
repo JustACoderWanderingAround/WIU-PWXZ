@@ -8,6 +8,7 @@ public class MovementData : ScriptableObject
     public float walkSpeed;
     public float crouchSpeed;
     public float sprintSpeed;
+    public float swimSpeed;
 
     public float baseJumpForce;
     public float jumpChargeMultiplier;

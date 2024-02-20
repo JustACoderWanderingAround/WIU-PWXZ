@@ -27,10 +27,11 @@ public class MovementController : MonoBehaviour
     float maxFPTimer = 10f;
     float shitTimer;
 
-    float subOffset = 0.5f;
-    float subRange = 1f;
+    float subOffset = 1.0f;
+    float subRange = 2.0f;
     float submergence;
-    float buoyancy = 2.0f;
+    float buoyancy = 1.75f;
+    private float _y = 0f;
     Vector3 gravity;
     LayerMask waterMask;
 
@@ -79,7 +80,7 @@ public class MovementController : MonoBehaviour
 
     public void ToggleCrouch()
     {
-        if (!isGrounded)
+        if (!isGrounded || inWater)
             return;
 
         isCrouching = !isCrouching;
@@ -107,10 +108,26 @@ public class MovementController : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
+        if (Input.GetKey(KeyCode.R))
+        {
+            _y = 1f;
+        }
+        // move down
+        else if (Input.GetKey(KeyCode.F))
+        {
+            _y = -1f;
+        }
+        else
+        {
+            _y = 0f;
+        }
+
+
         if (inWater)
         {
             playerRB.velocity +=
-                gravity * ((1f - buoyancy * submergence) * Time.deltaTime);
+                gravity * ((1f - buoyancy * submergence) * Time.deltaTime) * 2f;
+           
         }
 
         isMoving = horizontal != 0 || vertical != 0;
@@ -122,7 +139,7 @@ public class MovementController : MonoBehaviour
             Vector3 sideDirection = Vector3.ProjectOnPlane(Camera.main.transform.right * horizontal, Vector3.up);
             if (inWater)
             {
-                Vector3 upDirection = Vector3.ProjectOnPlane(Camera.main.transform.up, Vector3.up);
+                Vector3 upDirection = new Vector3(0, _y, 0);
                 direction = (forwardDirection + sideDirection + upDirection).normalized;
             }
             else 
@@ -284,7 +301,7 @@ public class MovementController : MonoBehaviour
         }
     }
 
-    void CheckSubmergence()
+    public void CheckSubmergence()
     {
         if (Physics.Raycast(transform.position + Vector3.up * subOffset, 
             -Vector3.up, 
@@ -353,5 +370,9 @@ public class MovementController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Hazard"))
             hazardMult = 1.0f;
+        if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
+        {
+            CheckSubmergence();
+        }
     }
 }
