@@ -32,10 +32,19 @@ public class EnergyDrink : MonoBehaviour, IInventoryItem
             transform.SetParent(PlayerController.Instance.leftHandPoint);
             transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
 
-            AnimationController animationController = AnimationController.Instance;
-            animationController.ChangeAnimation(animationController.Drinking, 0.1f, animationController.GetAnimationClip(animationController.Drinking).length, 0);
-            PlayerController.Instance.SetDontUseStamina(10f);
+            StartCoroutine(OnUseDrink());
         };
+    }
+
+    private IEnumerator OnUseDrink()
+    {
+        AnimationController animationController = AnimationController.Instance;
+        animationController.ChangeAnimation(animationController.Drinking, 0.1f, animationController.GetAnimationClip(animationController.Drinking).length, 0);
+        PlayerController.Instance.SetDontUseStamina(10f);
+
+        yield return new WaitForSeconds(animationController.GetAnimationClip(animationController.Drinking).length);
+
+        Destroy(gameObject);
     }
 
     private void Update()
