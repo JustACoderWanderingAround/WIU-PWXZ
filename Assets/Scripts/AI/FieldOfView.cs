@@ -84,4 +84,50 @@ public class FieldOfView : MonoBehaviour
         targetPos = Vector3.zero;
         return false;
     }
+
+    public bool CheckInteractableInteracted(out Vector3 targetPos, out IInteractable targetInteractable)
+    {
+        targetInteractable = null;
+
+        Collider[] colliders = Physics.OverlapSphere(viewPoint.position, viewRadius);
+        foreach (Collider col in colliders)
+        {
+            if (!col.CompareTag("Interactable"))
+                continue;
+
+            Vector3 dir = (col.transform.position - viewPoint.position).normalized;
+
+            if (Vector3.Angle(viewPoint.forward, dir) < viewAngle / 2)
+            {
+                float dist = Vector3.Distance(viewPoint.position, col.transform.position);
+
+                RaycastHit hit;
+                if (Physics.Raycast(viewPoint.position, dir, out hit, dist, obstacleMask))
+                {
+                    if (!hit.collider.gameObject.CompareTag("Interactable"))
+                        break;
+
+                    IInteractable interactable = col.gameObject.GetComponent<IInteractable>();
+
+                    if (interactable == null)
+                        continue;
+
+                    if (interactable.isInteracted)
+                    {
+                        targetInteractable = interactable;
+                        targetPos = col.transform.position + -col.transform.right * 2f;
+                        return true;
+                    }
+                    else
+                    {
+                        targetPos = Vector3.zero;
+                        return false;
+                    }
+                }
+            }
+        }
+
+        targetPos = Vector3.zero;
+        return false;
+    }
 }
