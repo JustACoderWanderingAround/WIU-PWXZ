@@ -11,6 +11,9 @@ public class MiniGamePicker : MonoBehaviour, IInteractable
     int chosenGame;
     bool withinRange, chosen;
 
+    private bool interacted;
+    public bool isInteracted { get => interacted; set => interacted = value; }
+
     private void OnEnable()
     {
         withinRange = false;

@@ -47,6 +47,16 @@ public class CameraTracker : MonoBehaviour, IInventoryItem
         targetPosition = new Vector3(0f, isEnabled ? 0f : offsetY, 0f);
 
         isEnabled = !isEnabled;
+        if (isEnabled)
+        {
+            AudioManager.Instance.Play("TurnOn");
+            AudioManager.Instance.Play("Static");
+        }
+        else
+        {
+            AudioManager.Instance.Play("TurnOff");
+            AudioManager.Instance.Stop("Static");
+        }
     }
 
     public bool GetItemIsConsumable()
@@ -72,6 +82,13 @@ public class CameraTracker : MonoBehaviour, IInventoryItem
 
     private void OnDisable()
     {
+        if (isEnabled)
+        {
+            AudioManager.Instance.Play("TurnOff");
+            AudioManager.Instance.Stop("Static");
+        }
+
+        isEnabled = false;
         targetMaterial.SetTexture("_Texture2D", defaultTexture);
     }
 
@@ -91,7 +108,7 @@ public class CameraTracker : MonoBehaviour, IInventoryItem
             UpdateTransform();
         }
         //Slowly change the position and make sure the parent is something
-        if (targetPosition != transform.localPosition && transform.parent != null)
+        if (targetPosition != transform.localPosition && (transform.parent?.name.Contains("HoldPoint") ?? false))
         {
             transform.localPosition = Vector3.Lerp(transform.localPosition, targetPosition, Time.deltaTime * 5f);
         }

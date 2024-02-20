@@ -5,6 +5,7 @@ using UnityEngine;
 public class LaserBehaviour : MonoBehaviour, IEventListener
 {
     private static System.Action<Collider> onHit;
+    [SerializeField] private Transform endTransform;
 
     public static void OnSubscribeHit(System.Action<Collider> _onHit)
     {
@@ -30,6 +31,7 @@ public class LaserBehaviour : MonoBehaviour, IEventListener
     [Header("Animation")]
     public float laserTransitionTimeScale = 100f;
     public float positionTransitionTimeScale = 1f;
+    public bool bRenderLine = false;
 
     [Header("Waypoints")]
     public int wayIndex = 0;
@@ -59,7 +61,9 @@ public class LaserBehaviour : MonoBehaviour, IEventListener
     public void Initialise()
     {
         //If there is no line renderer component, add a line renderer component
-        lineRenderer = GetComponent<LineRenderer>() ?? gameObject.AddComponent<LineRenderer>();
+        lineRenderer = GetComponent<LineRenderer>();
+        if (lineRenderer == null)
+            lineRenderer = gameObject.AddComponent<LineRenderer>();
 
         //If target layer is not part of layer affected
         if ((layerAffected & targetLayer) <= 0)
@@ -72,6 +76,9 @@ public class LaserBehaviour : MonoBehaviour, IEventListener
         }
 
         pausedTime = pauseTime;
+
+        if (waypoints.Contains(null))
+            Debug.LogError(gameObject + "Waypoints Contain Null");
     }
 
     public void UpdateTransform()
@@ -159,8 +166,13 @@ public class LaserBehaviour : MonoBehaviour, IEventListener
             linePosition[1] = (shootRotation * rayDistance) + transform.position;
         }
 
-        //Set the positions
-        lineRenderer.SetPositions(linePosition);
+        //Update The rotation so the Laser wont be alternated
+        endTransform.parent.rotation = Quaternion.identity;
+        endTransform.position = linePosition[1];
+
+        if (bRenderLine)
+            //Set the positions
+            lineRenderer.SetPositions(linePosition);
     }
 
     public void RespondToSound(SoundWPosition sound)

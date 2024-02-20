@@ -70,11 +70,15 @@ public class MovementController : MonoBehaviour
         {
             moveSpeed = movementData.sprintSpeed;
             soundEmitter.SetEmissionRange(movementData.sprintNoiseRange);
+
+            AudioManager.Instance.Stop("Walk");
         }
         else
         {
             moveSpeed = movementData.walkSpeed;
             soundEmitter.SetEmissionRange(movementData.walkNoiseRange);
+
+            AudioManager.Instance.Stop("Sprint");
         }
     }
 
@@ -88,6 +92,8 @@ public class MovementController : MonoBehaviour
 
         if (isCrouching)
         {
+            AudioManager.Instance.Stop("Sprint");
+
             moveSpeed = movementData.crouchSpeed;
             playerCol.height = 0.8f;
             playerCol.center = new Vector3(playerCol.center.x, 0.4f, playerCol.center.z);
@@ -147,9 +153,20 @@ public class MovementController : MonoBehaviour
             }
             
 
+            // If player is walking
+            if (!isSprinting && isGrounded)
+                AudioManager.Instance.OnlyPlayAfterSoundEnds("Walk");
             // If player is sprinting and is moving
             if (isSprinting && playerRB.velocity.magnitude > 0.1f && useStamina)
+            {
                 stamina -= movementData.sprintStaminaCost * Time.deltaTime;
+
+                if (isGrounded)
+                {
+                    AudioManager.Instance.Stop("Walk");
+                    AudioManager.Instance.OnlyPlayAfterSoundEnds("Sprint");
+                }
+            }
             else if (!isSprinting && !isCrouching)
                 soundEmitter.SetEmissionRange(movementData.walkNoiseRange);
 
@@ -173,7 +190,11 @@ public class MovementController : MonoBehaviour
             soundEmitter.SetEmissionRange(0);
         }
 
-       
+        if (!isMoving || !isGrounded)
+        {
+            AudioManager.Instance.Stop("Walk");
+            AudioManager.Instance.Stop("Sprint");
+        }
 
         // Set player to falling if falling
         if (playerRB.velocity.y <= -0.5f)
@@ -223,6 +244,8 @@ public class MovementController : MonoBehaviour
         animationController.ChangeAnimation(animationController.Jump, 0f, 0, 0);
 
         jumpChargeTime = 0;
+
+        AudioManager.Instance.Play("Jump");
     }
 
     public void UpdateAnimation()
@@ -330,6 +353,7 @@ public class MovementController : MonoBehaviour
 
             soundEmitter.SetEmissionRange(movementData.landNoiseRange);
             soundEmitter.EmitSound(SoundWPosition.SoundType.MOVEMENT);
+            AudioManager.Instance.Play("Land");
         }
     }
 
@@ -347,6 +371,7 @@ public class MovementController : MonoBehaviour
         if (other.gameObject.CompareTag("Hazard") || other.gameObject.CompareTag("Poop"))
             hazardMult = 0.5f;
         if (other.gameObject.CompareTag("Poop"))
+        {
             shitTimer = maxFPTimer;
         if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
         {
@@ -361,6 +386,7 @@ public class MovementController : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
         {
             CheckSubmergence();
+            AudioManager.Instance.Play("Splat");
         }
     }
     private void OnTriggerExit(Collider other)

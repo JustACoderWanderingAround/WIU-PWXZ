@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 4
   crouchSpeed: 3
-  sprintSpeed: 5
+  sprintSpeed: 6
   baseJumpForce: 6
   jumpChargeMultiplier: 2.5
   airMultiplier: 0.4

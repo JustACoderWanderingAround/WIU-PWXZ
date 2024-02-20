@@ -6,6 +6,13 @@ using UnityEngine.UI;
 //Created by: Tan Xiang Feng Wayne
 public class UIInventory : MonoBehaviour
 {
+    public Button switchButton;
+    public Sprite InventoryIcon, PhotoAlbumIcon;
+
+    [Header("Inventory")]
+    public Transform InventoryTransform;
+    public Transform InventoryContentTransform;
+
     public UIInventorySlot slotPrefab;
     //to be set by Inventory handler 
     public List<InventorySlot> itemsToRender { get; set; }
@@ -27,15 +34,54 @@ public class UIInventory : MonoBehaviour
 
     public bool isRendering { get; private set; }
 
+    [Header("PhotoAlbum")]
+    public Transform PhotoAlbumTransform;
+    public PhotoAlbum photoAlbumHandler;
+
+    private bool isInventory = true;
+
     //Called by Inventory Handler and pass in items that are to be rendered inside the ui
     public void Initialise(List<InventorySlot> _itemsToRender)
     {
         itemsToRender = _itemsToRender;
+        switchButton.transform.GetChild(0).GetComponent<Image>().sprite = isInventory ? PhotoAlbumIcon : InventoryIcon;
     }
 
+    private void Start()
+    {
+        switchButton.onClick.AddListener(() => SwitchType());
+    }
+
+    private void SwitchType()
+    {
+        isInventory = !isInventory;
+
+        if (isInventory)
+        {
+            Render(true);
+        }
+        else
+        {
+            Clear(false);
+
+            InventoryTransform.gameObject.SetActive(false);
+            PhotoAlbumTransform.gameObject.SetActive(true);
+
+            if (!photoAlbumHandler.hasLoaded)
+                photoAlbumHandler.Reload();
+
+            photoAlbumHandler.RenderAllImage();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(itemCanvas.transform as RectTransform);
+        }
+
+        switchButton.transform.GetChild(0).GetComponent<Image>().sprite = isInventory ? PhotoAlbumIcon : InventoryIcon;
+    }
     //Update per frame
     public void UpdateTransform()
     {
+        if (!InventoryTransform.gameObject.activeInHierarchy)
+            return;
+
         //if cursor is hovering over something
         if (hoveringSlot)
         {
@@ -114,17 +160,22 @@ public class UIInventory : MonoBehaviour
         selectedSlot?.Highlight();
     }
 
-    public void Render()
+    public void Render(bool isInternal = false)
     {
         if (!isRendering)
-            StartCoroutine(RenderRoutine());
+            StartCoroutine(RenderRoutine(isInternal));
     }
 
-    private IEnumerator RenderRoutine()
+    private IEnumerator RenderRoutine(bool isInternal)
     {
+        isInventory = true;
+        PhotoAlbumTransform.gameObject.SetActive(false);
+        InventoryTransform.gameObject.SetActive(true);
+
         isRendering = true;
-        //Set lockstate to none so we can see cursor
-        previousCursorMode = Cursor.lockState;
+        if (!isInternal)
+            //Set lockstate to none so we can see cursor
+            previousCursorMode = Cursor.lockState;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         //Freeze during view
@@ -132,7 +183,7 @@ public class UIInventory : MonoBehaviour
         //Create a new gameobject based on the prefab for each object
         foreach (InventorySlot iSlot in itemsToRender)
         {
-            UIInventorySlot newUI = Instantiate(slotPrefab, transform);
+            UIInventorySlot newUI = Instantiate(slotPrefab, InventoryContentTransform);
             //Update the ui
             newUI.Initialise(iSlot);
             //update the list
@@ -159,11 +210,14 @@ public class UIInventory : MonoBehaviour
         yield break;
     }
 
-    public void Clear()
+    public void Clear(bool hide = true)
     {
-        //Set the lockstate back 
-        Cursor.lockState = previousCursorMode;
-        Time.timeScale = 1f;
+        if (hide)
+        {
+            //Set the lockstate back 
+            Cursor.lockState = previousCursorMode;
+            Time.timeScale = 1f;
+        }
         itemCanvas.alpha = 0;
         itemCanvas.gameObject.SetActive(false);
         if (renderedSlot.Count <= 0) return;
