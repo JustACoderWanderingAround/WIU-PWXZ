@@ -19,6 +19,7 @@ MonoBehaviour:
   jumpChargeMultiplier: 2.5
   airMultiplier: 0.4
   groundDrag: 5
+  waterDrag: 10
   sprintStaminaCost: 15
   jumpStaminaCost: 15
   maxStamina: 100

@@ -12467,7 +12467,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7702428484901215520}
         m_TargetAssemblyTypeName: ShopUIController, Assembly-CSharp
         m_MethodName: SetShopCatalogueActive
         m_Mode: 1

@@ -93,23 +93,23 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DistortStrength: 0.126
+    - _DistortStrength: 0.462
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Metallic: 0.52
-    - _NoiseScale: 10
-    - _NoiseStrength: 0.169
+    - _Metallic: 0.3
+    - _NoiseScale: 15
+    - _NoiseStrength: 0.305
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _ReflectionStrength: 0
-    - _Smoothness: 2.52
+    - _ReflectionStrength: 0.5
+    - _Smoothness: 1.03
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1

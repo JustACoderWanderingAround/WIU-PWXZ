@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private CheckpointController checkpointController;
     private GameObject collidedInteractable;
     private ShopUIController shopController;
+    private GlobalVolumeController globalVolumeController;
 
     public Transform itemHoldPoint;
     public Transform leftHandPoint;
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour
         checkpointController = GetComponent<CheckpointController>();
         cameraCapture.SubscribeOnCapture(OnScreenCapture);
         shopController = GetComponent<ShopUIController>();
+        globalVolumeController = GetComponent<GlobalVolumeController>();
 
         // Initialize components
         movementController.IntializeMovementController();
@@ -102,10 +104,14 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
             checkpointController.Load();
 
-        if (Input.GetKeyDown(KeyCode.E) && collidedInteractable != null)
-            if (collidedInteractable.TryGetComponent(out IInteractable interactable))
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            shopController.SetShopCatalogueActive();
+            if (collidedInteractable != null && collidedInteractable.TryGetComponent(out IInteractable interactable))
+            {
                 interactable.OnInteract();
-
+            }
+        }
         movementController.UpdateAnimation();
         movementController.UpdateFootprints();
 
@@ -129,7 +135,10 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        movementController.MovePlayer();
+        if (!movementController.GetInWater())
+            movementController.MovePlayer();
+        else if (movementController.GetInWater())
+            movementController.MovePlayer();
     }
 
     private void OnCollisionEnter(Collision col)
@@ -148,7 +157,8 @@ public class PlayerController : MonoBehaviour
         {
             shopController.SetShopNameActive(col);
         }
-       
+        if (col.gameObject.CompareTag("Water"))
+            globalVolumeController.SetWaterEffect();
 
         if (col.gameObject.CompareTag("Checkpoint"))
             checkpointController.Save(col);
@@ -166,5 +176,7 @@ public class PlayerController : MonoBehaviour
             collidedInteractable = null;
         if (col.gameObject.CompareTag("Shop"))
             shopController.SetShopNameActive(col);
+        if (col.gameObject.CompareTag("Water"))
+            globalVolumeController.SetWaterEffect();
     }
 }

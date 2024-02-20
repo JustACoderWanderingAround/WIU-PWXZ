@@ -14,6 +14,7 @@ public class MovementData : ScriptableObject
 
     public float airMultiplier;
     public float groundDrag;
+    public float waterDrag;
 
     public float sprintStaminaCost;
     public float jumpStaminaCost;

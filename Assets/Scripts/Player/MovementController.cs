@@ -14,6 +14,9 @@ public class MovementController : MonoBehaviour
     private bool isCrouching = false;
     private bool isGrounded = true;
 
+    private bool inWater => submergence > 0f;
+    private bool isSwimming;
+
     private Vector3 direction;
     public float stamina = 100;
     private float jumpChargeTime = 0;
@@ -23,6 +26,13 @@ public class MovementController : MonoBehaviour
     float hazardMult = 0.5f;
     float maxFPTimer = 10f;
     float shitTimer;
+
+    float subOffset = 0.5f;
+    float subRange = 1f;
+    float submergence;
+    float buoyancy = 2.0f;
+    Vector3 gravity;
+    LayerMask waterMask;
 
     private AnimationController animationController;
 
@@ -37,6 +47,8 @@ public class MovementController : MonoBehaviour
         soundEmitter = GetComponent<SoundEmitter>();
         footprintController = GetComponent<FootprintController>();
         shitTimer = 0;
+        waterMask = LayerMask.NameToLayer("Water");
+        gravity = Physics.gravity;
     }
 
     public void SetUseStamina(bool isUsing)
@@ -95,6 +107,12 @@ public class MovementController : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
+        if (inWater)
+        {
+            playerRB.velocity +=
+                gravity * ((1f - buoyancy * submergence) * Time.deltaTime);
+        }
+
         isMoving = horizontal != 0 || vertical != 0;
         if (isMoving)
         {
@@ -102,7 +120,16 @@ public class MovementController : MonoBehaviour
 
             Vector3 forwardDirection = Vector3.ProjectOnPlane(Camera.main.transform.forward * vertical, Vector3.up);
             Vector3 sideDirection = Vector3.ProjectOnPlane(Camera.main.transform.right * horizontal, Vector3.up);
-            direction = (forwardDirection + sideDirection).normalized;
+            if (inWater)
+            {
+                Vector3 upDirection = Vector3.ProjectOnPlane(Camera.main.transform.up, Vector3.up);
+                direction = (forwardDirection + sideDirection + upDirection).normalized;
+            }
+            else 
+            { 
+                direction = (forwardDirection + sideDirection).normalized; 
+            }
+            
 
             // If player is sprinting and is moving
             if (isSprinting && playerRB.velocity.magnitude > 0.1f && useStamina)
@@ -112,6 +139,8 @@ public class MovementController : MonoBehaviour
 
             soundEmitter.EmitSound(SoundWPosition.SoundType.MOVEMENT);
         }
+
+
         else if (!isMoving && isGrounded)
         {
             playerRB.velocity = Vector3.zero;
@@ -127,6 +156,8 @@ public class MovementController : MonoBehaviour
 
             soundEmitter.SetEmissionRange(0);
         }
+
+       
 
         // Set player to falling if falling
         if (playerRB.velocity.y <= -0.5f)
@@ -157,7 +188,7 @@ public class MovementController : MonoBehaviour
 
     public void HandleJump()
     {
-        if (!canJump || !isGrounded || isCrouching || stamina < movementData.jumpStaminaCost)
+        if (!canJump || inWater ||!isGrounded || isCrouching || stamina < movementData.jumpStaminaCost)
             return;
 
         canJump = false;
@@ -217,11 +248,17 @@ public class MovementController : MonoBehaviour
         }
         Vector3 force;
 
+        //if (inWater)
+        //{
+        //    float z = 
+        //}
+
         // Adjust drag & force
         if (isGrounded)
             force = direction * moveSpeed * 10f;
         else if (!isGrounded)
             force = direction * moveSpeed * 10f * movementData.airMultiplier;
+        
         else
             force = Vector3.zero;
 
@@ -247,9 +284,32 @@ public class MovementController : MonoBehaviour
         }
     }
 
+    void CheckSubmergence()
+    {
+        if (Physics.Raycast(transform.position + Vector3.up * subOffset, 
+            -Vector3.up, 
+            out RaycastHit hit, subRange + 1f,
+            waterMask))
+        {
+            submergence = 1.0f - hit.distance / subRange;
+            Debug.Log(submergence);
+        }
+
+        else
+        {
+            submergence = 1f;
+            Debug.Log(submergence);
+        }
+    }
+
+    public bool GetInWater()
+    {
+        return inWater;
+    }
+
     public void EnterCollision(Collision col)
     {
-        if (LayerMask.LayerToName(col.gameObject.layer) == "Ground")
+        if (LayerMask.LayerToName(col.gameObject.layer) == "Ground" && !inWater)
         {
             isGrounded = true;
             canJump = true;
@@ -262,7 +322,7 @@ public class MovementController : MonoBehaviour
 
     public void ExitCollision(Collision col)
     {
-        if (LayerMask.LayerToName(col.gameObject.layer) == "Ground")
+        if (LayerMask.LayerToName(col.gameObject.layer) == "Ground" && !inWater)
         {
             isGrounded = false;
             playerRB.drag = 0;
@@ -275,7 +335,20 @@ public class MovementController : MonoBehaviour
             hazardMult = 0.5f;
         if (other.gameObject.CompareTag("Poop"))
             shitTimer = maxFPTimer;
+        if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
+        {
+            CheckSubmergence();
+        }
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
+        {
+            CheckSubmergence();
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Hazard"))
