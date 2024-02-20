@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 510868428922294491}
   m_Layer: 6
-  m_Name: DoubleDesk
+  m_Name: DoubleDeskMissingChair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -345,11 +345,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 4625810074267954846, guid: f7d697c49aa3a8542bbf03a481ccc19b,
-        type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 4737745302085713953, guid: f7d697c49aa3a8542bbf03a481ccc19b,
         type: 3}
       propertyPath: m_Layer
@@ -370,11 +365,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 6709194306650518177, guid: f7d697c49aa3a8542bbf03a481ccc19b,
-        type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 7369873521482759872, guid: f7d697c49aa3a8542bbf03a481ccc19b,
         type: 3}
       propertyPath: m_Layer
@@ -386,7 +376,8 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4625810074267954846, guid: f7d697c49aa3a8542bbf03a481ccc19b, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7d697c49aa3a8542bbf03a481ccc19b, type: 3}
