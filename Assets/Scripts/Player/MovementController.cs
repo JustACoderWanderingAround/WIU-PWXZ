@@ -373,6 +373,7 @@ public class MovementController : MonoBehaviour
         if (other.gameObject.CompareTag("Poop"))
         {
             shitTimer = maxFPTimer;
+        }
         if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
         {
             CheckSubmergence();
