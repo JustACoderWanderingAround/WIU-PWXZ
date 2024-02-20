@@ -88,7 +88,7 @@ public class InventoryHandler : MonoBehaviour
                         //Show the object
                         go.SetActive(false);
                         //Set parent to where it should be placed at
-                        go.transform.SetParent(inventoryTransform);
+                        go.transform.SetParent(inventoryUIHandler.InventoryTransform);
                     }
                 }
 

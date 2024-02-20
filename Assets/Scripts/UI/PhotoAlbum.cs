@@ -9,6 +9,8 @@ public class PhotoAlbum : MonoBehaviour
     public Image imageRenderer;
     public TMPro.TMP_Text imageText;
 
+    public Image imagePrefab;
+
     [Header("Read")]
     public string readFrom = "CaptureImage";
 
@@ -18,6 +20,10 @@ public class PhotoAlbum : MonoBehaviour
     private int currentIndex = 0;
 
     private Coroutine loadImageRoutine = null;
+
+    public bool renderAll = false;
+
+    public bool hasLoaded = false;
 
     #region DebugOnly
     // Start is called before the first frame update
@@ -102,8 +108,12 @@ public class PhotoAlbum : MonoBehaviour
             }
         }
         Debug.Log("PhotoAlbum: End Loading");
-        RenderImage();
 
+        if (renderAll)
+            RenderAllImage();
+        else
+            RenderImage();
+        hasLoaded = true;
         loadImageRoutine = null;
     }
 
@@ -120,6 +130,29 @@ public class PhotoAlbum : MonoBehaviour
         //Set the image and text accordingly
         imageRenderer.overrideSprite = images[currentIndex];
         imageText.text = readFrom + currentIndex + ".png";
+    }
+
+    public void RenderAllImage()
+    {
+        //Check if any Images is initialised
+        if (images.Count <= 0)
+        {
+            Debug.LogWarning("You are trying to Render Non-Existent Image");
+            return;
+        }
+
+        //Clear the Image
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        //Create a Gameobject for each Object
+        foreach (Sprite imageToRender in images)
+        {
+            Image imageHandler = Instantiate(imagePrefab, transform);
+            imageHandler.transform.GetChild(0).GetComponent<Image>().sprite = imageToRender;
+        }
     }
 
     public void LeftButton()
