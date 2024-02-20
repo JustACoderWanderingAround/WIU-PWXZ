@@ -26,6 +26,7 @@ public class Guard : MonoBehaviour, IEventListener
 
     private Coroutine increaseSuspicion = null;
     private bool caughtPlayer = false;
+    private IInteractable interactable;
 
     public enum GuardState
     {
@@ -136,6 +137,13 @@ public class Guard : MonoBehaviour, IEventListener
                         waypointIndex = 0;
                 }
 
+                // Check if interactable has been interacted
+                if (fov.CheckInteractableInteracted(out Vector3 targetPos, out IInteractable targetInteractable))
+                {
+                    interactable = targetInteractable;
+                    OnSuspicionIncrease(100f, targetPos, GuardState.SEARCH);
+                }
+
                 break;
             case GuardState.CHASE:
                 if (!fov.CheckTargetInLineOfSight(out positionOfInterest, 10000))
@@ -151,7 +159,14 @@ public class Guard : MonoBehaviour, IEventListener
             case GuardState.LOOK_AROUND:
                 timer += Time.deltaTime;
                 if (timer >= 6f)
+                {
                     ChangeState(GuardState.PATROL);
+                    if (interactable != null)
+                    {
+                        interactable.OnInteract();
+                        interactable = null;    
+                    }
+                }
 
                 break;
             case GuardState.SEARCH:
@@ -204,7 +219,9 @@ public class Guard : MonoBehaviour, IEventListener
                 }
             }
 
-            if (furthestTarget != null)
+            if (furthestTarget != null &&
+                currentState != GuardState.CHASE &&
+                currentState != GuardState.STUNNED)
             {
                 OnSuspicionIncrease(100f, furthestTarget.transform.position, GuardState.SEARCH);
                 aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
@@ -245,6 +262,9 @@ public class Guard : MonoBehaviour, IEventListener
 
         if (enemyUIController.GetSuspicionLevel() >= 100)
         {
+            if (currentState != nextState)
+                AudioManager.Instance.Play("Alert");
+
             positionOfInterest = position;
             fov.targetPos = positionOfInterest;
             ChangeState(nextState);

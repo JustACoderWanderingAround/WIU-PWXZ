@@ -39,8 +39,6 @@ public class CameraController : MonoBehaviour
     {
         _mousePosition.x += MouseX * mouseSensitivity;
         _mousePosition.y -= MouseY * mouseSensitivity;
-
-        transform.Rotate(0, MouseX, 0);
     }
 
     public void UpdateTransform()
@@ -52,7 +50,7 @@ public class CameraController : MonoBehaviour
     private void HandleCheck()
     {
         //This is to prevent Camera Flipping
-        _mousePosition.y = Mathf.Clamp(_mousePosition.y, -90f, 90f);
+        _mousePosition.y = Mathf.Clamp(_mousePosition.y, -80f, 80f);
     }
 
     private void UpdateCamera()

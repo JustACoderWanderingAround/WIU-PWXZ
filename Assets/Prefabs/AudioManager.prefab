@@ -1,0 +1,153 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100261001764161025
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2814242631490281068}
+  - component: {fileID: 7597325697356764698}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2814242631490281068
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100261001764161025}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7597325697356764698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100261001764161025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abe96eb65ec70cc4ea1f92489da106f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 009cc7a96c9ffdf47965c75b62403f32, type: 2}
+  sounds:
+  - name: Walk
+    clip: {fileID: 8300000, guid: e8cd7cf9aae45644887c98232a11567b, type: 3}
+    mixerGroup: {fileID: -443511191476778727, guid: 009cc7a96c9ffdf47965c75b62403f32,
+      type: 2}
+    pitch: 1
+    source: {fileID: 0}
+    loop: 1
+  - name: Sprint
+    clip: {fileID: 8300000, guid: e8cd7cf9aae45644887c98232a11567b, type: 3}
+    mixerGroup: {fileID: -443511191476778727, guid: 009cc7a96c9ffdf47965c75b62403f32,
+      type: 2}
+    pitch: 1.5
+    source: {fileID: 0}
+    loop: 1
+  - name: Jump
+    clip: {fileID: 8300000, guid: 207606f0d37e1f84b9d22585f76c97e5, type: 3}
+    mixerGroup: {fileID: -443511191476778727, guid: 009cc7a96c9ffdf47965c75b62403f32,
+      type: 2}
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Land
+    clip: {fileID: 8300000, guid: 3fd3da51f408b3042a190417b87aca6b, type: 3}
+    mixerGroup: {fileID: -443511191476778727, guid: 009cc7a96c9ffdf47965c75b62403f32,
+      type: 2}
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: OpenCan
+    clip: {fileID: 8300000, guid: cd4754bbc097d7144a69fec307042281, type: 3}
+    mixerGroup: {fileID: -443511191476778727, guid: 009cc7a96c9ffdf47965c75b62403f32,
+      type: 2}
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Drink
+    clip: {fileID: 8300000, guid: 026b86685e104cf4aa39225ac45b6d7d, type: 3}
+    mixerGroup: {fileID: -443511191476778727, guid: 009cc7a96c9ffdf47965c75b62403f32,
+      type: 2}
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PickupItem
+    clip: {fileID: 8300000, guid: e5e2ae86173fb2e41a2af787c73daae4, type: 3}
+    mixerGroup: {fileID: -443511191476778727, guid: 009cc7a96c9ffdf47965c75b62403f32,
+      type: 2}
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: TurnOn
+    clip: {fileID: 8300000, guid: 24364fb930cea4a42b194d6ab4650fb8, type: 3}
+    mixerGroup: {fileID: -443511191476778727, guid: 009cc7a96c9ffdf47965c75b62403f32,
+      type: 2}
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: TurnOff
+    clip: {fileID: 8300000, guid: ecd6172afe23bb14eb3e7909c77a9c2a, type: 3}
+    mixerGroup: {fileID: -443511191476778727, guid: 009cc7a96c9ffdf47965c75b62403f32,
+      type: 2}
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Static
+    clip: {fileID: 8300000, guid: 03ec97d94ecf2e142874839340e3a61e, type: 3}
+    mixerGroup: {fileID: -443511191476778727, guid: 009cc7a96c9ffdf47965c75b62403f32,
+      type: 2}
+    pitch: 1
+    source: {fileID: 0}
+    loop: 1
+  - name: Taser
+    clip: {fileID: 8300000, guid: adbbffd910ceec64ea552a75af2132a9, type: 3}
+    mixerGroup: {fileID: -443511191476778727, guid: 009cc7a96c9ffdf47965c75b62403f32,
+      type: 2}
+    pitch: 1
+    source: {fileID: 0}
+    loop: 1
+  - name: Splat
+    clip: {fileID: 8300000, guid: 05a404527e8c88d42a109327648d4a19, type: 3}
+    mixerGroup: {fileID: -443511191476778727, guid: 009cc7a96c9ffdf47965c75b62403f32,
+      type: 2}
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: Alert
+    clip: {fileID: 8300000, guid: 2834d4e6ad37a5f499a54796a411adf8, type: 3}
+    mixerGroup: {fileID: -443511191476778727, guid: 009cc7a96c9ffdf47965c75b62403f32,
+      type: 2}
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: LockerOpen
+    clip: {fileID: 8300000, guid: 41aa972ee531a1a4784c4d0a90343da4, type: 3}
+    mixerGroup: {fileID: -443511191476778727, guid: 009cc7a96c9ffdf47965c75b62403f32,
+      type: 2}
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: LockerClose
+    clip: {fileID: 8300000, guid: 2be888fe6fc125244ba59703082efa92, type: 3}
+    mixerGroup: {fileID: -443511191476778727, guid: 009cc7a96c9ffdf47965c75b62403f32,
+      type: 2}
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0

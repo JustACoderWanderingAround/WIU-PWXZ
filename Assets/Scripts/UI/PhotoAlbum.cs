@@ -9,15 +9,23 @@ public class PhotoAlbum : MonoBehaviour
     public Image imageRenderer;
     public TMPro.TMP_Text imageText;
 
+    public Image imagePrefab;
+
     [Header("Read")]
     public string readFrom = "CaptureImage";
 
     private Dictionary<Sprite, Texture2D> textureReference = new Dictionary<Sprite, Texture2D>();
     private List<Sprite> images = new List<Sprite>();
 
+    private List<Sprite> internalImages = new List<Sprite>();
+
     private int currentIndex = 0;
 
     private Coroutine loadImageRoutine = null;
+
+    public bool renderAll = false;
+
+    public bool hasLoaded = false;
 
     #region DebugOnly
     // Start is called before the first frame update
@@ -102,9 +110,37 @@ public class PhotoAlbum : MonoBehaviour
             }
         }
         Debug.Log("PhotoAlbum: End Loading");
-        RenderImage();
 
+        if (renderAll)
+            RenderAllImage();
+        else
+            RenderImage();
+        hasLoaded = true;
         loadImageRoutine = null;
+    }
+
+    /// <summary>
+    /// Temporarily add Image to a list such as players not need to reload to look at new images taken.
+    /// This hugely reduces the time taken.
+    /// </summary>
+    /// <param name="textureBytes">Image as Byte</param>
+    public void AddImage(byte[] textureBytes)
+    {
+        Texture2D texture = new Texture2D(1, 1);
+        //Load the image with ref to bytes
+        texture.LoadImage(textureBytes);
+
+        //Get Sprite of it (Do not delete texture of it, as sprite is created with a reference to it)
+        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height),
+            new Vector2(texture.width * 0.5f, texture.height * 0.5f));
+
+        //Add to the list
+        internalImages.Add(sprite);
+
+        if (renderAll)
+            RenderAllImage();
+        else
+            RenderImage();
     }
 
     public void RenderImage()
@@ -120,6 +156,36 @@ public class PhotoAlbum : MonoBehaviour
         //Set the image and text accordingly
         imageRenderer.overrideSprite = images[currentIndex];
         imageText.text = readFrom + currentIndex + ".png";
+    }
+
+    public void RenderAllImage()
+    {
+        //Check if any Images is initialised
+        if (images.Count <= 0)
+        {
+            Debug.LogWarning("You are trying to Render Non-Existent Image");
+            return;
+        }
+
+        //Clear the Image
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        //Create a Gameobject for each Object
+        foreach (Sprite imageToRender in images)
+        {
+            Image imageHandler = Instantiate(imagePrefab, transform);
+            imageHandler.transform.GetChild(0).GetComponent<Image>().sprite = imageToRender;
+        }
+
+        //Create a Gameobject for each Object
+        foreach (Sprite imageToRender in internalImages)
+        {
+            Image imageHandler = Instantiate(imagePrefab, transform);
+            imageHandler.transform.GetChild(0).GetComponent<Image>().sprite = imageToRender;
+        }
     }
 
     public void LeftButton()

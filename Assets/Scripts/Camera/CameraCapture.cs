@@ -22,6 +22,8 @@ public class CameraCapture : MonoBehaviour
     private Coroutine captureHandler = null;
     private Coroutine identifyHandler = null;
 
+    public PhotoAlbum photoAlbum = null;
+
     #region DebugOnly
     // Start is called before the first frame update
     void Start()
@@ -104,7 +106,7 @@ public class CameraCapture : MonoBehaviour
         //Populate the list if there is the renderer is active
         allRenderers.ForEach((r) => {
             //Check if it is active
-            if (r.gameObject.activeInHierarchy)
+            if (r?.gameObject.activeInHierarchy ?? false)
             {
                 gameobjectBounds.Add(r.gameObject, r.bounds);
             }
@@ -170,6 +172,9 @@ public class CameraCapture : MonoBehaviour
         RenderTexture.active = null;
         //Encode it so it can be saved
         byte[] byteArray = renderedTexture.EncodeToPNG();
+
+        //Add Image to the photo album to not reload (System.IO.Read takes long time)
+        photoAlbum?.AddImage(byteArray);
 
         captureCamera.targetTexture = null;
 
