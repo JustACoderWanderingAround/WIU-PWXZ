@@ -18,7 +18,7 @@ public class CameraBehaviour : MonoBehaviour
     private Vector3 originalEulerRotation;
     private Color targetColor = Color.white;
 
-    [Header("Rotation")]
+    [Header("Rotation (0deg - 360deg)")]
     public float minRotationY;
     public float maxRotationY;
     private float targetRotationY;
@@ -101,10 +101,14 @@ public class CameraBehaviour : MonoBehaviour
                 break;
         }
 
-        targetColor = targetGO != null ? Color.red : Color.white;
-        //Set Spot light Color to the specifc color
-        if (cameraSpotlight.color != targetColor)
-            cameraSpotlight.color = Color.Lerp(cameraSpotlight.color, targetColor, Time.deltaTime * 10f);
+        //If there is spot ;ight
+        if (cameraSpotlight)
+        {
+            targetColor = targetGO != null ? Color.red : Color.white;
+            //Set Spot light Color to the specifc color
+            if (cameraSpotlight.color != targetColor)
+                cameraSpotlight.color = Color.Lerp(cameraSpotlight.color, targetColor, Time.deltaTime * 10f);
+        }
     }
 
     public void UpdatePhysics()
