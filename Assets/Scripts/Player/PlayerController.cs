@@ -15,8 +15,7 @@ public class PlayerController : MonoBehaviour
     public Transform leftHandPoint;
     public Transform rightHandPoint;
 
-    [SerializeField]
-    private InventoryManager inventoryManager;
+    public InventoryManager inventoryManager;
 
     public bool AddItem(IInventoryItem item)
     {
