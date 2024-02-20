@@ -109,6 +109,7 @@ public class PhotoAlbum : MonoBehaviour
                 textureReference.Add(sprite, texture);
             }
         }
+        internalImages.Clear();
         Debug.Log("PhotoAlbum: End Loading");
 
         if (renderAll)
