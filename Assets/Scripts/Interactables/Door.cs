@@ -8,6 +8,9 @@ public class Door : MonoBehaviour, IInteractable
     [SerializeField] private Collider doorCollider;
     private bool isOpen = false;
 
+    bool interacted;
+    public bool isInteracted { get => interacted; set => interacted = value; }
+
     private void Awake()
     {
         //animator = GetComponent<Animator>();
