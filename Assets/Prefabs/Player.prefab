@@ -3089,6 +3089,7 @@ MonoBehaviour:
   folderPath: Screenshots
   fileName: CaptureImage
   ifExistIncrement: 1
+  photoAlbum: {fileID: 7248813682051299148}
 --- !u!114 &8016021365160787464
 MonoBehaviour:
   m_ObjectHideFlags: 0

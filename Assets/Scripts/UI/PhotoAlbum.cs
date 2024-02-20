@@ -17,6 +17,8 @@ public class PhotoAlbum : MonoBehaviour
     private Dictionary<Sprite, Texture2D> textureReference = new Dictionary<Sprite, Texture2D>();
     private List<Sprite> images = new List<Sprite>();
 
+    private List<Sprite> internalImages = new List<Sprite>();
+
     private int currentIndex = 0;
 
     private Coroutine loadImageRoutine = null;
@@ -117,6 +119,30 @@ public class PhotoAlbum : MonoBehaviour
         loadImageRoutine = null;
     }
 
+    /// <summary>
+    /// Temporarily add Image to a list such as players not need to reload to look at new images taken.
+    /// This hugely reduces the time taken.
+    /// </summary>
+    /// <param name="textureBytes">Image as Byte</param>
+    public void AddImage(byte[] textureBytes)
+    {
+        Texture2D texture = new Texture2D(1, 1);
+        //Load the image with ref to bytes
+        texture.LoadImage(textureBytes);
+
+        //Get Sprite of it (Do not delete texture of it, as sprite is created with a reference to it)
+        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height),
+            new Vector2(texture.width * 0.5f, texture.height * 0.5f));
+
+        //Add to the list
+        internalImages.Add(sprite);
+
+        if (renderAll)
+            RenderAllImage();
+        else
+            RenderImage();
+    }
+
     public void RenderImage()
     {
         //Check if any Images is initialised
@@ -149,6 +175,13 @@ public class PhotoAlbum : MonoBehaviour
 
         //Create a Gameobject for each Object
         foreach (Sprite imageToRender in images)
+        {
+            Image imageHandler = Instantiate(imagePrefab, transform);
+            imageHandler.transform.GetChild(0).GetComponent<Image>().sprite = imageToRender;
+        }
+
+        //Create a Gameobject for each Object
+        foreach (Sprite imageToRender in internalImages)
         {
             Image imageHandler = Instantiate(imagePrefab, transform);
             imageHandler.transform.GetChild(0).GetComponent<Image>().sprite = imageToRender;
