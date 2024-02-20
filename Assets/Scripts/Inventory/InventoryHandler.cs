@@ -179,6 +179,10 @@ public class InventoryHandler : MonoBehaviour
                     go.transform.SetParent(activeObjectTransform);
                     go.transform.localPosition = Vector3.zero;
                     go.transform.localRotation = Quaternion.identity;
+
+                    Rigidbody rb = go.GetComponent<Rigidbody>(); 
+                    if (rb != null)
+                        rb.isKinematic = true;
                 }
             }
         }
