@@ -9,18 +9,6 @@ public class LevelEnd : MonoBehaviour
 
     private void OnCollisionEnter(Collision col)
     {
-        StartCoroutine(LoadLevel());
-    }
-
-    private IEnumerator LoadLevel()
-    {
-        SceneManagement.Instance.LoadScene(nextLevel);
-
-        while (SceneManagement.Instance.isLoading)
-        {
-            yield return null;
-        }
-
-        PlayerController.Instance.gameObject.transform.position = nextSpawnPos;
+        PlayerController.Instance.StartCoroutine(PlayerController.Instance.LoadLevel(nextLevel, nextSpawnPos));
     }
 }
