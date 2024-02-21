@@ -25282,6 +25282,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1373547004}
+    - targetCorrespondingSourceObject: {fileID: 2742940542485384995, guid: 626eacc701f99af4aa933d0488a54e34,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1373547021}
   m_SourcePrefab: {fileID: 100100000, guid: 626eacc701f99af4aa933d0488a54e34, type: 3}
 --- !u!1001 &1063517479
 PrefabInstance:
@@ -32636,6 +32640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa6696b8a55e43e43bdb30edb5327772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
 --- !u!1001 &1376559318
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32714,6 +32719,22 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 658e64758890bc24ba679c51e2cd2ab3, type: 3}
+=======
+--- !u!114 &1373547021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373546989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abe96eb65ec70cc4ea1f92489da106f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 009cc7a96c9ffdf47965c75b62403f32, type: 2}
+  sounds: []
+>>>>>>> Stashed changes
 --- !u!1001 &1380646865
 PrefabInstance:
   m_ObjectHideFlags: 0

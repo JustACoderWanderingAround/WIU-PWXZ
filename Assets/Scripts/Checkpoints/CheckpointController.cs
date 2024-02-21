@@ -15,6 +15,10 @@ public class CheckpointController : MonoBehaviour
     public List<ItemState> ItemsList { get; private set; }
     public List<EnemyState> EnemiesList { get; private set; }
     private Vector3 lastCheckpointPos;
+    [SerializeField]
+    private GameObject canvas;
+    private bool isShopUIActive;
+
 
     void Start()
     {
@@ -30,12 +34,14 @@ public class CheckpointController : MonoBehaviour
             DontDestroyOnLoad(this);
     }
 
-
-
-    public void Save(Collider other)
+    public void SetShopUIActive()
     {
-        if (other.gameObject.tag == "Checkpoint")
-        {
+        isShopUIActive = !isShopUIActive;
+        canvas.SetActive(isShopUIActive);
+    }
+
+    public void Save()
+    {
             string s = inventoryManager.ToJSON();
 
             if (FileManager.WriteToFile("playerdata.json", s))
@@ -86,7 +92,7 @@ public class CheckpointController : MonoBehaviour
             PlayerPrefs.SetString("CheckpointPos", other.transform.position.ToString());
             //PlayerPrefs.SetInt("Money", ShopItemController.Instance.GetMoney());
             PlayerPrefs.Save();
-        }
+        
     }
 
     public void Load()
