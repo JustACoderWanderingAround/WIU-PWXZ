@@ -9,6 +9,6 @@ public class LevelEnd : MonoBehaviour
 
     private void OnCollisionEnter(Collision col)
     {
-        StartCoroutine(PlayerController.Instance.LoadLevel(nextLevel, nextSpawnPos));
+        PlayerController.Instance.StartCoroutine(PlayerController.Instance.LoadLevel(nextLevel, nextSpawnPos));
     }
 }

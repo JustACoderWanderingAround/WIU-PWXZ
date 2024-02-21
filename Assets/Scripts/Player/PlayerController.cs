@@ -147,6 +147,7 @@ public class PlayerController : MonoBehaviour
 
         while (SceneManagement.Instance.isLoading)
         {
+            Debug.Log("ISLOADING");
             yield return null;
         }
 
