@@ -10,14 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0020481ef902cd4c92d8ab3a337a4a6, type: 3}
-  m_Name: TestDialogue
+  m_Name: fnaf
   m_EditorClassIdentifier: 
-  speakerName: Testor Tommy Test
+  speakerName: Frederick Fazbear Felicious III
   dialogues:
-  - i am tester tommy test
-  - and my tests are always the best
-  - if you see this here
-  - you dont ever fear
-  - cuz you know im better than the rest
-  - ok  byeeeee
-  - ok  byeeeee
+  - har har harhar har har harhar harhar har har harhar har har harhar
