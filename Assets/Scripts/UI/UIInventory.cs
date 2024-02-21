@@ -67,9 +67,6 @@ public class UIInventory : MonoBehaviour
             InventoryTransform.gameObject.SetActive(false);
             PhotoAlbumTransform.gameObject.SetActive(true);
 
-            if (!photoAlbumHandler.hasLoaded)
-                photoAlbumHandler.Reload();
-
             photoAlbumHandler.RenderAllImage();
             LayoutRebuilder.ForceRebuildLayoutImmediate(itemCanvas.transform as RectTransform);
         }

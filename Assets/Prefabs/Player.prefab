@@ -1409,7 +1409,7 @@ MonoBehaviour:
   itemCanvas: {fileID: 1897870935908192827}
   itemText: {fileID: 6634094948713935560}
   PhotoAlbumTransform: {fileID: 590100572123494140}
-  photoAlbumHandler: {fileID: 7248813682051299148}
+  photoAlbumHandler: {fileID: 300154298326452441}
 --- !u!1 &1663359296029273459
 GameObject:
   m_ObjectHideFlags: 0
@@ -2918,6 +2918,7 @@ GameObject:
   - component: {fileID: 8492720796699014022}
   - component: {fileID: 267869946297880933}
   - component: {fileID: 6609820751713327736}
+  - component: {fileID: 300154298326452441}
   m_Layer: 7
   m_Name: PlayerController
   m_TagString: Player
@@ -3089,7 +3090,8 @@ MonoBehaviour:
   folderPath: Screenshots
   fileName: CaptureImage
   ifExistIncrement: 1
-  photoAlbum: {fileID: 7248813682051299148}
+  photoAlbum: {fileID: 300154298326452441}
+  debugAutoSave: 0
 --- !u!114 &8016021365160787464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3160,6 +3162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryManager: {fileID: 11400000, guid: 564cbd8f240a2e44c9ccb932a83c0feb, type: 2}
   inventoryCache: {fileID: 8233128157154526760}
+  photoAlbum: {fileID: 300154298326452441}
 --- !u!95 &8492720796699014022
 Animator:
   serializedVersion: 5
@@ -3281,6 +3284,26 @@ MonoBehaviour:
   - m_Rig: {fileID: 1398575007112106334}
     m_Active: 1
   m_Effectors: []
+--- !u!114 &300154298326452441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2742940542485384995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab363492b99539439f68dedb4818fd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imageTransform: {fileID: 1864204194242159527}
+  imageRenderer: {fileID: 0}
+  imageText: {fileID: 0}
+  imagePrefab: {fileID: 2301294648252879879, guid: c34ff02c6013fc24e94e4cb0d77de377,
+    type: 3}
+  readFrom: CaptureImage
+  renderAll: 1
+  hasLoaded: 0
 --- !u!1 &2747032173130957626
 GameObject:
   m_ObjectHideFlags: 0
@@ -4397,7 +4420,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1864204194242159527}
   - component: {fileID: 6039401190821113696}
-  - component: {fileID: 7248813682051299148}
   - component: {fileID: 50143540226824081}
   m_Layer: 5
   m_Name: PhotoAlbum
@@ -4449,25 +4471,6 @@ MonoBehaviour:
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 0
   m_ConstraintCount: 2
---- !u!114 &7248813682051299148
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4256833284143845729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ab363492b99539439f68dedb4818fd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  imageRenderer: {fileID: 0}
-  imageText: {fileID: 0}
-  imagePrefab: {fileID: 2301294648252879879, guid: c34ff02c6013fc24e94e4cb0d77de377,
-    type: 3}
-  readFrom: CaptureImage
-  renderAll: 1
-  hasLoaded: 0
 --- !u!114 &50143540226824081
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            shopController.SetShopCatalogueActive();
+            //shopController.SetShopCatalogueActive();
             if (collidedInteractable != null && collidedInteractable.TryGetComponent(out IInteractable interactable))
             {
                 interactable.OnInteract();
