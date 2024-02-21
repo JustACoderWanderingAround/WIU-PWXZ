@@ -265,6 +265,7 @@ public class PhotoAlbum : MonoBehaviour
         //Clear
         System.IO.File.WriteAllText(JSONPath, JsonUtility.ToJson(null));
         Debug.Log("PhotoAlbum: Clear Image Complete");
+        clearImageRoutine = null;
     }
 
     /// <summary>

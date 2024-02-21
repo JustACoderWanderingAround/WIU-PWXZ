@@ -53,7 +53,7 @@ public class CameraCapture : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             CaptureScreen();
         }
@@ -111,7 +111,8 @@ public class CameraCapture : MonoBehaviour
         List<GameObject> gameObjects = new List<GameObject>();
 
         //Populate the list if there is the renderer is active
-        allRenderers.ForEach((r) => {
+        allRenderers.ForEach((r) =>
+        {
             //Check if it is active
             if (r?.gameObject?.activeInHierarchy ?? false)
             {

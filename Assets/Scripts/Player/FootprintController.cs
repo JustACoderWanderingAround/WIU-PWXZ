@@ -16,8 +16,6 @@ public class FootprintController : MonoBehaviour
     public void CheckFootprint(CapsuleCollider capCollider)
     {
         float distFromLast = Vector3.Distance(lastFootprint, transform.position);
-        Debug.Log(distFromLast);
-        Debug.Log(footprintSpacer);
         if (distFromLast >= footprintSpacer)
         {
             if (isFootLeft)

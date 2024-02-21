@@ -161,6 +161,9 @@ public class CheckpointController : MonoBehaviour
             }
         }
 
+        //Refresh Renderer List Each Load
+        GetComponent<CameraCapture>().UpdateRendererList();
+
     }
 
     public static Vector3 StringToVector3(string sVector)
