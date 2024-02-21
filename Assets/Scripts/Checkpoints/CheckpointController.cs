@@ -74,11 +74,10 @@ public class CheckpointController : MonoBehaviour
 
             foreach (GameObject enemy in enemiesList)
             {
-                if (enemy.GetComponent<AINavigation>() != null)
-                {
-                    EnemyState enemyState = new EnemyState(enemy.name, enemy.activeSelf, enemy.transform.position, enemy.transform.eulerAngles.x, enemy.transform.eulerAngles.y, enemy.transform.eulerAngles.z);
-                    EnemiesList.Add(enemyState);
-                }
+                GameObject child = enemy.transform.GetChild(0).gameObject;
+
+                EnemyState enemyState = new EnemyState(child.name, child.activeSelf, child.transform.position, child.transform.eulerAngles.x, child.transform.eulerAngles.y, child.transform.eulerAngles.z);
+                EnemiesList.Add(enemyState);
             }
 
             string enemies = JsonUtility.ToJson(new SerializableList<EnemyState>(EnemiesList));
@@ -151,14 +150,13 @@ public class CheckpointController : MonoBehaviour
 
             foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
             {
-                if (enemy.GetComponent<AINavigation>() != null)
+                GameObject child = enemy.transform.GetChild(0).gameObject;
+
+                foreach (EnemyState enemyState in listEnemies)
                 {
-                    foreach (EnemyState enemyState in listEnemies)
-                    {
-                        enemy.transform.position = enemyState.position;
-                        enemy.transform.Rotate(enemyState.rotationX, enemyState.rotationY, enemyState.rotationZ);
-                        //Quaternion.Euler()
-                    }
+                    child.transform.position = enemyState.position;
+                    child.transform.Rotate(enemyState.rotationX, enemyState.rotationY, enemyState.rotationZ);
+                    //Quaternion.Euler()
                 }
             }
         }
