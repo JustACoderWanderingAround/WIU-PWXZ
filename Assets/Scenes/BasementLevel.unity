@@ -26751,6 +26751,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 467360864059586580, guid: cd751af24d422da469be94e87150dee0,
         type: 3}
+      propertyPath: m_SceneBindings.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 467360864059586580, guid: cd751af24d422da469be94e87150dee0,
+        type: 3}
+      propertyPath: m_SceneBindings.Array.data[7].key
+      value: 
+      objectReference: {fileID: 6799332935266643488, guid: 798a8cb1c0f73e44c8ffef1cb0558cc1,
+        type: 2}
+    - target: {fileID: 467360864059586580, guid: cd751af24d422da469be94e87150dee0,
+        type: 3}
+      propertyPath: m_SceneBindings.Array.data[8].key
+      value: 
+      objectReference: {fileID: 8817716264817422536, guid: 798a8cb1c0f73e44c8ffef1cb0558cc1,
+        type: 2}
+    - target: {fileID: 467360864059586580, guid: cd751af24d422da469be94e87150dee0,
+        type: 3}
       propertyPath: m_SceneBindings.Array.data[0].value
       value: 
       objectReference: {fileID: 745279461}
