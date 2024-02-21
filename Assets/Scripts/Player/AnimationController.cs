@@ -27,15 +27,12 @@ public class AnimationController : MonoBehaviour
     {
         Instance = this;
 
-        Debug.Log("CALLED");
         animator = GetComponent<Animator>();
         if (animator == null)
         {
             animator = gameObject.AddComponent<Animator>();
             animator.runtimeAnimatorController = Resources.Load("Animator/Player") as RuntimeAnimatorController;
         }
-
-        Debug.Log(animator);
     }
 
     public void ChangeAnimation(int state, float transitionDuration, float delayDuration, int layer)
