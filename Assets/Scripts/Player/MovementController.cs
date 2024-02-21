@@ -272,9 +272,7 @@ public class MovementController : MonoBehaviour
             return;
 
         if (isMoving && shitTimer > 0)
-        {
             footprintController.CheckFootprint(playerCol);
-        }
     }
 
     public void MovePlayer()

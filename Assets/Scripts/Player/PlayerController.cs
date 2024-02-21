@@ -128,6 +128,7 @@ public class PlayerController : MonoBehaviour
                 interactable.OnInteract();
             }
         }
+
         movementController.UpdateAnimation();
         movementController.UpdateFootprints();
 
