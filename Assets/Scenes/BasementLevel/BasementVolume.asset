@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6246406675277466903
+--- !u!114 &-5106987466933035694
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,16 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dee7cfcc5b64586458ff4a09cb5bb35b, type: 3}
-  m_Name: ColorTintPostProcess
+  m_Script: {fileID: 11500000, guid: ecc45944dc893b84cb7ed371a219dc9d, type: 3}
+  m_Name: DissolvePostProcessing
   m_EditorClassIdentifier: 
   active: 1
-  blendIntensity:
-    m_OverrideState: 0
+  Progress:
+    m_OverrideState: 1
+    m_Value: 0
+  isActive:
+    m_OverrideState: 1
     m_Value: 1
-  overlayColor:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &-4322456731576129232
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -112,7 +112,7 @@ MonoBehaviour:
   - {fileID: -4322456731576129232}
   - {fileID: 5235182559632007448}
   - {fileID: 6603563049706944239}
-  - {fileID: -6246406675277466903}
+  - {fileID: -5106987466933035694}
 --- !u!114 &4899063290518061650
 MonoBehaviour:
   m_ObjectHideFlags: 3

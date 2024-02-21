@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MirrorBehaviour : MonoBehaviour
 {
-    public Shader shader;
-
     [Header("For Update")]
     private Camera _camera = null;
     public bool toUpdate = true;
@@ -19,6 +17,11 @@ public class MirrorBehaviour : MonoBehaviour
     public float adjustValue = 1f;
     public float minCameraDistance = 0.3f;
 
+    [Header("Material")]
+    public Shader shader;
+    [ColorUsageAttribute(true, true)]
+    public Color matColor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,17 +33,17 @@ public class MirrorBehaviour : MonoBehaviour
     {
         //Update Camera Position
         Vector3 localPlayer = transform.InverseTransformPoint(Camera.main.transform.position);
-        //if (localPlayer.sqrMagnitude < minCameraDistance * minCameraDistance)
-        //{
-        //    localPlayer = localPlayer.normalized * minCameraDistance;
-        //}
+        if (localPlayer.sqrMagnitude < minCameraDistance * minCameraDistance)
+        {
+            localPlayer = localPlayer.normalized * minCameraDistance;
+        }
         _camera.transform.position = transform.TransformPoint(new Vector3(localPlayer.x, localPlayer.y, -localPlayer.z));
         //Update Camera Rotation
         Vector3 lookAtMirror = transform.TransformPoint(new Vector3(-localPlayer.x, localPlayer.y, localPlayer.z));
         _camera.transform.LookAt(lookAtMirror);
 
         //Set Min Value
-        _camera.nearClipPlane = Mathf.Max(minCameraDistance, Vector3.Distance(_camera.transform.position, transform.position));
+        _camera.nearClipPlane = Vector3.Distance(_camera.transform.position, transform.position);
 
         //Alternate Calculation for More Exact Result
         /*
@@ -103,6 +106,7 @@ public class MirrorBehaviour : MonoBehaviour
         _material = _renderer.material;
 
         _material.SetTexture("_Texture2D", newRenderTexture);
+        _material.SetColor("_Color", matColor);
 
         StartCoroutine(WaitForNextFrame(() => _camera.backgroundColor = AverageColorFromTexture(toTexture2D(_camera.targetTexture))));
 
