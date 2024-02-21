@@ -21,6 +21,8 @@ public class CheckpointController : MonoBehaviour
     [SerializeField]
     private GameObject saveUICanvas;
 
+    public PhotoAlbum photoAlbum;
+
     void Start()
     {
         // We search all the checkpoints in the current scene
@@ -28,7 +30,8 @@ public class CheckpointController : MonoBehaviour
         sceneManagement = SceneManagement.Instance;
         ItemsList = new List<ItemState>();
         EnemiesList = new List<EnemyState>();
-       
+        if (photoAlbum == null)
+            photoAlbum = GetComponentInChildren<PhotoAlbum>();
         DontDestroyOnLoad(this);
 
         Instance = this;
@@ -57,6 +60,8 @@ public class CheckpointController : MonoBehaviour
     {
 
             string s = inventoryManager.ToJSON();
+
+            photoAlbum.SaveImage();
 
             if (FileManager.WriteToFile("playerdata.json", s))
             {
@@ -115,7 +120,7 @@ public class CheckpointController : MonoBehaviour
 
             if (FileManager.WriteToFile("enemiesdata.json", enemies))
             {
-                Debug.Log("Save scene data successful");
+                Debug.Log("Save enemy data successful");
             }
 
             PlayerPrefs.SetString("SceneName", SceneManager.GetActiveScene().name);
@@ -139,6 +144,8 @@ public class CheckpointController : MonoBehaviour
         {
             yield return null;
         }
+
+        photoAlbum.Reload();
 
         transform.position = StringToVector3(PlayerPrefs.GetString("CheckpointPos"));
         transform.position = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
@@ -183,7 +190,9 @@ public class CheckpointController : MonoBehaviour
 
             foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
             {
-                if (enemy.GetComponent<AINavigation>() != null)
+                GameObject child = enemy.transform.GetChild(0).gameObject;
+
+                foreach (EnemyState enemyState in listEnemies)
                 {
                     EnemyObjectList.Add(enemy);
                 }
@@ -214,6 +223,9 @@ public class CheckpointController : MonoBehaviour
                 //    }
             }
         }
+
+        //Refresh Renderer List Each Load
+        GetComponent<CameraCapture>().UpdateRendererList();
 
     }
 

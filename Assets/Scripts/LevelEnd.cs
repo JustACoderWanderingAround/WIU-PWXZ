@@ -5,9 +5,10 @@ using UnityEngine;
 public class LevelEnd : MonoBehaviour
 {
     [SerializeField] private string nextLevel;
+    [SerializeField] private Vector3 nextSpawnPos;
 
     private void OnCollisionEnter(Collision col)
     {
-        SceneManagement.Instance.LoadScene(nextLevel);
+        PlayerController.Instance.StartCoroutine(PlayerController.Instance.LoadLevel(nextLevel, nextSpawnPos));
     }
 }

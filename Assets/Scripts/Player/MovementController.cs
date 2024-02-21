@@ -35,7 +35,7 @@ public class MovementController : MonoBehaviour
     Vector3 gravity;
     LayerMask waterMask;
 
-    private AnimationController animationController;
+    [SerializeField] private AnimationController animationController;
 
     // Start is called before the first frame update
     public void IntializeMovementController()
@@ -44,7 +44,6 @@ public class MovementController : MonoBehaviour
         moveSpeed = movementData.walkSpeed;
         playerCol = GetComponent<CapsuleCollider>();
         playerRB = GetComponent<Rigidbody>();
-        animationController = AnimationController.Instance;
         soundEmitter = GetComponent<SoundEmitter>();
         footprintController = GetComponent<FootprintController>();
         shitTimer = 0;
@@ -272,9 +271,7 @@ public class MovementController : MonoBehaviour
             return;
 
         if (isMoving && shitTimer > 0)
-        {
             footprintController.CheckFootprint(playerCol);
-        }
     }
 
     public void MovePlayer()
