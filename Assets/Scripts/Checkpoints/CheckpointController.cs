@@ -14,7 +14,12 @@ public class CheckpointController : MonoBehaviour
     private SceneManagement sceneManagement;
     public List<ItemState> ItemsList { get; private set; }
     public List<EnemyState> EnemiesList { get; private set; }
-    private Vector3 lastCheckpointPos;
+
+    public List<GameObject> EnemyObjectList { get; private set; }
+    private Collider collided = null;
+    private bool isSaveUIActive;
+    [SerializeField]
+    private GameObject saveUICanvas;
 
     void Start()
     {
@@ -23,6 +28,7 @@ public class CheckpointController : MonoBehaviour
         sceneManagement = SceneManagement.Instance;
         ItemsList = new List<ItemState>();
         EnemiesList = new List<EnemyState>();
+       
         DontDestroyOnLoad(this);
 
         Instance = this;
@@ -30,12 +36,26 @@ public class CheckpointController : MonoBehaviour
             DontDestroyOnLoad(this);
     }
 
-
-
-    public void Save(Collider other)
+    public void SetSaveUIActive(Collider other)
     {
-        if (other.gameObject.tag == "Checkpoint")
+        isSaveUIActive = !isSaveUIActive;
+        saveUICanvas.SetActive(isSaveUIActive);
+        if (saveUICanvas.activeSelf) {
+            collided = other;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = saveUICanvas.activeSelf;
+        }
+        if (!saveUICanvas.activeSelf)
         {
+            collided = null;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = saveUICanvas.activeSelf;
+        }
+    }
+
+    public void Save()
+    {
+
             string s = inventoryManager.ToJSON();
 
             if (FileManager.WriteToFile("playerdata.json", s))
@@ -64,13 +84,29 @@ public class CheckpointController : MonoBehaviour
 
             GameObject[] enemiesList = GameObject.FindGameObjectsWithTag("Enemy");
 
-
-
             foreach (GameObject enemy in enemiesList)
             {
-                if (enemy.GetComponent<AINavigation>() != null)
+                AINavigation aiHandler = enemy.GetComponent<AINavigation>();
+                if (aiHandler != null)
                 {
-                    EnemyState enemyState = new EnemyState(enemy.name, enemy.activeSelf, enemy.transform.position, enemy.transform.eulerAngles.x, enemy.transform.eulerAngles.y, enemy.transform.eulerAngles.z);
+                    //Check which type of enemy it is
+                    string workerType = "NULL";
+                    int waypoint = 0;
+                    EnemyWorker wh = enemy.GetComponent<EnemyWorker>();
+                    Guard gh = enemy.GetComponent<Guard>();
+
+                    if (wh != null)
+                    {
+                        workerType = "EnemyWorker";
+                        waypoint = wh.WaypointIndex;
+                    }
+                    else if (gh)
+                    {
+                        workerType = "Guard";
+                        waypoint = gh.WaypointIndex;
+                    }
+                    
+                    EnemyState enemyState = new EnemyState(enemy.name, enemy.activeSelf, enemy.transform.localPosition, enemy.transform.eulerAngles, workerType, waypoint);
                     EnemiesList.Add(enemyState);
                 }
             }
@@ -83,10 +119,10 @@ public class CheckpointController : MonoBehaviour
             }
 
             PlayerPrefs.SetString("SceneName", SceneManager.GetActiveScene().name);
-            PlayerPrefs.SetString("CheckpointPos", other.transform.position.ToString());
+            PlayerPrefs.SetString("CheckpointPos", transform.position.ToString());
             //PlayerPrefs.SetInt("Money", ShopItemController.Instance.GetMoney());
             PlayerPrefs.Save();
-        }
+        
     }
 
     public void Load()
@@ -105,7 +141,7 @@ public class CheckpointController : MonoBehaviour
         }
 
         transform.position = StringToVector3(PlayerPrefs.GetString("CheckpointPos"));
-        transform.position = new Vector3 (transform.position.x + 3.0f, transform.position.y, transform.position.z);
+        transform.position = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
 
         string s;
         if (FileManager.LoadFromFile("playerdata.json", out s))
@@ -135,23 +171,47 @@ public class CheckpointController : MonoBehaviour
             }
         }
 
+
+
+        int i = 0;
         string s2;
         if (FileManager.LoadFromFile("enemiesdata.json", out s2))
         {
             List<EnemyState> listEnemies = JsonUtility.FromJson<SerializableList<EnemyState>>(s2).list;
             Debug.Log("Load enemies data successful");
+            EnemyObjectList = new List<GameObject>();
 
             foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
             {
                 if (enemy.GetComponent<AINavigation>() != null)
                 {
-                    foreach (EnemyState enemyState in listEnemies)
-                    {
-                        enemy.transform.position = enemyState.position;
-                        enemy.transform.Rotate(enemyState.rotationX, enemyState.rotationY, enemyState.rotationZ);
-                        //Quaternion.Euler()
-                    }
+                    EnemyObjectList.Add(enemy);
                 }
+            }
+
+           
+
+            foreach (GameObject enemy in EnemyObjectList)
+            {
+                enemy.transform.localPosition = listEnemies[i].position;
+                enemy.transform.eulerAngles = listEnemies[i].eulerAngles;
+                switch (listEnemies[i].Type)
+                {
+                    case "EnemyWorker":
+                        enemy.GetComponent<EnemyWorker>().WaypointIndex = listEnemies[i].waypointIndex;
+                        break;
+                    case "Guard":
+                        enemy.GetComponent<Guard>().WaypointIndex = listEnemies[i].waypointIndex;
+                        break;
+                }
+                i++;
+                //foreach (EnemyState enemyState in listEnemies)
+                //    {
+                //        enemy.transform.position = enemyState.position;
+                //        enemy.transform.Rotate(enemyState.rotationX, enemyState.rotationY, enemyState.rotationZ);
+                //        //Quaternion.Euler()
+                //        i++;
+                //    }
             }
         }
 
