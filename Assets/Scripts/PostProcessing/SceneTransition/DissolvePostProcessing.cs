@@ -14,6 +14,6 @@ public class DissolvePostProcessing : VolumeComponent, IPostProcessComponent
     public FloatParameter Progress = new ClampedFloatParameter(0f, 0f, 1f);
     public BoolParameter isActive = new BoolParameter(false);
 
-    public bool IsActive() => (bool)isActive;
+    public bool IsActive() => (bool)isActive && (float)Progress > 0f;
     public bool IsTileCompatible() => true;
 }
