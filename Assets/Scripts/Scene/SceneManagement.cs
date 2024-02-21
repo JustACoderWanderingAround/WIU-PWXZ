@@ -23,7 +23,7 @@ public class SceneManagement : MonoBehaviour
 
     private AsyncOperation asyncHandler = null;
     
-    public bool isLoading { get => asyncHandler != null; }
+    public bool isLoading { get; private set; }
 
     private void Awake()
     {
@@ -43,6 +43,32 @@ public class SceneManagement : MonoBehaviour
 
     private IEnumerator LoadSceneRoutine(string sceneName)
     {
+        isLoading = true;
+        Time.timeScale = 0;
+        //Doing Scene Transitions
+        Volume globalVolume = FindObjectOfType<Volume>();
+
+        if (globalVolume != null)
+        {
+            DissolvePostProcessing dPP = null;
+            globalVolume.sharedProfile.TryGet<DissolvePostProcessing>(out dPP);
+
+            if (dPP != null)
+            {
+                float timePassed = 0f;
+                while (timePassed < 1f)
+                {
+                    timePassed += Time.unscaledDeltaTime;
+                    dPP.Progress.SetValue(new FloatParameter(Mathf.Min(timePassed, 1f)));
+                    yield return null;
+                }
+            }
+            else
+            {
+                Debug.Log("No Dissolve Post Processing Attached");
+            }
+        }
+
         asyncHandler = SceneManager.LoadSceneAsync(sceneName);
 
         if (asyncHandler == null)
@@ -58,6 +84,8 @@ public class SceneManagement : MonoBehaviour
 
         //Default set game time scale to 1 when a new scene is loaded
         Time.timeScale = 1;
+        loadCoroutine = null;
+        isLoading = false;
     }
 
     public void Exit()
