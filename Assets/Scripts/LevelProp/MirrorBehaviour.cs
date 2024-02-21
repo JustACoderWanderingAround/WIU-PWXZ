@@ -17,6 +17,7 @@ public class MirrorBehaviour : MonoBehaviour
     [Range(100f, 10000f)]
     public float scaleMultiplier = 1000f;
     public float adjustValue = 1f;
+    public float minCameraDistance = 0.3f;
 
     // Start is called before the first frame update
     void Start()
@@ -29,12 +30,17 @@ public class MirrorBehaviour : MonoBehaviour
     {
         //Update Camera Position
         Vector3 localPlayer = transform.InverseTransformPoint(Camera.main.transform.position);
+        //if (localPlayer.sqrMagnitude < minCameraDistance * minCameraDistance)
+        //{
+        //    localPlayer = localPlayer.normalized * minCameraDistance;
+        //}
         _camera.transform.position = transform.TransformPoint(new Vector3(localPlayer.x, localPlayer.y, -localPlayer.z));
         //Update Camera Rotation
         Vector3 lookAtMirror = transform.TransformPoint(new Vector3(-localPlayer.x, localPlayer.y, localPlayer.z));
         _camera.transform.LookAt(lookAtMirror);
 
-        _camera.nearClipPlane = Vector3.Distance(_camera.transform.position, transform.position);
+        //Set Min Value
+        _camera.nearClipPlane = Mathf.Max(minCameraDistance, Vector3.Distance(_camera.transform.position, transform.position));
 
         //Alternate Calculation for More Exact Result
         /*
@@ -56,7 +62,7 @@ public class MirrorBehaviour : MonoBehaviour
 
         //Calculation that is used
         //To minimaise calculation
-        _camera.fieldOfView = 60f - Vector3.Distance(localPlayer, transform.position) * adjustValue;
+        _camera.fieldOfView = 60f - _camera.nearClipPlane * adjustValue;
     }
 
     private void OnValidate()
@@ -70,31 +76,31 @@ public class MirrorBehaviour : MonoBehaviour
         _mf = GetComponent<MeshFilter>();
     }
 
+    private void OnDestroy()
+    {
+        _camera.targetTexture.Release();
+    }
+
     private void UpdateCameraTexture()
     {
-        //Create a Render Texture based on the new local Scale
-        RenderTexture newRenderTexture = new RenderTexture(Mathf.FloorToInt(transform.localScale.x * scaleMultiplier),
-                                                    Mathf.FloorToInt(transform.localScale.y * scaleMultiplier), 16);
+        if (!Application.isPlaying) return;
+
         _camera = GetComponentInChildren<Camera>();
         if (_camera == null)
             Debug.LogWarning("MirrorBehaviour: There is no Camera Attached to the Mirror");
+
+        if (_camera.targetTexture == null)
+            return;
+
+        //Create a Render Texture based on the new local Scale
+        RenderTexture newRenderTexture = new RenderTexture(Mathf.FloorToInt(transform.localScale.x * scaleMultiplier),
+                                                Mathf.FloorToInt(transform.localScale.y * scaleMultiplier), 16);
 
         _camera.targetTexture = newRenderTexture;
 
         _renderer = GetComponent<Renderer>();
 
-        //If in Playing Mode
-        if (Application.isPlaying)
-        {
-            _material = _renderer.material;
-        }
-        //In Edit Mode
-        else if (_renderer.sharedMaterial == null || _material == null)
-        {
-            //Update the render texture
-            _material = new Material(shader);
-            _renderer.sharedMaterial = _material;
-        }
+        _material = _renderer.material;
 
         _material.SetTexture("_Texture2D", newRenderTexture);
 

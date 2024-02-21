@@ -124,6 +124,7 @@ MonoBehaviour:
   toUpdate: 1
   scaleMultiplier: 1000
   adjustValue: 0.75
+  minCameraDistance: 0.3
 --- !u!1 &2707722576237247367
 GameObject:
   m_ObjectHideFlags: 0
