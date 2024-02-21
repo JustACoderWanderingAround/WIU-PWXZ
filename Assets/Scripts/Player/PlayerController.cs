@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour
     public void SetIsDisabled(int disabled)
     {
         isDisabled = disabled == 1 ? true : false;
-        Debug.Log(isDisabled);
     }
 
     public bool AddItem(IInventoryItem item)
