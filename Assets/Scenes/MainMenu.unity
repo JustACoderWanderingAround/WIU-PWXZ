@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6850511}
   - component: {fileID: 6850512}
+  - component: {fileID: 6850513}
   m_Layer: 0
   m_Name: Scene
   m_TagString: Untagged
@@ -168,6 +169,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneNames: []
+--- !u!114 &6850513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6850509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab363492b99539439f68dedb4818fd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imageTransform: {fileID: 0}
+  imageRenderer: {fileID: 0}
+  imageText: {fileID: 0}
+  imagePrefab: {fileID: 0}
+  readFrom: CaptureImage
+  renderAll: 0
+  hasLoaded: 0
 --- !u!1 &46424354
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,6 +281,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: BasementLevel
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6850513}
+        m_TargetAssemblyTypeName: PhotoAlbum, Assembly-CSharp
+        m_MethodName: ClearImages
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &46424357
