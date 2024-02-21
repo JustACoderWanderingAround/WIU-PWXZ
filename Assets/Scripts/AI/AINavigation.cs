@@ -30,10 +30,5 @@ public class AINavigation : MonoBehaviour
     public void StopNavigation()
     {
         navMeshAgent.speed = 0;
-        navMeshAgent.isStopped = true;
-    }
-    public void ResumeNavigation()
-    {
-        navMeshAgent.isStopped = false;
     }
 }

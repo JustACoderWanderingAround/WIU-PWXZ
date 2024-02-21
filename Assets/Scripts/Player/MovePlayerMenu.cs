@@ -13,7 +13,7 @@ public class MovePlayerMenu : MonoBehaviour
     void Start()
     {
         animationController = AnimationController.Instance;
-        animationController.ChangeAnimation(animationController.Sprint, 0f, 0, 0);
+        animationController.ChangeAnimation(animationController.Sprint, 0.15f, 0, 0);
     }
 
     // Update is called once per frame

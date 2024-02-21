@@ -6,7 +6,7 @@ public class AnimationController : MonoBehaviour
 {
     public static AnimationController Instance;
 
-    private Animator animator;
+    [SerializeField] private Animator animator;
 
     private int currentState;
     private float transitionDelay;
@@ -26,16 +26,6 @@ public class AnimationController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-
-        Debug.Log("CALLED");
-        animator = GetComponent<Animator>();
-        if (animator == null)
-        {
-            animator = gameObject.AddComponent<Animator>();
-            animator.runtimeAnimatorController = Resources.Load("Animator/Player") as RuntimeAnimatorController;
-        }
-
-        Debug.Log(animator);
     }
 
     public void ChangeAnimation(int state, float transitionDuration, float delayDuration, int layer)
@@ -45,13 +35,13 @@ public class AnimationController : MonoBehaviour
 
         transitionDelay = Time.time + delayDuration;
 
-        animator?.CrossFade(state, transitionDuration, layer);
+        animator.CrossFade(state, transitionDuration, layer);
         currentState = state;
     }
 
     public AnimationClip GetAnimationClip(int animation)
     {
-        foreach (AnimationClip clip in animator?.runtimeAnimatorController.animationClips)
+        foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
         {
             if (Animator.StringToHash(clip.name) == animation)
                 return clip;

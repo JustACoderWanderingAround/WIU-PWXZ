@@ -15,8 +15,6 @@ public class CameraCapture : MonoBehaviour
     public string fileName = "CaptureImage";
     public bool ifExistIncrement = false;
 
-    public static string FileName { get; private set; }
-
     //Private Variables that only to be initialised within the Scipt
     private System.Action<GameObject[]> onCaptureActions;
     private List<Renderer> allRenderers = new List<Renderer>();
@@ -24,10 +22,7 @@ public class CameraCapture : MonoBehaviour
     private Coroutine captureHandler = null;
     private Coroutine identifyHandler = null;
 
-    public PhotoAlbum photoAlbum;
-
-    [SerializeField]
-    private bool debugAutoSave = false;
+    public PhotoAlbum photoAlbum = null;
 
     #region DebugOnly
     // Start is called before the first frame update
@@ -53,7 +48,7 @@ public class CameraCapture : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.Backspace))
         {
             CaptureScreen();
         }
@@ -74,8 +69,6 @@ public class CameraCapture : MonoBehaviour
         {
             captureCamera = Camera.main;
         }
-
-        FileName = fileName;
     }
 
     //Subscribe to listener
@@ -111,10 +104,9 @@ public class CameraCapture : MonoBehaviour
         List<GameObject> gameObjects = new List<GameObject>();
 
         //Populate the list if there is the renderer is active
-        allRenderers.ForEach((r) =>
-        {
+        allRenderers.ForEach((r) => {
             //Check if it is active
-            if (r?.gameObject?.activeInHierarchy ?? false)
+            if (r?.gameObject.activeInHierarchy ?? false)
             {
                 gameobjectBounds.Add(r.gameObject, r.bounds);
             }
@@ -181,54 +173,48 @@ public class CameraCapture : MonoBehaviour
         //Encode it so it can be saved
         byte[] byteArray = renderedTexture.EncodeToPNG();
 
-        screenTexture.Release();
-
         //Add Image to the photo album to not reload (System.IO.Read takes long time)
         photoAlbum?.AddImage(byteArray);
 
         captureCamera.targetTexture = null;
 
-        //Internal Save Image
-        if (debugAutoSave)
-        { 
-            //Read necessary Data from JSON
-            string JSONPath = System.IO.Path.Combine(constantFolderPath, $"{fileName}Data.json");
-            //Check if such JSON FIle exists
-            if (!System.IO.File.Exists(JSONPath))
-            {
-                System.IO.FileStream fs = new System.IO.FileInfo(JSONPath).Create();
-                fs.Close();
-            }
-
-            string JSONText = System.IO.File.ReadAllText(JSONPath);
-            //Overwrite Data and Create One if it is not initialised Properly
-            ImageFolderData data = JsonUtility.FromJson<ImageFolderData>(JSONText) ?? new ImageFolderData();
-
-            //BackTrack by one to allow for increase value in do.while loop (if incremental)
-            int incremental = ifExistIncrement ? data.imageCount - 1 : -1;
-            string capturePath;
-            do
-            {
-                incremental++;
-                capturePath = System.IO.Path.Combine(constantFolderPath, fileName + incremental + ".png");
-            }
-            while (System.IO.File.Exists(capturePath) && ifExistIncrement);
-
-            //Update JSON
-            data.imagePrefix = fileName;
-            data.imageCount = data.imageCount < (incremental + 1) ? incremental + 1 : data.imageCount;
-            data.lastSavedAt = System.DateTime.Now.ToString();
-
-            //Convert back to string
-            JSONText = JsonUtility.ToJson(data);
-
-            //Write to the path
-            System.IO.File.WriteAllBytes(capturePath, byteArray);
-            System.IO.File.WriteAllText(JSONPath, JSONText);
-
-            Debug.Log($"File {fileName} has been saved in {capturePath}");
-            Debug.Log($"JSONFIle {JSONPath} has been Updated! : {JSONText}");
+        //Read necessary Data from JSON
+        string JSONPath = System.IO.Path.Combine(constantFolderPath, $"{fileName}Data.json");
+        //Check if such JSON FIle exists
+        if (!System.IO.File.Exists(JSONPath))
+        {
+            System.IO.FileStream fs = new System.IO.FileInfo(JSONPath).Create();
+            fs.Close();
         }
+
+        string JSONText = System.IO.File.ReadAllText(JSONPath);
+        //Overwrite Data and Create One if it is not initialised Properly
+        ImageFolderData data = JsonUtility.FromJson<ImageFolderData>(JSONText) ?? new ImageFolderData();
+
+        //BackTrack by one to allow for increase value in do.while loop (if incremental)
+        int incremental = ifExistIncrement ? data.imageCount - 1 : -1;
+        string capturePath;
+        do
+        {
+            incremental++;
+            capturePath = System.IO.Path.Combine(constantFolderPath, fileName + incremental + ".png");
+        }
+        while (System.IO.File.Exists(capturePath) && ifExistIncrement);
+
+        //Update JSON
+        data.imagePrefix = fileName;
+        data.imageCount = data.imageCount < (incremental + 1) ? incremental + 1 : data.imageCount;
+        data.lastSavedAt = System.DateTime.Now.ToString();
+
+        //Convert back to string
+        JSONText = JsonUtility.ToJson(data);
+
+        //Write to the path
+        System.IO.File.WriteAllBytes(capturePath, byteArray);
+        System.IO.File.WriteAllText(JSONPath, JSONText);
+
+        Debug.Log($"File {fileName} has been saved in {capturePath}");
+        Debug.Log($"JSONFIle {JSONPath} has been Updated! : {JSONText}");
 
         captureHandler = null;
     }

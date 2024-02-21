@@ -11,6 +11,23 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private Transform camFollow;
 
+    //This Region Should ONLY be used when InputController is Not Done
+    #region DebugOnly
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        Initialise();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        ReadMouseAxisCommand(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        UpdateTransform();
+    }
+    #endregion
+
     public void Initialise()
     {
         firstPersonCamera = Camera.main;
