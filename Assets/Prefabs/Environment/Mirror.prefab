@@ -120,11 +120,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9996131c4f6bbd4590b3788dbf4dda2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shader: {fileID: -6465566751694194690, guid: fa852d108e5d16d4cb0ba4d039863c4d, type: 3}
   toUpdate: 1
   scaleMultiplier: 1000
-  adjustValue: 0.75
+  adjustValue: 5
   minCameraDistance: 0.3
+  shader: {fileID: -6465566751694194690, guid: fa852d108e5d16d4cb0ba4d039863c4d, type: 3}
+  matColor: {r: 7.9999995, g: 7.9999995, b: 7.9999995, a: 0}
 --- !u!1 &2707722576237247367
 GameObject:
   m_ObjectHideFlags: 0

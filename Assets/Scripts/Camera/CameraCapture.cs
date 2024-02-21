@@ -181,6 +181,8 @@ public class CameraCapture : MonoBehaviour
         //Encode it so it can be saved
         byte[] byteArray = renderedTexture.EncodeToPNG();
 
+        screenTexture.Release();
+
         //Add Image to the photo album to not reload (System.IO.Read takes long time)
         photoAlbum?.AddImage(byteArray);
 

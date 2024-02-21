@@ -419,10 +419,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _HighlightStepValue: 20
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _StepValue: 0.1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 0.14117648}
   m_BuildTextureStacks: []
 --- !u!1001 &79753836
 PrefabInstance:
@@ -9397,8 +9399,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4764619727323426544, guid: f2bd98d71da00d244863cc97b013bc25,
         type: 3}
+      propertyPath: matColor.b
+      value: 7.9999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764619727323426544, guid: f2bd98d71da00d244863cc97b013bc25,
+        type: 3}
+      propertyPath: matColor.g
+      value: 7.9999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764619727323426544, guid: f2bd98d71da00d244863cc97b013bc25,
+        type: 3}
+      propertyPath: matColor.r
+      value: 7.9999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764619727323426544, guid: f2bd98d71da00d244863cc97b013bc25,
+        type: 3}
       propertyPath: adjustValue
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764619727323426544, guid: f2bd98d71da00d244863cc97b013bc25,
+        type: 3}
+      propertyPath: minCameraDistance
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5931641590644429911, guid: f2bd98d71da00d244863cc97b013bc25,
         type: 3}
@@ -12076,7 +12098,7 @@ PrefabInstance:
     - target: {fileID: 263315046778464422, guid: 626eacc701f99af4aa933d0488a54e34,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 263315046778464422, guid: 626eacc701f99af4aa933d0488a54e34,
         type: 3}
