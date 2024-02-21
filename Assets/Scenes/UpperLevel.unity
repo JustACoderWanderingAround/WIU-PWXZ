@@ -21884,6 +21884,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1373547004}
+    - targetCorrespondingSourceObject: {fileID: 2742940542485384995, guid: 626eacc701f99af4aa933d0488a54e34,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1373547005}
   m_SourcePrefab: {fileID: 100100000, guid: 626eacc701f99af4aa933d0488a54e34, type: 3}
 --- !u!43 &1065467691
 Mesh:
@@ -22641,7 +22645,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageRenderer: {fileID: 1099158368}
   imageText: {fileID: 903465033}
+  imagePrefab: {fileID: 0}
   readFrom: CaptureImage
+  renderAll: 0
+  hasLoaded: 0
 --- !u!1 &1100755581
 GameObject:
   m_ObjectHideFlags: 0
@@ -28416,6 +28423,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa6696b8a55e43e43bdb30edb5327772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1373547005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373546989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a81ee177e4f64d41a38fb2dfa4f45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopNameCanvas: {fileID: 0}
+  shopCatalogueCanvas: {fileID: 0}
+  buttonEDDec: {fileID: 0}
+  buttonEDInc: {fileID: 0}
+  buttonTCDec: {fileID: 0}
+  buttonTCInc: {fileID: 0}
+  buttonAMDec: {fileID: 0}
+  buttonAMInc: {fileID: 0}
+  buttonBuy: {fileID: 0}
+  EDCountText: {fileID: 0}
+  TCCountText: {fileID: 0}
+  AMCountText: {fileID: 0}
+  totalText: {fileID: 0}
+  moneyText: {fileID: 0}
+  eDrink: {fileID: 0}
+  tCharge: {fileID: 0}
+  ammo: {fileID: 0}
 --- !u!1001 &1380646865
 PrefabInstance:
   m_ObjectHideFlags: 0
