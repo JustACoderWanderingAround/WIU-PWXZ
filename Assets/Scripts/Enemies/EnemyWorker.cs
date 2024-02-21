@@ -71,17 +71,16 @@ public class EnemyWorker : MonoBehaviour, IEventListener
         switch (currentState)
         {
             case WorkerState.IDLE:
-                
-                SetIdle();
                 aiNavigation.StopNavigation();
+                SetIdle();
                 break;
             case WorkerState.MOVE:
-                
+                aiNavigation.ResumeNavigation();
                 animator.CrossFade(Walk, 0.1f);
                 aiNavigation.SetNavMeshTarget(waypoints[waypointIndex].position, 2f);
                 break;
             case WorkerState.RETREAT:
-                
+                aiNavigation.ResumeNavigation();
                 animator.CrossFade(Sprint, 0.1f);
                 aiNavigation.SetNavMeshTarget(positionOfInterest, 2f);
                 break;
@@ -94,7 +93,7 @@ public class EnemyWorker : MonoBehaviour, IEventListener
                 //
                 break;
             case WorkerState.SEARCH:
-                
+                aiNavigation.ResumeNavigation();
                 animator.CrossFade(Walk, 0.1f);
                 aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
                 break;
