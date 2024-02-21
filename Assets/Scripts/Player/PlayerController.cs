@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
         Instance = this;
         // Hide cursor
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
 
         LaserBehaviour.OnSubscribeHit(OnDetectLaserCollision);
         waterMask = LayerMask.NameToLayer("Water");

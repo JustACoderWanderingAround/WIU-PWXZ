@@ -22,6 +22,8 @@ public class SceneManagement : MonoBehaviour
     public List<string> sceneNames;
 
     private AsyncOperation asyncHandler = null;
+
+    private Coroutine loadSceneRoutine = null;
     
     public bool isLoading { get => asyncHandler != null; }
 
@@ -38,7 +40,12 @@ public class SceneManagement : MonoBehaviour
 
     public void LoadScene(string name)
     {
-        StartCoroutine(LoadSceneRoutine(name));
+        if (loadSceneRoutine != null)
+        {
+            Debug.LogWarning("Loading Scene. Please wait before Loading another Scene");
+            return;
+        }
+        loadSceneRoutine = StartCoroutine(LoadSceneRoutine(name));
     }
 
     private IEnumerator LoadSceneRoutine(string sceneName)
@@ -58,6 +65,7 @@ public class SceneManagement : MonoBehaviour
 
         //Default set game time scale to 1 when a new scene is loaded
         Time.timeScale = 1;
+        loadSceneRoutine = null;
     }
 
     public void Exit()

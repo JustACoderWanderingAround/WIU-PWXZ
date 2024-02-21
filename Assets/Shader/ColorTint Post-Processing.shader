@@ -4,7 +4,8 @@ Shader "Custom Post-Processing/ColorTint Post-Processing"
     {
         _MainTex ("Texture", 2D) = "white" {}
         //_blend("B & W blend", Range(0,1)) = 0
-
+        _Intensity ("Intensity", float) = 0
+        _OverlayColor("Intensity", Color) = (0, 0, 0, 1)
     }
     SubShader
     {

@@ -27,10 +27,4 @@ public class GlobalVolumeController : MonoBehaviour
 
         //colorTintPostProcess.blendIntensity.value = 1.0f;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
