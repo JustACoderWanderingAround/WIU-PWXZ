@@ -6,6 +6,8 @@ using UnityEngine.UI;
 //Created by: Tan Xiang Feng Wayne
 public class PhotoAlbum : MonoBehaviour
 {
+    public Transform imageTransform;
+
     public Image imageRenderer;
     public TMPro.TMP_Text imageText;
 
@@ -16,12 +18,13 @@ public class PhotoAlbum : MonoBehaviour
 
     private Dictionary<Sprite, Texture2D> textureReference = new Dictionary<Sprite, Texture2D>();
     private List<Sprite> images = new List<Sprite>();
-
-    private List<Sprite> internalImages = new List<Sprite>();
+    private List<Sprite> unsavedImages = new List<Sprite>();
 
     private int currentIndex = 0;
 
     private Coroutine loadImageRoutine = null;
+    private Coroutine saveImageRoutine = null;
+    private Coroutine clearImageRoutine = null;
 
     public bool renderAll = false;
 
@@ -31,16 +34,18 @@ public class PhotoAlbum : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Reload();
+        //Reload();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        
+        if (Input.GetKeyDown(KeyCode.C))
         {
-            Reload();
+            ClearImages();
         }
+        /*
         else if(Input.GetKeyDown(KeyCode.LeftArrow))
         {
             LeftButton();
@@ -48,7 +53,7 @@ public class PhotoAlbum : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             RightButton();
-        }
+        }*/
     }
     #endregion
 
@@ -57,6 +62,16 @@ public class PhotoAlbum : MonoBehaviour
         if (loadImageRoutine != null)
         {
             Debug.LogWarning("PhotoAlbum: Please Wait Before it's done Loading before reloading again.");
+            return;
+        }
+        if (saveImageRoutine != null)
+        {
+            Debug.LogWarning("PhotoAlbum: Please Wait for the Images to done Saving before loading");
+            return;
+        }
+        if (clearImageRoutine != null)
+        {
+            Debug.LogWarning("PhotoAlbum: Please Wait for the Images to done Clearing before loading");
             return;
         }
         loadImageRoutine = StartCoroutine(LoadImageRoutine());
@@ -81,6 +96,20 @@ public class PhotoAlbum : MonoBehaviour
             Debug.LogWarning("JSON File is not Initialised Yet");
             yield break;
         }
+
+        Debug.Log("Begin Loading");
+
+        images.Clear();
+        //Create loading Image
+        for (int i = 0; i < data.imageCount; i++)
+        {
+            images.Add(null);
+        }
+        //Render it
+        if (renderAll)
+            RenderAllImage();
+        else
+            RenderImage();
 
         images.Clear();
         textureReference.Clear();
@@ -107,9 +136,11 @@ public class PhotoAlbum : MonoBehaviour
                 //Add to the list
                 images.Add(sprite);
                 textureReference.Add(sprite, texture);
+                //Wait for one frame for other threads to run
+                yield return null;
             }
         }
-        internalImages.Clear();
+        unsavedImages.Clear();
         Debug.Log("PhotoAlbum: End Loading");
 
         if (renderAll)
@@ -118,6 +149,123 @@ public class PhotoAlbum : MonoBehaviour
             RenderImage();
         hasLoaded = true;
         loadImageRoutine = null;
+    }
+
+    public void SaveImage()
+    {
+        if (saveImageRoutine != null)
+        {
+            Debug.LogWarning("PhotoAlbum: Please Wait for the Images to done Saving before saving again");
+            return;
+        }
+        if (clearImageRoutine != null)
+        {
+            Debug.LogWarning("PhotoAlbum: Please Wait for the Images to done Clearing before saving again");
+            return;
+        }
+        saveImageRoutine = StartCoroutine(SaveImageRoutine());
+    }
+
+    private IEnumerator SaveImageRoutine()
+    {
+        //Wait for it to load finish
+        while (CameraCapture.constantFolderPath == null || CameraCapture.constantFolderPath == string.Empty)
+            yield return null;
+
+        //Read necessary Data from JSON
+        string JSONPath = System.IO.Path.Combine(CameraCapture.constantFolderPath, $"{CameraCapture.FileName}Data.json");
+        //Check if such JSON FIle exists
+        if (!System.IO.File.Exists(JSONPath))
+        {
+            System.IO.FileStream fs = new System.IO.FileInfo(JSONPath).Create();
+            fs.Close();
+        }
+
+        string JSONText = System.IO.File.ReadAllText(JSONPath);
+        //Overwrite Data and Create One if it is not initialised Properly
+        ImageFolderData data = JsonUtility.FromJson<ImageFolderData>(JSONText) ?? new ImageFolderData();
+
+        for (int i = 0; i < unsavedImages.Count; i++)
+        {
+            int incremental = data.imageCount + i;
+            string capturePath = System.IO.Path.Combine(CameraCapture.constantFolderPath, CameraCapture.FileName + incremental + ".png");
+
+            byte[] byteArray = unsavedImages[i].texture.EncodeToPNG();
+
+            //Write to the path
+            System.IO.File.WriteAllBytes(capturePath, byteArray);
+
+            Debug.Log($"Unsaved Image {i} has been saved in {capturePath}");
+            //Wait for one frame for other to run too
+            yield return null;
+        }
+
+        //Update JSON
+        data.imagePrefix = CameraCapture.FileName;
+        data.imageCount = data.imageCount + unsavedImages.Count;
+        data.lastSavedAt = System.DateTime.Now.ToString();
+
+        //Convert back to string
+        JSONText = JsonUtility.ToJson(data);
+
+        System.IO.File.WriteAllText(JSONPath, JSONText);
+
+        Debug.Log($"JSONFIle {JSONPath} has been Updated! : {JSONText}");
+
+        saveImageRoutine = null;
+    }
+    
+    public void ClearImages()
+    {
+        if (clearImageRoutine != null)
+        {
+            Debug.LogWarning("PhotoAlbum: Please Wait for the Images to be done clearing");
+            return;
+        }
+        clearImageRoutine = StartCoroutine(ClearImageRoutine());
+    }
+
+    private IEnumerator ClearImageRoutine()
+    {
+        Debug.Log("ISCalled");
+        //Wait for it to load finish
+        while (CameraCapture.constantFolderPath == null || CameraCapture.constantFolderPath == string.Empty)
+            yield return null;
+        Debug.Log("Starting");
+        //Read necessary Data from JSON
+        string JSONPath = System.IO.Path.Combine(CameraCapture.constantFolderPath, $"{CameraCapture.FileName}Data.json");
+        //Check if such JSON FIle exists
+        if (!System.IO.File.Exists(JSONPath))
+        {
+            Debug.Log("No Images To Clear, Directory/JSON Does Not Exist");
+            yield break;
+        }
+
+        string JSONText = System.IO.File.ReadAllText(JSONPath);
+        ImageFolderData data = JsonUtility.FromJson<ImageFolderData>(JSONText);
+
+        if (data == null)
+        {
+            Debug.Log("No Images To Clear, No Previous Saves exists");
+            yield break;
+        }
+
+        for (int i = 0; i < data.imageCount; i++)
+        {
+            string capturePath = System.IO.Path.Combine(CameraCapture.constantFolderPath, data.imagePrefix + i + ".png");
+
+            //Delete Obj at Path
+            System.IO.File.Delete(capturePath);
+
+            Debug.Log($"Image {i} has been Cleared");
+            //Wait for one frame for other to run too
+            yield return null;
+        }
+
+        //Clear
+        System.IO.File.WriteAllText(JSONPath, JsonUtility.ToJson(null));
+        Debug.Log("PhotoAlbum: Clear Image Complete");
+        clearImageRoutine = null;
     }
 
     /// <summary>
@@ -136,7 +284,7 @@ public class PhotoAlbum : MonoBehaviour
             new Vector2(texture.width * 0.5f, texture.height * 0.5f));
 
         //Add to the list
-        internalImages.Add(sprite);
+        unsavedImages.Add(sprite);
 
         if (renderAll)
             RenderAllImage();
@@ -161,30 +309,30 @@ public class PhotoAlbum : MonoBehaviour
 
     public void RenderAllImage()
     {
+        //Clear the Image
+        foreach (Transform child in imageTransform)
+        {
+            Destroy(child.gameObject);
+        }
+
         //Check if any Images is initialised
-        if (images.Count <= 0)
+        if (images.Count <= 0 && unsavedImages.Count <= 0)
         {
             Debug.LogWarning("You are trying to Render Non-Existent Image");
             return;
         }
 
-        //Clear the Image
-        foreach (Transform child in transform)
-        {
-            Destroy(child.gameObject);
-        }
-
         //Create a Gameobject for each Object
         foreach (Sprite imageToRender in images)
         {
-            Image imageHandler = Instantiate(imagePrefab, transform);
+            Image imageHandler = Instantiate(imagePrefab, imageTransform);
             imageHandler.transform.GetChild(0).GetComponent<Image>().sprite = imageToRender;
         }
 
         //Create a Gameobject for each Object
-        foreach (Sprite imageToRender in internalImages)
+        foreach (Sprite imageToRender in unsavedImages)
         {
-            Image imageHandler = Instantiate(imagePrefab, transform);
+            Image imageHandler = Instantiate(imagePrefab, imageTransform);
             imageHandler.transform.GetChild(0).GetComponent<Image>().sprite = imageToRender;
         }
     }
