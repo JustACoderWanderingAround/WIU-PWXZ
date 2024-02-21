@@ -141,6 +141,18 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
     }
 
+    public IEnumerator LoadLevel(string nextLevel, Vector3 nextSpawnPos)
+    {
+        SceneManagement.Instance.LoadScene(nextLevel);
+
+        while (SceneManagement.Instance.isLoading)
+        {
+            yield return null;
+        }
+
+        transform.position = nextSpawnPos;
+    }
+
     public void SetDontUseStamina(float duration)
     {
         StartCoroutine(DontUseStamina(duration));
