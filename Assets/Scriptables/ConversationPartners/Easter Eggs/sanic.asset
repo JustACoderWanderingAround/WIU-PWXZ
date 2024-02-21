@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0020481ef902cd4c92d8ab3a337a4a6, type: 3}
   m_Name: sanic
   m_EditorClassIdentifier: 
-  speakerName: Felicia F.
+  speakerName: Mr. F
   dialogues:
   - Did you know that in 2008 during the global financial crisis, a group of Sonic
     the Hedgehog megafans created a currency based on the game, and it inflated the
