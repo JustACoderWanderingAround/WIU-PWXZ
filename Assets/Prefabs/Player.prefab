@@ -4770,6 +4770,7 @@ GameObject:
   - component: {fileID: 267869946297880933}
   - component: {fileID: 6609820751713327736}
   - component: {fileID: 300154298326452441}
+  - component: {fileID: 8327062529304609050}
   m_Layer: 7
   m_Name: PlayerController
   m_TagString: Player
@@ -5155,6 +5156,35 @@ MonoBehaviour:
   readFrom: CaptureImage
   renderAll: 1
   hasLoaded: 0
+--- !u!114 &8327062529304609050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2742940542485384995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a81ee177e4f64d41a38fb2dfa4f45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopNameCanvas: {fileID: 184521779856877902}
+  shopCatalogueCanvas: {fileID: 3491668496141946162}
+  buttonEDDec: {fileID: 7319688607137741736}
+  buttonEDInc: {fileID: 131465249711098762}
+  buttonTCDec: {fileID: 5494484883324345671}
+  buttonTCInc: {fileID: 199268135658477204}
+  buttonAMDec: {fileID: 2770055399804652336}
+  buttonAMInc: {fileID: 1729660647731349240}
+  buttonBuy: {fileID: 6532381440560349190}
+  EDCountText: {fileID: 2934533289349038160}
+  TCCountText: {fileID: 1719739756282007885}
+  AMCountText: {fileID: 1432965171038324587}
+  totalText: {fileID: 4194874500448568729}
+  moneyText: {fileID: 7046073633646520119}
+  eDrink: {fileID: 8553361999668326925, guid: 15f3451256154d54681f5d92c683d9c9, type: 3}
+  tCharge: {fileID: 8068978003744245330, guid: 9987bd3850fec10458c6af3df4773bc0, type: 3}
+  ammo: {fileID: 6365114412934605305, guid: 23b5eed8189d5104eb3b23da15c55a69, type: 3}
 --- !u!1 &2747032173130957626
 GameObject:
   m_ObjectHideFlags: 0
@@ -10273,7 +10303,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7969084439514960359}
+      - m_Target: {fileID: 8327062529304609050}
         m_TargetAssemblyTypeName: ShopUIController, Assembly-CSharp
         m_MethodName: SetShopCatalogueActive
         m_Mode: 1
