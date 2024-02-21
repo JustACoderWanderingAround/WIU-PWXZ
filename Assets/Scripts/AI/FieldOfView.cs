@@ -100,7 +100,6 @@ public class FieldOfView : MonoBehaviour
             if (Vector3.Angle(viewPoint.forward, dir) < viewAngle / 2)
             {
                 float dist = Vector3.Distance(viewPoint.position, col.transform.position);
-
                 RaycastHit hit;
                 if (Physics.Raycast(viewPoint.position, dir, out hit, dist, obstacleMask))
                 {

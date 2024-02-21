@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 977d3c996fda4c34782a8c6035d2cacc, type: 3}
+  m_Name: InventoryManager
+  m_EditorClassIdentifier: 
+  maxItemsPerSlot: 5
+  maxSlots: 100
+  itemsJSON: '{"list":[{"itemDisplayImage":{"instanceID":33608},"uid":427263555,"itemName":"Tablet:
+    Camera Tracker","itemDescription":"This Item is used track the Camera View Nearby.","isStackable":false,"isConsumable":false,"bFollowHoldPoint":false,"itemCount":1}]}'

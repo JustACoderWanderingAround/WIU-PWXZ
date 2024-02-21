@@ -12,15 +12,23 @@ public class PlayerController : MonoBehaviour
     private GameObject collidedInteractable;
     private ShopUIController shopController;
     private GlobalVolumeController globalVolumeController;
+    private CameraController cameraController;
 
     public Transform itemHoldPoint;
     public Transform leftHandPoint;
     public Transform rightHandPoint;
 
+    private bool isDisabled = false;
+
     LayerMask waterMask;
 
     [SerializeField]
     private InventoryManager inventoryManager;
+
+    public void SetIsDisabled(int disabled)
+    {
+        isDisabled = disabled == 1 ? true : false;
+    }
 
     public bool AddItem(IInventoryItem item)
     {
@@ -45,10 +53,12 @@ public class PlayerController : MonoBehaviour
         cameraCapture.SubscribeOnCapture(OnScreenCapture);
         shopController = GetComponent<ShopUIController>();
         globalVolumeController = GetComponent<GlobalVolumeController>();
+        cameraController = GetComponent<CameraController>();
 
         // Initialize components
         movementController.IntializeMovementController();
         inventoryManager.Init();
+        cameraController.Initialise();
 
         Instance = this;
         // Hide cursor
@@ -88,6 +98,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isDisabled)
+            return;
+
         movementController.HandleMovment();
 
         if (Input.GetKey(KeyCode.Space))
@@ -109,14 +122,18 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            shopController.SetShopCatalogueActive();
+            //shopController.SetShopCatalogueActive();
             if (collidedInteractable != null && collidedInteractable.TryGetComponent(out IInteractable interactable))
             {
                 interactable.OnInteract();
             }
         }
+
         movementController.UpdateAnimation();
         movementController.UpdateFootprints();
+
+        cameraController.ReadMouseAxisCommand(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        cameraController.UpdateTransform();
 
         uiController.UpdateStaminaBar(movementController.stamina, 100);
 

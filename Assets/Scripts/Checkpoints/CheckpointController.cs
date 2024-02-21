@@ -16,6 +16,8 @@ public class CheckpointController : MonoBehaviour
     public List<EnemyState> EnemiesList { get; private set; }
     private Vector3 lastCheckpointPos;
 
+    public PhotoAlbum photoAlbum;
+
     void Start()
     {
         // We search all the checkpoints in the current scene
@@ -23,6 +25,8 @@ public class CheckpointController : MonoBehaviour
         sceneManagement = SceneManagement.Instance;
         ItemsList = new List<ItemState>();
         EnemiesList = new List<EnemyState>();
+        if (photoAlbum == null)
+            photoAlbum = GetComponentInChildren<PhotoAlbum>();
         DontDestroyOnLoad(this);
 
         Instance = this;
@@ -37,6 +41,8 @@ public class CheckpointController : MonoBehaviour
         if (other.gameObject.tag == "Checkpoint")
         {
             string s = inventoryManager.ToJSON();
+
+            photoAlbum.SaveImage();
 
             if (FileManager.WriteToFile("playerdata.json", s))
             {
@@ -79,7 +85,7 @@ public class CheckpointController : MonoBehaviour
 
             if (FileManager.WriteToFile("enemiesdata.json", enemies))
             {
-                Debug.Log("Save scene data successful");
+                Debug.Log("Save enemy data successful");
             }
 
             PlayerPrefs.SetString("SceneName", SceneManager.GetActiveScene().name);
@@ -103,6 +109,8 @@ public class CheckpointController : MonoBehaviour
         {
             yield return null;
         }
+
+        photoAlbum.Reload();
 
         transform.position = StringToVector3(PlayerPrefs.GetString("CheckpointPos"));
         transform.position = new Vector3 (transform.position.x + 3.0f, transform.position.y, transform.position.z);
@@ -154,6 +162,9 @@ public class CheckpointController : MonoBehaviour
                 }
             }
         }
+
+        //Refresh Renderer List Each Load
+        GetComponent<CameraCapture>().UpdateRendererList();
 
     }
 
