@@ -5002,7 +5002,7 @@ MonoBehaviour:
   inventoryManager: {fileID: 11400000, guid: 564cbd8f240a2e44c9ccb932a83c0feb, type: 2}
   inventoryCache: {fileID: 8233128157154526760}
   photoAlbum: {fileID: 300154298326452441}
-  saveUICanvas: {fileID: 0}
+  saveUICanvas: {fileID: 4773799331551857448}
 --- !u!95 &8492720796699014022
 Animator:
   serializedVersion: 5
@@ -14929,6 +14929,12 @@ PrefabInstance:
 --- !u!224 &4131858372787699894 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3459157626749599700, guid: f4f9f145a10ed4049b5498897100c09e,
+    type: 3}
+  m_PrefabInstance: {fileID: 672772219134426978}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4773799331551857448 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5434116282966832202, guid: f4f9f145a10ed4049b5498897100c09e,
     type: 3}
   m_PrefabInstance: {fileID: 672772219134426978}
   m_PrefabAsset: {fileID: 0}
