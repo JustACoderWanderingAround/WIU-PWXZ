@@ -275,9 +275,6 @@ public class Guard : MonoBehaviour, IEventListener
 
         if (enemyUIController.GetSuspicionLevel() >= 100)
         {
-            if (currentState != nextState)
-                AudioManager.Instance.Play("Alert");
-
             positionOfInterest = position;
             fov.targetPos = positionOfInterest;
             ChangeState(nextState);

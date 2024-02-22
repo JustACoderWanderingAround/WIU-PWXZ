@@ -15,7 +15,7 @@ MonoBehaviour:
   active: 0
   Progress:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   isActive:
     m_OverrideState: 1
     m_Value: 1

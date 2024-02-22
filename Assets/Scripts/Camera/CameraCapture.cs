@@ -110,7 +110,8 @@ public class CameraCapture : MonoBehaviour
         Dictionary<GameObject, Bounds> gameobjectBounds = new Dictionary<GameObject, Bounds>();
         List<GameObject> gameObjects = new List<GameObject>();
 
-        ////Populate the list if there is the renderer is active
+        //!!! COMMENTED OUT CAUSE NOT STABLE !!!
+        //Populate the list if there is the renderer is active
         //allRenderers.ForEach((r) =>
         //{
         //    //Check if it is active

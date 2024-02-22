@@ -8,10 +8,13 @@ public class MovePlayerMenu : MonoBehaviour
     [SerializeField] private Transform waypoint;
     //[SerializeField] private Animator animator;
     private AnimationController animationController;
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
+        
         animationController = AnimationController.Instance;
         animationController.ChangeAnimation(animationController.Sprint, 0f, 0, 0);
     }
