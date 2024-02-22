@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private CheckpointController checkpointController;
     private GameObject collidedInteractable;
     private ShopUIController shopController;
-    private GlobalVolumeController globalVolumeController = null;
+    private GlobalVolumeController globalVolumeController;
     private CameraController cameraController;
 
     public Transform itemHoldPoint;
@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject.transform.parent.gameObject);
             return;
         }
+        Instance = this;
         if (transform.parent == null)
             DontDestroyOnLoad(this);
         GameManager.Init();
@@ -53,7 +54,6 @@ public class PlayerController : MonoBehaviour
         cameraCapture.SubscribeOnCapture(OnScreenCapture);
         cameraCapture.SubscribeOnCapture(GameManager.AddEvidence);
         shopController = GetComponent<ShopUIController>();
-        globalVolumeController = GetComponent<GlobalVolumeController>();
         cameraController = GetComponent<CameraController>();
 
         // Initialize components
@@ -61,7 +61,6 @@ public class PlayerController : MonoBehaviour
         inventoryManager.Init();
         cameraController.Initialise();
 
-        Instance = this;
         // Hide cursor
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -99,6 +98,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(isDisabled);
         if (isDisabled)
             return;
 
@@ -144,6 +144,7 @@ public class PlayerController : MonoBehaviour
         cameraController.UpdateTransform();
 
         uiController.UpdateStaminaBar(movementController.stamina, 100);
+        uiController.UpdateBreathBar(movementController.breathTimer, 100);
     }
 
     public IEnumerator LoadLevel(string nextLevel, Vector3 nextSpawnPos)
@@ -191,6 +192,9 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider col)
     {
+        if (globalVolumeController == null)
+            globalVolumeController = FindObjectOfType<GlobalVolumeController>();
+
         if (col.gameObject.CompareTag("Shop"))
         {
             shopController.SetShopNameActive(col);
@@ -221,7 +225,7 @@ public class PlayerController : MonoBehaviour
             collidedInteractable = null;
         if (col.gameObject.CompareTag("Shop"))
             shopController.SetShopNameActive(col);
-        if (movementController.GetSubmergence() < 0.7f && col.gameObject.CompareTag("Water"))
+        if (movementController.GetSubmergence() < 0.7f || col.gameObject.CompareTag("Water"))
             globalVolumeController?.DisableWaterEffect();
         if (col.gameObject.CompareTag("Checkpoint"))
             checkpointController.SetSaveUIInactive();

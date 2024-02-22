@@ -222,11 +222,19 @@ public class CheckpointController : MonoBehaviour
                 switch (listEnemies[i].Type)
                 {
                     case "EnemyWorker":
-                        enemy.GetComponent<EnemyWorker>().WaypointIndex = listEnemies[i].waypointIndex;
-                        break;
+                        {
+                            EnemyWorker eh = enemy.GetComponent<EnemyWorker>();
+                            if (eh != null)
+                                eh.WaypointIndex = listEnemies[i].waypointIndex;
+                            break;
+                        }
                     case "Guard":
-                        enemy.GetComponent<Guard>().WaypointIndex = listEnemies[i].waypointIndex;
-                        break;
+                        {
+                            Guard gh = enemy.GetComponent<Guard>();
+                            if (gh != null)
+                                gh.WaypointIndex = listEnemies[i].waypointIndex;
+                            break;
+                        }
                 }
                 i++;
             }

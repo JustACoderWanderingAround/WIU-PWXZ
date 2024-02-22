@@ -105,6 +105,13 @@ public class InventoryManager : ScriptableObject
                 items.Remove(slot);
         }
 
+        //New Scene
+        if (slot.goRef == null)
+        {
+            slot.LoadSpriteAndGameObject();
+            slot.goRef.transform.SetParent(cacheInventoryItemTransform);
+        }
+
         //Invoke the item effect
         slot.itemEffect.Invoke();
 
