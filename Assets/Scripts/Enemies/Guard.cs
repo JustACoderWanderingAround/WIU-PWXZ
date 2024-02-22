@@ -245,6 +245,7 @@ public class Guard : MonoBehaviour, IEventListener
         if (Vector3.Distance(transform.position, PlayerController.Instance.transform.position) <= 1f && !caughtPlayer)
         {
             caughtPlayer = true;
+            Debug.Log(gameObject + " Called Load");
             CheckpointController.Instance.Load();
         }
     }

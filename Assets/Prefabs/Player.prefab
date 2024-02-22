@@ -5102,7 +5102,6 @@ MonoBehaviour:
   ifExistIncrement: 1
   photoAlbum: {fileID: 300154298326452441}
   debugAutoSave: 0
-  bloomIntensity: 1000
   timeToResolve: 1
   volumeManager: {fileID: 3462028526740007230}
 --- !u!114 &8016021365160787464

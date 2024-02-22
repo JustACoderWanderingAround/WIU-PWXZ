@@ -12,11 +12,7 @@ public class GlobalVolumeDissolveManager : MonoBehaviour
         if (!SceneManagement.Instance.isLoadingEffect)
         {
             Volume globalVolume = GetComponent<Volume>();
-            DissolvePostProcessing dPP = null;
-            globalVolume.sharedProfile.TryGet<DissolvePostProcessing>(out dPP);
-
-            if (dPP != null)
-                dPP.Progress.SetValue(new UnityEngine.Rendering.FloatParameter(0f));
+            globalVolume.weight = 0f;
         }
     }
 

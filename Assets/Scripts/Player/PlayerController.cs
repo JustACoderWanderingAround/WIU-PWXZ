@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnDetectLaserCollision(Collider col)
     {
+        Debug.Log(gameObject + " Called Load");
         if (col?.gameObject == gameObject)
             CheckpointController.Instance.Load();
     }
