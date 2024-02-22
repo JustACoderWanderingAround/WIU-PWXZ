@@ -31,6 +31,7 @@ public class SceneManagement : MonoBehaviour
     public TMPro.TMP_Text loadingText;
     
     public bool isLoading { get; private set; }
+    public bool isLoadingEffect { get; private set; }
 
     private System.Action onSceneLoaded;
 
@@ -71,6 +72,7 @@ public class SceneManagement : MonoBehaviour
     private IEnumerator LoadSceneRoutine(string sceneName)
     {
         isLoading = true;
+        isLoadingEffect = true;
         Time.timeScale = 0;
         //Doing Scene Transitions
         Volume globalVolume = FindObjectOfType<Volume>();
@@ -143,6 +145,7 @@ public class SceneManagement : MonoBehaviour
 
         //Default set game time scale to 1 when a new scene is loaded
         Time.timeScale = 1;
+        isLoadingEffect = false;
     }
 
     public void Exit()
