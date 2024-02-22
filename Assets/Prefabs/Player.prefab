@@ -5137,6 +5137,7 @@ MonoBehaviour:
   inventoryCache: {fileID: 8233128157154526760}
   photoAlbum: {fileID: 300154298326452441}
   saveUICanvas: {fileID: 6906587353633461575}
+  introCutscene: {fileID: 0}
 --- !u!95 &8492720796699014022
 Animator:
   serializedVersion: 5
