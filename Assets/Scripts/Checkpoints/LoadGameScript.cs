@@ -60,6 +60,6 @@ public class LoadGameScript : MonoBehaviour
         photoAlbum?.ClearImages();
         //Load New Scene
         SceneManagement.Instance.LoadScene("BasementLevel");
-        SceneManagement.Instance.OnSceneLoaded(() => PlayerController.Instance.SetIsDisabled(0));
+        SceneManagement.Instance.OnSceneLoadSetTimeScale(1f);
     }
 }
