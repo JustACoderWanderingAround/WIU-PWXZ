@@ -154,7 +154,10 @@ public class Guard : MonoBehaviour, IEventListener
                     ChangeState(GuardState.SEARCH);
                 }
 
-                aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
+                if (PlayerController.Instance == null)
+                    return;
+
+                aiNavigation.SetNavMeshTarget(PlayerController.Instance.transform.position, 3f);
 
                 break;
             case GuardState.LOOK_AROUND:

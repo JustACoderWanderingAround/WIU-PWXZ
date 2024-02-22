@@ -147,4 +147,9 @@ public class SceneManagement : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void OnSceneLoadSetTimeScale(float timeScale)
+    {
+        onSceneLoaded += () => Time.timeScale = timeScale;
+    }
 }
