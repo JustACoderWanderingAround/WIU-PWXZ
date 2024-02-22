@@ -15,6 +15,8 @@ public class InventoryManager : ScriptableObject
 
     public string itemsJSON = string.Empty;
 
+    public Transform cacheInventoryItemTransform { get; set; }
+
     public void Init()
     {
         items = new List<InventorySlot>();
@@ -116,7 +118,15 @@ public class InventoryManager : ScriptableObject
 
     public void SetItemsList(List<InventorySlot> rhs)
     {
+        //Remove All Items first
+        foreach (InventorySlot slot in items)
+        {
+            Destroy(slot.goRef);
+        }
+        //Overwrite data
         items = rhs;
+        //Reload sprite and gameObject
+        items.ForEach((x) => { x.LoadSpriteAndGameObject(); x.goRef.transform.SetParent(cacheInventoryItemTransform); });
     }
 }
 

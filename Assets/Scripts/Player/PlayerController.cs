@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
 
         Instance = this;
         // Hide cursor
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
 
         LaserBehaviour.OnSubscribeHit(OnDetectLaserCollision);
         waterMask = LayerMask.NameToLayer("Water");
@@ -195,7 +195,7 @@ public class PlayerController : MonoBehaviour
             globalVolumeController.SetWaterEffect();
 
         if (col.gameObject.CompareTag("Checkpoint"))
-            checkpointController.Save(col);
+            checkpointController.SetSaveUIActive(col);
         if (col.gameObject.CompareTag("ConversationalPartner")) {
             uiController.SetDialogueBoxActive(true);
             uiController.GetConversation(col.GetComponent<ConversationPartner>());
@@ -213,5 +213,7 @@ public class PlayerController : MonoBehaviour
             shopController.SetShopNameActive(col);
         if (col.gameObject.CompareTag("Water"))
             globalVolumeController.SetWaterEffect();
+        if (col.gameObject.CompareTag("Checkpoint"))
+            checkpointController.SetSaveUIInactive();
     }
 }

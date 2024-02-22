@@ -14,6 +14,7 @@ public class Guard : MonoBehaviour, IEventListener
 
     // Waypoints
     [SerializeField] private Transform[] waypoints;
+    public int WaypointIndex { get => waypointIndex; set => waypointIndex = value; }
     private int waypointIndex = 0;
     private Vector3 positionOfInterest = Vector3.zero;
 
@@ -229,6 +230,9 @@ public class Guard : MonoBehaviour, IEventListener
         }
 
         // Check if guard catch player
+        if (PlayerController.Instance == null)
+            return;
+
         if (Vector3.Distance(transform.position, PlayerController.Instance.transform.position) <= 1f && !caughtPlayer)
         {
             caughtPlayer = true;

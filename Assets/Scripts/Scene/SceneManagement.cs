@@ -30,7 +30,15 @@ public class SceneManagement : MonoBehaviour
     [Header("Canvas")]
     public TMPro.TMP_Text loadingText;
     
-    public bool isLoading { get => asyncHandler != null; }
+    public bool isLoading { get; private set; }
+
+    private System.Action onSceneLoaded;
+
+    public void OnSceneLoaded(System.Action onSceneLoad)
+    {
+        if (isLoading)
+            onSceneLoaded += onSceneLoad;
+    }
 
     private void Awake()
     {
@@ -60,6 +68,7 @@ public class SceneManagement : MonoBehaviour
 
     private IEnumerator LoadSceneRoutine(string sceneName)
     {
+        isLoading = true;
         Time.timeScale = 0;
         //Doing Scene Transitions
         Volume globalVolume = FindObjectOfType<Volume>();
@@ -100,9 +109,12 @@ public class SceneManagement : MonoBehaviour
             yield return null;
         }
         asyncHandler = null;
+        onSceneLoaded?.Invoke();
+        onSceneLoaded = null;
         loadingText.gameObject.SetActive(false);
+        isLoading = false;
 
-        //Doing Scene Transitions
+        //Doing Scene Transitions : ON GAME TIME
         globalVolume = FindObjectOfType<Volume>();
 
         if (globalVolume != null)
@@ -115,7 +127,7 @@ public class SceneManagement : MonoBehaviour
                 float timePassed = 0f;
                 while (timePassed < 1f)
                 {
-                    timePassed += Time.unscaledDeltaTime;
+                    timePassed += Time.deltaTime;
                     dPP.Progress.SetValue(new FloatParameter(1f - Mathf.Min(timePassed, 1f)));
                     yield return null;
                 }

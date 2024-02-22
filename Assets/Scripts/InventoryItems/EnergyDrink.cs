@@ -7,6 +7,7 @@ public class EnergyDrink : MonoBehaviour, IInventoryItem
 {
     [SerializeField] private Sprite itemDisplayImage = null;
     private bool onUse = false;
+    private Coroutine drinkRoutine = null;
 
     public string GetItemName()
     {
@@ -32,12 +33,16 @@ public class EnergyDrink : MonoBehaviour, IInventoryItem
             transform.SetParent(PlayerController.Instance.leftHandPoint);
             transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
 
-            StartCoroutine(OnUseDrink());
+            if (drinkRoutine == null)
+                drinkRoutine = StartCoroutine(OnUseDrink());
         };
     }
 
     private IEnumerator OnUseDrink()
     {
+        while (AnimationController.Instance == null)
+            yield return null;
+
         AnimationController animationController = AnimationController.Instance;
         animationController.ChangeAnimation(animationController.Drinking, 0.1f, animationController.GetAnimationClip(animationController.Drinking).length, 0);
         PlayerController.Instance.SetDontUseStamina(10f);
@@ -45,6 +50,7 @@ public class EnergyDrink : MonoBehaviour, IInventoryItem
 
         yield return new WaitForSeconds(animationController.GetAnimationClip(animationController.Drinking).length);
 
+        drinkRoutine = null;
         Destroy(gameObject);
     }
 

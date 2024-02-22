@@ -71,7 +71,7 @@ public class CameraTracker : MonoBehaviour, IInventoryItem
 
     public string GetItemName()
     {
-        return "Tablet: Camera Tracker";
+        return "Tablet";
     }
 
     // Start is called before the first frame update

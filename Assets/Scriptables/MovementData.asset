@@ -15,11 +15,12 @@ MonoBehaviour:
   walkSpeed: 4
   crouchSpeed: 3
   sprintSpeed: 6
+  swimSpeed: 3
   baseJumpForce: 6
   jumpChargeMultiplier: 2.5
   airMultiplier: 0.4
   groundDrag: 5
-  waterDrag: 10
+  waterDrag: 3
   sprintStaminaCost: 15
   jumpStaminaCost: 15
   maxStamina: 100

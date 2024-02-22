@@ -14,8 +14,7 @@ public class MovementController : MonoBehaviour
     private bool isCrouching = false;
     private bool isGrounded = true;
 
-    private bool inWater => submergence > 0f;
-    private bool isSwimming;
+    private bool inWater => submergence > 0.7f;
 
     private Vector3 direction;
     public float stamina = 100;
@@ -27,15 +26,15 @@ public class MovementController : MonoBehaviour
     float maxFPTimer = 10f;
     float shitTimer;
 
-    float subOffset = 0.875f;
-    float subRange = 1.75f;
+    float subOffset = 1.0f;
+    float subRange = 2.0f;
     float submergence;
     float buoyancy = 2.25f;
     private float _y = 0f;
     Vector3 gravity;
     LayerMask waterMask;
 
-    private AnimationController animationController;
+    [SerializeField] private AnimationController animationController;
 
     // Start is called before the first frame update
     public void IntializeMovementController()
@@ -44,7 +43,6 @@ public class MovementController : MonoBehaviour
         moveSpeed = movementData.walkSpeed;
         playerCol = GetComponent<CapsuleCollider>();
         playerRB = GetComponent<Rigidbody>();
-        animationController = AnimationController.Instance;
         soundEmitter = GetComponent<SoundEmitter>();
         footprintController = GetComponent<FootprintController>();
         shitTimer = 0;
