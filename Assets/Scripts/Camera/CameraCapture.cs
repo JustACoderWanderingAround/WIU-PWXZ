@@ -110,15 +110,16 @@ public class CameraCapture : MonoBehaviour
         Dictionary<GameObject, Bounds> gameobjectBounds = new Dictionary<GameObject, Bounds>();
         List<GameObject> gameObjects = new List<GameObject>();
 
+        //!!! COMMENTED OUT CAUSE NOT STABLE !!!
         //Populate the list if there is the renderer is active
-        allRenderers.ForEach((r) =>
-        {
-            //Check if it is active
-            if (r?.gameObject?.activeInHierarchy ?? false)
-            {
-                gameobjectBounds.Add(r.gameObject, r.bounds);
-            }
-        });
+        //allRenderers.ForEach((r) =>
+        //{
+        //    //Check if it is active
+        //    if (r?.gameObject?.activeInHierarchy ?? false)
+        //    {
+        //        gameobjectBounds.Add(r.gameObject, r.bounds);
+        //    }
+        //});
 
         //Overlap Sphere to check for Colliders
         Collider[] colliders = Physics.OverlapSphere(captureCamera.gameObject.transform.position, captureCamera.farClipPlane, itemLayer);
