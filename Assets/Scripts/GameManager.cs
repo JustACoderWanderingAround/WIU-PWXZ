@@ -37,4 +37,12 @@ public static class GameManager
         }
         
     }
+    public static List<GameObject> GetEvidenceList()
+    {
+        if (EvidenceList == null)
+        {
+            Init();
+        }
+        return EvidenceList;
+    }
 }
