@@ -4903,7 +4903,6 @@ GameObject:
   - component: {fileID: 6609820751713327736}
   - component: {fileID: 300154298326452441}
   - component: {fileID: 8327062529304609050}
-  - component: {fileID: 1408245739024946919}
   m_Layer: 7
   m_Name: PlayerController
   m_TagString: Player
@@ -5308,18 +5307,6 @@ MonoBehaviour:
   eDrink: {fileID: 8553361999668326925, guid: 15f3451256154d54681f5d92c683d9c9, type: 3}
   tCharge: {fileID: 8068978003744245330, guid: 9987bd3850fec10458c6af3df4773bc0, type: 3}
   ammo: {fileID: 6365114412934605305, guid: 23b5eed8189d5104eb3b23da15c55a69, type: 3}
---- !u!114 &1408245739024946919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2742940542485384995}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa6696b8a55e43e43bdb30edb5327772, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2747032173130957626
 GameObject:
   m_ObjectHideFlags: 0
