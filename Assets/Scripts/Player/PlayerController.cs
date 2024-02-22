@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
     private GameObject collidedInteractable;
     private ShopUIController shopController;
     private GlobalVolumeController globalVolumeController;
-    private GameObject goVolCon;
     private CameraController cameraController;
 
     public Transform itemHoldPoint;
@@ -43,6 +42,7 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject.transform.parent.gameObject);
             return;
         }
+        Instance = this;
         if (transform.parent == null)
             DontDestroyOnLoad(this);
         GameManager.Init();
@@ -54,8 +54,6 @@ public class PlayerController : MonoBehaviour
         cameraCapture.SubscribeOnCapture(OnScreenCapture);
         cameraCapture.SubscribeOnCapture(GameManager.AddEvidence);
         shopController = GetComponent<ShopUIController>();
-        goVolCon = GameObject.FindGameObjectWithTag("GlobalVolume");
-        globalVolumeController = goVolCon.GetComponent<GlobalVolumeController>();
         cameraController = GetComponent<CameraController>();
 
         // Initialize components
@@ -63,7 +61,6 @@ public class PlayerController : MonoBehaviour
         inventoryManager.Init();
         cameraController.Initialise();
 
-        Instance = this;
         // Hide cursor
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -194,6 +191,9 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider col)
     {
+        if (globalVolumeController == null)
+            globalVolumeController = FindObjectOfType<GlobalVolumeController>();
+
         if (col.gameObject.CompareTag("Shop"))
         {
             shopController.SetShopNameActive(col);
@@ -214,7 +214,7 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Water") && movementController.GetSubmergence() > 0.7f)
-            globalVolumeController.EnableWaterEffect();
+            globalVolumeController?.EnableWaterEffect();
     }
 
     private void OnTriggerExit(Collider col)
@@ -225,7 +225,7 @@ public class PlayerController : MonoBehaviour
         if (col.gameObject.CompareTag("Shop"))
             shopController.SetShopNameActive(col);
         if (movementController.GetSubmergence() < 0.7f || col.gameObject.CompareTag("Water"))
-            globalVolumeController.DisableWaterEffect();
+            globalVolumeController?.DisableWaterEffect();
         if (col.gameObject.CompareTag("Checkpoint"))
             checkpointController.SetSaveUIInactive();
     }
