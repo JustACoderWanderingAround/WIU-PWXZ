@@ -158,7 +158,7 @@ public class InventoryHandler : MonoBehaviour
             {
                 //Depending if its stackable, if its stackable, NO OBJECT SHOULD BE SHOWN
                 //Clear the transform
-                if (activeObjectTransform.childCount > 0 + (selectedSlot.Slot.isStackable ? 0 : 1))
+                if (activeObjectTransform.childCount > (selectedSlot.Slot.isStackable ? 0 : 1))
                 {
                     List<Transform> trToR = new List<Transform>();
                     int c = activeObjectTransform.childCount;
@@ -237,6 +237,7 @@ public class InventoryHandler : MonoBehaviour
         {
             inventorySlots[i] = null;
         }
+        manager.cacheInventoryItemTransform = inventoryTransform;
     }
 
     public bool AddItemToManager(IInventoryItem item)

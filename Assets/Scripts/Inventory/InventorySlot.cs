@@ -38,6 +38,19 @@ public class InventorySlot
             itemDisplayImage = Resources.Load<Sprite>(System.IO.Path.Combine(folderPath, itemName));
     }
 
+    public void LoadSpriteAndGameObject()
+    {
+        //Load In GameObject
+        if (goRef == null)
+        {
+            goRef = UnityEngine.Object.Instantiate(Resources.Load<GameObject>(System.IO.Path.Combine(folderPath, itemName)));
+            goRef.name = itemName;
+            IInventoryItem handler = goRef.GetComponent<IInventoryItem>();
+            itemEffect = handler.GetItemEffect();
+            itemDisplayImage = handler.GetItemDisplaySprite();
+        }
+    }
+
     public string GetString()
     {
         return $"<b>Name:</b> {itemName}\n<b>Description: </b>{(itemDescription == string.Empty ? "NULL" : itemDescription)}\n" + (isStackable ? $"<b>Item Count:</b> {itemCount}" : "") + $"\n\n<b>IsStackable: </b>{isStackable}\n<b>IsConsumable: </b>{isConsumable}";

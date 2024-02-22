@@ -27,7 +27,6 @@ public class CheckpointController : MonoBehaviour
         EnemiesList = new List<EnemyState>();
         if (photoAlbum == null)
             photoAlbum = GetComponentInChildren<PhotoAlbum>();
-        DontDestroyOnLoad(this);
 
         Instance = this;
         if (transform.parent == null)

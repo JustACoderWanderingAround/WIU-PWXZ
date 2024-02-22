@@ -30,7 +30,7 @@ public class SceneManagement : MonoBehaviour
     [Header("Canvas")]
     public TMPro.TMP_Text loadingText;
     
-    public bool isLoading { get => asyncHandler != null; }
+    public bool isLoading { get; private set; }
 
     private void Awake()
     {
@@ -60,6 +60,7 @@ public class SceneManagement : MonoBehaviour
 
     private IEnumerator LoadSceneRoutine(string sceneName)
     {
+        isLoading = true;
         Time.timeScale = 0;
         //Doing Scene Transitions
         Volume globalVolume = FindObjectOfType<Volume>();
@@ -129,6 +130,7 @@ public class SceneManagement : MonoBehaviour
         //Default set game time scale to 1 when a new scene is loaded
         Time.timeScale = 1;
         loadCoroutine = null;
+        isLoading = false;
     }
 
     public void Exit()
