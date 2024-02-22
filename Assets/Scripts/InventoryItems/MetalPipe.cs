@@ -65,7 +65,8 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
             transform.parent = null;
             GetComponent<Collider>().enabled = true;
             pipeRB.useGravity = true;
-            pipeRB.AddForce(Camera.main.transform.forward * _force + Camera.main.transform.up * 5f, ForceMode.Impulse);
+            pipeRB.isKinematic = false;
+            pipeRB.AddForce(Camera.main.transform.forward * _force + Camera.main.transform.up * 2f, ForceMode.Impulse);
             isEnabled = false;
             _force = 0f;
             hasRan = true;
