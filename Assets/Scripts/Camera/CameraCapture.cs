@@ -32,11 +32,11 @@ public class CameraCapture : MonoBehaviour
     private bool debugAutoSave = false;
 
     [Header("Effects")]
-    public float bloomIntensity = 1000f;
     public float timeToResolve = 0.5f;
 
     private string sceneName = string.Empty;
     public Volume volumeManager = null;
+    private Volume sceneVolume = null;
     private Coroutine effectCoroutine = null;
 
     #region DebugOnly
@@ -118,12 +118,20 @@ public class CameraCapture : MonoBehaviour
 
     private IEnumerator CameraFlickEffect()
     {
+        if (sceneName != SceneManagement.Instance.GetActiveSceneName())
+        {
+            sceneVolume = GameObject.FindGameObjectWithTag("EditableVolume")?.GetComponent<Volume>();
+            sceneName = SceneManagement.Instance.GetActiveSceneName();
+        }
+
         // While capturing Image wait
         while (captureHandler != null)
             yield return null;
 
         AudioManager.Instance.Play("CameraFlick");
         volumeManager.weight = 1f;
+        if (sceneVolume != null)
+            sceneVolume.weight = 0f;
 
         float time = 0f;
         float multiplier = 1 / timeToResolve;
@@ -131,10 +139,14 @@ public class CameraCapture : MonoBehaviour
         {
             time += Time.deltaTime;
             volumeManager.weight = 1f - (time * multiplier);
+            if (sceneVolume != null)
+                sceneVolume.weight = (time * multiplier);
             yield return null;
         }
 
         volumeManager.weight = 0f;
+        if (sceneVolume != null)
+            sceneVolume.weight = 1f;
 
         effectCoroutine = null;
     }

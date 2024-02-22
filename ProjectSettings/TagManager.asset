@@ -21,6 +21,7 @@ TagManager:
   - Water
   - GlobalVolume
   - Cutscene
+  - EditableVolume
   layers:
   - Default
   - TransparentFX
