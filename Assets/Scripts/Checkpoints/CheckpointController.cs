@@ -160,6 +160,8 @@ public class CheckpointController : MonoBehaviour
             yield return null;
         }
 
+        GameObject.FindGameObjectWithTag("Cutscene")?.SetActive(false);
+
         Time.timeScale = 0f;
         transform.position = StringToVector3(PlayerPrefs.GetString("CheckpointPos"));
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);

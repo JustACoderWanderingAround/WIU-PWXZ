@@ -20,6 +20,7 @@ TagManager:
   - Shop
   - Water
   - GlobalVolume
+  - Cutscene
   layers:
   - Default
   - TransparentFX
