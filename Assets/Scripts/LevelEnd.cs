@@ -11,7 +11,10 @@ public class LevelEnd : MonoBehaviour
     private void OnCollisionEnter(Collision col)
     {
         if (!isGameEnd)
+        {
             PlayerController.Instance.StartCoroutine(PlayerController.Instance.LoadLevel(nextLevel, nextSpawnPos));
+            SceneManagement.Instance.OnSceneLoaded(() => { Time.timeScale = 1f; });
+        }
         else
         {
             SceneManagement.Instance.LoadScene(nextLevel);
