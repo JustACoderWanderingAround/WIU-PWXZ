@@ -16,7 +16,7 @@ public class EndScenePlayer : MonoBehaviour
         }
         else
         {
-            whistleDirector.SetActive(false);
+            defaultDirector.SetActive(true);
         }
     }
 }
