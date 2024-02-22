@@ -15,8 +15,6 @@ public class CheckpointController : MonoBehaviour
     public GameObject inventoryCache;
     private SceneManagement sceneManagement;
     public List<ItemState> ItemsList { get; private set; }
-
-    public List<InventorySlot> InventorySlots { get; private set; }
     public List<EnemyState> EnemiesList { get; private set; }
 
     public List<GameObject> EnemyObjectList { get; private set; }
@@ -148,6 +146,13 @@ public class CheckpointController : MonoBehaviour
     public IEnumerator LoadRoutine()
     {
         DontDestroyOnLoad(Camera.main);
+        if (PlayerPrefs.GetString("SceneName") == null)
+        {
+            yield break;
+        }
+
+        while (sceneManagement.isLoading) { yield return null; }
+
         sceneManagement.LoadScene(PlayerPrefs.GetString("SceneName"));
 
         while (sceneManagement.isLoading)
@@ -222,13 +227,6 @@ public class CheckpointController : MonoBehaviour
                         break;
                 }
                 i++;
-                //foreach (EnemyState enemyState in listEnemies)
-                //    {
-                //        enemy.transform.position = enemyState.position;
-                //        enemy.transform.Rotate(enemyState.rotationX, enemyState.rotationY, enemyState.rotationZ);
-                //        //Quaternion.Euler()
-                //        i++;
-                //    }
             }
         }
         Debug.Log("LoadDone");

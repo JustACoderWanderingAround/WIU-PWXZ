@@ -34,6 +34,8 @@ public class SceneManagement : MonoBehaviour
 
     private System.Action onSceneLoaded;
 
+    
+
     public void OnSceneLoaded(System.Action onSceneLoad)
     {
         if (isLoading)
@@ -113,6 +115,7 @@ public class SceneManagement : MonoBehaviour
         onSceneLoaded = null;
         loadingText.gameObject.SetActive(false);
         isLoading = false;
+        loadCoroutine = null;
 
         //Doing Scene Transitions : ON GAME TIME
         globalVolume = FindObjectOfType<Volume>();
@@ -140,7 +143,6 @@ public class SceneManagement : MonoBehaviour
 
         //Default set game time scale to 1 when a new scene is loaded
         Time.timeScale = 1;
-        loadCoroutine = null;
     }
 
     public void Exit()
