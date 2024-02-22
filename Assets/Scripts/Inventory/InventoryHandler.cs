@@ -191,6 +191,15 @@ public class InventoryHandler : MonoBehaviour
         }
     }
 
+    public void UpdateInventoryItemSlot()
+    {
+       foreach (UIInventorySlot inventorySlot in activeSlot)
+        {
+            inventorySlot.Initialise(null);
+            inventorySlot.UpdateTransform();
+        }
+    }
+
     private bool isActive(InventorySlot compare)
     {
         foreach(UIInventorySlot uis in activeSlot)

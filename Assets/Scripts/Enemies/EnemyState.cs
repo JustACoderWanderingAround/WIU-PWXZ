@@ -10,17 +10,17 @@ public class EnemyState
     public string name;
     public bool isActive;
     public Vector3 position;
-    public float rotationX;
-    public float rotationY;
-    public float rotationZ;
+    public Vector3 eulerAngles;
+    public string Type;
+    public int waypointIndex;
 
-    public EnemyState(string _name, bool _isActive, Vector3 _position, float _rotationX, float _rotationY, float _rotationZ)
+    public EnemyState(string _name, bool _isActive, Vector3 _position, Vector3 _eulerAngles, string type, int waypointIndex)
     {
         name = _name;
         isActive = _isActive;
         position = _position;
-        rotationX = _rotationX;
-        rotationY = _rotationY;
-        rotationZ = _rotationZ;
+        eulerAngles = _eulerAngles;
+        Type = type;
+        this.waypointIndex = waypointIndex;
     }
 }

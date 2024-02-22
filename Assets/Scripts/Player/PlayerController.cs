@@ -194,7 +194,7 @@ public class PlayerController : MonoBehaviour
             globalVolumeController.SetWaterEffect();
 
         if (col.gameObject.CompareTag("Checkpoint"))
-            checkpointController.Save(col);
+            checkpointController.Save();
         if (col.gameObject.CompareTag("ConversationalPartner")) {
             uiController.SetDialogueBoxActive(true);
             uiController.GetConversation(col.GetComponent<ConversationPartner>());

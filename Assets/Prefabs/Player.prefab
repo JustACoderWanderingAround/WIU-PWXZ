@@ -3424,7 +3424,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 150, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 280, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5971120860966362990
@@ -5000,8 +5000,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryManager: {fileID: 11400000, guid: 564cbd8f240a2e44c9ccb932a83c0feb, type: 2}
+  inventoryHandler: {fileID: 3737218765727679668}
   inventoryCache: {fileID: 8233128157154526760}
-  photoAlbum: {fileID: 300154298326452441}
+  saveUICanvas: {fileID: 0}
 --- !u!95 &8492720796699014022
 Animator:
   serializedVersion: 5
