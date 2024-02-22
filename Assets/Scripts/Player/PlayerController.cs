@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
         cameraCapture = GetComponent<CameraCapture>();
         checkpointController = GetComponent<CheckpointController>();
         cameraCapture.SubscribeOnCapture(OnScreenCapture);
+        cameraCapture.SubscribeOnCapture(GameManager.AddEvidence);
         shopController = GetComponent<ShopUIController>();
         globalVolumeController = GetComponent<GlobalVolumeController>();
         cameraController = GetComponent<CameraController>();

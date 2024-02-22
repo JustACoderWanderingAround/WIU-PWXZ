@@ -12175,7 +12175,7 @@ PrefabInstance:
     - target: {fileID: 263315046778464422, guid: 626eacc701f99af4aa933d0488a54e34,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 263315046778464422, guid: 626eacc701f99af4aa933d0488a54e34,
         type: 3}
@@ -23558,6 +23558,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextLevel: GroundLevel
   nextSpawnPos: {x: 40, y: 0, z: 1}
+  isGameEnd: 0
 --- !u!1001 &1714816330
 PrefabInstance:
   m_ObjectHideFlags: 0

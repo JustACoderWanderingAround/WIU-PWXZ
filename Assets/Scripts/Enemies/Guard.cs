@@ -93,11 +93,13 @@ public class Guard : MonoBehaviour, IEventListener
                 animator.CrossFade(Idle, 0.1f);
                 break;
             case GuardState.PATROL:
+                aiNavigation.ResumeNavigation();
                 ChangeColor(Color.white);
                 animator.CrossFade(Walk, 0.1f);
                 aiNavigation.SetNavMeshTarget(waypoints[waypointIndex].position, 2f);
                 break;
             case GuardState.CHASE:
+                aiNavigation.ResumeNavigation();
                 ChangeColor(Color.red);
                 animator.CrossFade(Sprint, 0.1f);
                 break;
@@ -105,6 +107,7 @@ public class Guard : MonoBehaviour, IEventListener
                 animator.CrossFade(LookAround, 0.1f);
                 break;
             case GuardState.SEARCH:
+                aiNavigation.ResumeNavigation();
                 ChangeColor(Color.red);
                 animator.CrossFade(Walk, 0.1f);
                 aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
@@ -154,7 +157,10 @@ public class Guard : MonoBehaviour, IEventListener
                     ChangeState(GuardState.SEARCH);
                 }
 
-                aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
+                if (PlayerController.Instance == null)
+                    return;
+
+                aiNavigation.SetNavMeshTarget(PlayerController.Instance.transform.position, 3f);
 
                 break;
             case GuardState.LOOK_AROUND:
