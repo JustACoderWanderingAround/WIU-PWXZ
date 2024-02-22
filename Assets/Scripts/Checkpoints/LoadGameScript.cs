@@ -19,6 +19,18 @@ public class LoadGameScript : MonoBehaviour
     public void OnLoadGame()
     {
         SceneManagement.Instance.LoadScene("BasementLevel");
-        SceneManagement.Instance.OnSceneLoaded(() => FindObjectOfType<CheckpointController>().Load());
+        SceneManagement.Instance.OnSceneLoaded(() => { 
+            CheckpointController handler = FindObjectOfType<CheckpointController>();
+            handler.Load();
+            handler.StartCoroutine(LoadRoutine());
+            IEnumerator LoadRoutine()
+            {
+                while (SceneManagement.Instance.isLoading || SceneManagement.Instance.GetActiveSceneName() == "BasementLevel")
+                {
+                    yield return null;
+                }
+                PlayerController.Instance.SetIsDisabled(0);
+            }
+        });
     }
 }
