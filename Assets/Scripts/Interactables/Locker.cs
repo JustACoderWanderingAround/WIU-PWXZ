@@ -51,11 +51,15 @@ public class Locker : MonoBehaviour, IInteractable
     }
     private void OnTriggerEnter(Collider other)
     {
+        
+    }
+    private void OnTriggerStay(Collider other)
+    {
         if (other.gameObject.CompareTag("Player"))
         {
             playerInside = true;
         }
-        else if (other.gameObject.CompareTag("Enemy") )
+        if (other.gameObject.CompareTag("Enemy"))
         {
             if (playerInside)
                 StartCoroutine(StartMiniGame());

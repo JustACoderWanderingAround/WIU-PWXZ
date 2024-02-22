@@ -23,11 +23,13 @@ public class Door : MonoBehaviour, IInteractable
         {
             doorCollider.isTrigger = true;
             animator.SetTrigger("open");
+            AudioManager.Instance.Play("DoorOpen");
         }
         else if (!isOpen)
         {
             doorCollider.isTrigger = false;
             animator.SetTrigger("close");
+            AudioManager.Instance.Play("DoorClose");
         }
     }
     private void OnTriggerStay(Collider other)

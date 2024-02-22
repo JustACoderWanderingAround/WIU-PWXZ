@@ -144,6 +144,15 @@ MonoBehaviour:
     pitch: 1
     source: {fileID: 0}
     loop: 0
+  - name: DoorOpen
+    clip: {fileID: 8300000, guid: 6d6d298cc80d9514eae6b81c54467bb0, type: 3}
+    mixerGroup: {fileID: -443511191476778727, guid: 009cc7a96c9ffdf47965c75b62403f32,
+      type: 2}
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: DoorClose
+    clip: {fileID: 8300000, guid: dba6641691843554ebb5a75c9851671b, type: 3}
   - name: CameraFlick
     clip: {fileID: 8300000, guid: ccb78e100accb68489eeec4aebc90a30, type: 3}
     mixerGroup: {fileID: -443511191476778727, guid: 009cc7a96c9ffdf47965c75b62403f32,
