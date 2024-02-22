@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
         }
         if (transform.parent == null)
             DontDestroyOnLoad(this);
-
+        GameManager.Init();
         // Get player components
         movementController = GetComponent<MovementController>();
         uiController = GetComponent<UIController>();
@@ -129,17 +129,21 @@ public class PlayerController : MonoBehaviour
                 interactable.OnInteract();
             }
         }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            cameraCapture.CaptureScreen();
+        }
 
         movementController.UpdateAnimation();
         movementController.UpdateFootprints();
+
+        transform.forward = Camera.main.transform.forward;
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
 
         cameraController.ReadMouseAxisCommand(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         cameraController.UpdateTransform();
 
         uiController.UpdateStaminaBar(movementController.stamina, 100);
-
-        transform.forward = Camera.main.transform.forward;
-        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
     }
 
     public IEnumerator LoadLevel(string nextLevel, Vector3 nextSpawnPos)

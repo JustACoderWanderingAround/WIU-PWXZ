@@ -5058,7 +5058,7 @@ MonoBehaviour:
   captureCamera: {fileID: 0}
   itemLayer:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1024
   folderPath: Screenshots
   fileName: CaptureImage
   ifExistIncrement: 1
@@ -5137,6 +5137,7 @@ MonoBehaviour:
   inventoryCache: {fileID: 8233128157154526760}
   photoAlbum: {fileID: 300154298326452441}
   saveUICanvas: {fileID: 6906587353633461575}
+  introCutscene: {fileID: 0}
 --- !u!95 &8492720796699014022
 Animator:
   serializedVersion: 5
@@ -5254,7 +5255,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RigLayers: []
+  m_RigLayers:
+  - m_Rig: {fileID: 0}
+    m_Active: 1
   m_Effectors: []
 --- !u!114 &300154298326452441
 MonoBehaviour:
