@@ -129,6 +129,10 @@ public class PlayerController : MonoBehaviour
                 interactable.OnInteract();
             }
         }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            cameraCapture.CaptureScreen();
+        }
 
         movementController.UpdateAnimation();
         movementController.UpdateFootprints();

@@ -16,6 +16,10 @@ public static class GameManager
     public static void AddEvidence(GameObject[] newEvidenceList)
     {
         bool withinList = false;
+        if (newEvidenceList == null)
+        {
+            return;
+        }
         foreach (GameObject newEvidence in newEvidenceList)
         {
             foreach (GameObject evidence in EvidenceList)
