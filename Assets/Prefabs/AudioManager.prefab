@@ -130,13 +130,6 @@ MonoBehaviour:
     pitch: 1
     source: {fileID: 0}
     loop: 0
-  - name: Alert
-    clip: {fileID: 8300000, guid: 2834d4e6ad37a5f499a54796a411adf8, type: 3}
-    mixerGroup: {fileID: -443511191476778727, guid: 009cc7a96c9ffdf47965c75b62403f32,
-      type: 2}
-    pitch: 1
-    source: {fileID: 0}
-    loop: 0
   - name: LockerOpen
     clip: {fileID: 8300000, guid: 41aa972ee531a1a4784c4d0a90343da4, type: 3}
     mixerGroup: {fileID: -443511191476778727, guid: 009cc7a96c9ffdf47965c75b62403f32,
