@@ -152,4 +152,6 @@ public class SceneManagement : MonoBehaviour
     {
         onSceneLoaded += () => Time.timeScale = timeScale;
     }
+
+    public string GetActiveSceneName() => SceneManager.GetActiveScene().name;
 }
