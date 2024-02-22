@@ -1,19 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class LoadGameScript : MonoBehaviour
 {
+    [SerializeField]
+    private Button newGameButton, loadGameButton;
+    [SerializeField]
+    private PhotoAlbum photoAlbum = null;
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
+        string sceneName = PlayerPrefs.GetString("SceneName");
+        if (string.IsNullOrWhiteSpace(sceneName))
+            loadGameButton.interactable = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        newGameButton.onClick.AddListener(OnNewGame);
+        loadGameButton.onClick.AddListener(OnLoadGame);
     }
 
     public void OnLoadGame()
@@ -41,5 +46,20 @@ public class LoadGameScript : MonoBehaviour
                 }
             });
         }
+    }
+
+    public void OnNewGame()
+    {
+        //Clear all the existing datas
+        FileManager.WriteToFile("playerdata.json", null);
+        FileManager.WriteToFile("scenedata.json", null);
+        FileManager.WriteToFile("enemiesdata.json", null);
+        PlayerPrefs.DeleteKey("SceneName");
+        PlayerPrefs.DeleteKey("CheckpointPos");
+        PlayerPrefs.DeleteKey("Money");
+        photoAlbum?.ClearImages();
+        //Load New Scene
+        SceneManagement.Instance.LoadScene("BasementLevel");
+        SceneManagement.Instance.OnSceneLoadSetTimeScale(1f);
     }
 }

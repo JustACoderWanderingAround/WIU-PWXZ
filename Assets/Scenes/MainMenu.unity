@@ -205,43 +205,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 46424357}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 523669792}
-        m_TargetAssemblyTypeName: SceneManagement, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: BasementLevel
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 523669791}
-        m_TargetAssemblyTypeName: PhotoAlbum, Assembly-CSharp
-        m_MethodName: ClearImages
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 523669792}
-        m_TargetAssemblyTypeName: SceneManagement, Assembly-CSharp
-        m_MethodName: OnSceneLoadSetTimeScale
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 1
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &46424357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2401,31 +2365,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1314149903}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1749769218}
-        m_TargetAssemblyTypeName: LoadGameScript, Assembly-CSharp
-        m_MethodName: OnLoadGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 523669792}
-        m_TargetAssemblyTypeName: SceneManagement, Assembly-CSharp
-        m_MethodName: OnSceneLoadSetTimeScale
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 1
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1314149903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3805,6 +3745,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26f23adfd3e4e94faef40a63be437ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  newGameButton: {fileID: 46424356}
+  loadGameButton: {fileID: 1314149902}
+  photoAlbum: {fileID: 523669791}
 --- !u!1 &1750819251
 GameObject:
   m_ObjectHideFlags: 0
@@ -4670,55 +4613,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2067369573}
   m_CullTransparentMesh: 1
---- !u!1 &2134181651
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2134181653}
-  - component: {fileID: 2134181652}
-  m_Layer: 0
-  m_Name: CheckpointManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2134181652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2134181651}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef5199c623118754ab0011690e6cb1ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventoryManager: {fileID: 11400000, guid: 564cbd8f240a2e44c9ccb932a83c0feb, type: 2}
-  inventoryHandler: {fileID: 0}
-  inventoryCache: {fileID: 0}
-  photoAlbum: {fileID: 0}
-  saveUICanvas: {fileID: 0}
---- !u!4 &2134181653
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2134181651}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 56.17295, y: 801.27203, z: -755.4888}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -4733,5 +4627,4 @@ SceneRoots:
   - {fileID: 1984650695}
   - {fileID: 523669790}
   - {fileID: 954653508}
-  - {fileID: 2134181653}
   - {fileID: 1648908228}

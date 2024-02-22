@@ -7,6 +7,7 @@ using TMPro;
 public class UIController : MonoBehaviour
 {
     [SerializeField] private Slider staminaBar;
+    [SerializeField] private Slider breathBar;
     [SerializeField] private DialogueBox dialogueBox;
     [SerializeField] private GameObject activeInventory;
     [SerializeField] private GameObject playerDialogueBox;
@@ -24,6 +25,18 @@ public class UIController : MonoBehaviour
         if (dialogueBox?.finished  ?? false)
             SetDialogueBoxActive(false);
     }
+    public void UpdateBreathBar(float currentBreath, float maxBreath)
+    {
+        breathBar.value = currentBreath;
+        breathBar.maxValue = maxBreath;
+        if (currentBreath >= maxBreath)
+            breathBar.gameObject.SetActive(false);
+        else
+            breathBar.gameObject.SetActive(true);
+        if (dialogueBox?.finished ?? false)
+            SetDialogueBoxActive(false);
+    }
+
     public void SetDialogueBoxActive(bool active)
     {
         playerDialogueBox?.SetActive(active);
