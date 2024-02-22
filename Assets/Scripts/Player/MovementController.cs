@@ -213,7 +213,6 @@ public class MovementController : MonoBehaviour
         // Update facing direction
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, targetAngle, 0), moveSpeed * Time.deltaTime);
-        Debug.Log(submergence);
     }
 
     public void ChargeJump()

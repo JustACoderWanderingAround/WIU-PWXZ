@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
         cameraCapture = GetComponent<CameraCapture>();
         checkpointController = GetComponent<CheckpointController>();
         cameraCapture.SubscribeOnCapture(OnScreenCapture);
+        cameraCapture.SubscribeOnCapture(GameManager.AddEvidence);
         shopController = GetComponent<ShopUIController>();
         globalVolumeController = GetComponent<GlobalVolumeController>();
         cameraController = GetComponent<CameraController>();
@@ -212,5 +213,7 @@ public class PlayerController : MonoBehaviour
             shopController.SetShopNameActive(col);
         if (col.gameObject.CompareTag("Water"))
             globalVolumeController.SetWaterEffect();
+        if (col.gameObject.CompareTag("Checkpoint"))
+            checkpointController.SetSaveUIInactive();
     }
 }

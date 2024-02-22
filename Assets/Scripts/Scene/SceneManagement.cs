@@ -32,6 +32,14 @@ public class SceneManagement : MonoBehaviour
     
     public bool isLoading { get; private set; }
 
+    private System.Action onSceneLoaded;
+
+    public void OnSceneLoaded(System.Action onSceneLoad)
+    {
+        if (isLoading)
+            onSceneLoaded += onSceneLoad;
+    }
+
     private void Awake()
     {
         if (instance != null)
@@ -101,9 +109,12 @@ public class SceneManagement : MonoBehaviour
             yield return null;
         }
         asyncHandler = null;
+        onSceneLoaded?.Invoke();
+        onSceneLoaded = null;
         loadingText.gameObject.SetActive(false);
+        isLoading = false;
 
-        //Doing Scene Transitions
+        //Doing Scene Transitions : ON GAME TIME
         globalVolume = FindObjectOfType<Volume>();
 
         if (globalVolume != null)
@@ -116,7 +127,7 @@ public class SceneManagement : MonoBehaviour
                 float timePassed = 0f;
                 while (timePassed < 1f)
                 {
-                    timePassed += Time.unscaledDeltaTime;
+                    timePassed += Time.deltaTime;
                     dPP.Progress.SetValue(new FloatParameter(1f - Mathf.Min(timePassed, 1f)));
                     yield return null;
                 }
@@ -130,7 +141,6 @@ public class SceneManagement : MonoBehaviour
         //Default set game time scale to 1 when a new scene is loaded
         Time.timeScale = 1;
         loadCoroutine = null;
-        isLoading = false;
     }
 
     public void Exit()
