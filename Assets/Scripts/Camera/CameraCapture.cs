@@ -273,7 +273,7 @@ public class CameraCapture : MonoBehaviour
     {
         RaycastHit hit;
         Vector3 direction = (objectToCheck.transform.position - captureCamera.transform.position).normalized;
-        if (Physics.Raycast(captureCamera.transform.position, direction, out hit, captureCamera.farClipPlane))
+        if (Physics.Raycast(captureCamera.transform.position, direction, out hit, captureCamera.farClipPlane, itemLayer))
         {
             if (hit.transform.gameObject == objectToCheck)
             {

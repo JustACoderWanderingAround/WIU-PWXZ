@@ -5058,7 +5058,7 @@ MonoBehaviour:
   captureCamera: {fileID: 0}
   itemLayer:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1024
   folderPath: Screenshots
   fileName: CaptureImage
   ifExistIncrement: 1

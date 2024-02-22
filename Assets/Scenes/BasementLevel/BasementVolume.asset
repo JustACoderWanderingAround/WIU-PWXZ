@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc45944dc893b84cb7ed371a219dc9d, type: 3}
   m_Name: DissolvePostProcessing
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   Progress:
     m_OverrideState: 1
     m_Value: 0
