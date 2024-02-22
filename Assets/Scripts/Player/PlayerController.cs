@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
         }
         if (transform.parent == null)
             DontDestroyOnLoad(this);
-
+        GameManager.Init();
         // Get player components
         movementController = GetComponent<MovementController>();
         uiController = GetComponent<UIController>();
