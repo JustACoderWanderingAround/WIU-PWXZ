@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static UnityEngine.EventSystems.EventTrigger;
@@ -13,10 +14,17 @@ public class CheckpointController : MonoBehaviour
     public GameObject inventoryCache;
     private SceneManagement sceneManagement;
     public List<ItemState> ItemsList { get; private set; }
+
+    public List<InventorySlot> InventorySlots { get; private set; }
     public List<EnemyState> EnemiesList { get; private set; }
     private Vector3 lastCheckpointPos;
 
     public PhotoAlbum photoAlbum;
+    private Collider collided = null;
+    private bool isSaveUIActive;
+    [SerializeField]
+    private GameObject saveUICanvas;
+
 
     void Start()
     {
@@ -34,66 +42,102 @@ public class CheckpointController : MonoBehaviour
             DontDestroyOnLoad(this);
     }
 
-
-
-    public void Save(Collider other)
+    public void SetSaveUIActive(Collider other)
     {
-        if (other.gameObject.tag == "Checkpoint")
+        isSaveUIActive = true;
+        saveUICanvas.SetActive(isSaveUIActive);
+        if (saveUICanvas.activeSelf)
         {
-            string s = inventoryManager.ToJSON();
-
-            photoAlbum.SaveImage();
-
-            if (FileManager.WriteToFile("playerdata.json", s))
-            {
-                Debug.Log("Save player data successful");
-            }
-
-            foreach (Transform g in inventoryCache.transform)
-            {
-                ItemState itemState = new ItemState(g.gameObject.name, g.gameObject.GetInstanceID(), g.gameObject.activeSelf, g.transform.position, g.transform.rotation.x, g.transform.rotation.y, g.transform.rotation.z);
-                ItemsList.Add(itemState);
-            }
-
-            foreach (GameObject item in GameObject.FindGameObjectsWithTag("Item"))
-            {
-                ItemState itemState = new ItemState(item.name,item.GetInstanceID(),item.activeSelf, item.transform.position, item.transform.rotation.x, item.transform.rotation.y, item.transform.rotation.z);
-                ItemsList.Add(itemState);
-            }
-            
-            string items = JsonUtility.ToJson(new SerializableList<ItemState> (ItemsList));
-
-            if (FileManager.WriteToFile("scenedata.json", items))
-            {
-                Debug.Log("Save scene data successful");
-            }
-
-            GameObject[] enemiesList = GameObject.FindGameObjectsWithTag("Enemy");
-
-
-
-            foreach (GameObject enemy in enemiesList)
-            {
-                GameObject child = enemy.transform.GetChild(0).gameObject;
-
-                EnemyState enemyState = new EnemyState(child.name, child.activeSelf, child.transform.position, child.transform.eulerAngles.x, child.transform.eulerAngles.y, child.transform.eulerAngles.z);
-                EnemiesList.Add(enemyState);
-            }
-
-            string enemies = JsonUtility.ToJson(new SerializableList<EnemyState>(EnemiesList));
-
-            if (FileManager.WriteToFile("enemiesdata.json", enemies))
-            {
-                Debug.Log("Save enemy data successful");
-            }
-
-            PlayerPrefs.SetString("SceneName", SceneManager.GetActiveScene().name);
-            PlayerPrefs.SetString("CheckpointPos", other.transform.position.ToString());
-            //PlayerPrefs.SetInt("Money", ShopItemController.Instance.GetMoney());
-            PlayerPrefs.Save();
+            collided = other;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = saveUICanvas.activeSelf;
         }
     }
 
+    public void SetSaveUIInactive()
+    {
+        isSaveUIActive = false;
+        saveUICanvas.SetActive(isSaveUIActive);
+        if (!saveUICanvas.activeSelf)
+        {
+            collided = null;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = saveUICanvas.activeSelf;
+        }
+    }
+
+
+    public void Save()
+    {
+
+        string s = inventoryManager.ToJSON();
+
+        if (FileManager.WriteToFile("playerdata.json", s))
+        {
+            Debug.Log("Save player data successful");
+        }
+
+        foreach (Transform g in inventoryCache.transform)
+        {
+            ItemState itemState = new ItemState(g.gameObject.name, g.gameObject.GetInstanceID(), g.gameObject.activeSelf, g.transform.position, g.transform.rotation.x, g.transform.rotation.y, g.transform.rotation.z);
+            ItemsList.Add(itemState);
+        }
+
+        foreach (GameObject item in GameObject.FindGameObjectsWithTag("Item"))
+        {
+            ItemState itemState = new ItemState(item.name, item.GetInstanceID(), item.activeSelf, item.transform.position, item.transform.rotation.x, item.transform.rotation.y, item.transform.rotation.z);
+            ItemsList.Add(itemState);
+        }
+
+        string items = JsonUtility.ToJson(new SerializableList<ItemState>(ItemsList));
+
+        if (FileManager.WriteToFile("scenedata.json", items))
+        {
+            Debug.Log("Save scene data successful");
+        }
+
+        GameObject[] enemiesList = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (GameObject enemy in enemiesList)
+        {
+            AINavigation aiHandler = enemy.GetComponent<AINavigation>();
+            if (aiHandler != null)
+            {
+                //Check which type of enemy it is
+                string workerType = "NULL";
+                int waypoint = 0;
+                EnemyWorker wh = enemy.GetComponent<EnemyWorker>();
+                Guard gh = enemy.GetComponent<Guard>();
+
+                if (wh != null)
+                {
+                    workerType = "EnemyWorker";
+                    waypoint = wh.WaypointIndex;
+                }
+                else if (gh)
+                {
+                    workerType = "Guard";
+                    waypoint = gh.WaypointIndex;
+                }
+
+                EnemyState enemyState = new EnemyState(enemy.name, enemy.activeSelf, enemy.transform.localPosition, enemy.transform.eulerAngles, workerType, waypoint);
+                EnemiesList.Add(enemyState);
+            }
+        }
+
+        string enemies = JsonUtility.ToJson(new SerializableList<EnemyState>(EnemiesList));
+
+        if (FileManager.WriteToFile("enemiesdata.json", enemies))
+        {
+            Debug.Log("Save scene data successful");
+        }
+
+        PlayerPrefs.SetString("SceneName", SceneManager.GetActiveScene().name);
+        PlayerPrefs.SetString("CheckpointPos", transform.position.ToString());
+        //PlayerPrefs.SetInt("Money", ShopItemController.Instance.GetMoney());
+        PlayerPrefs.Save();
+
+    }
     public void Load()
     {
         StartCoroutine(LoadRoutine());
