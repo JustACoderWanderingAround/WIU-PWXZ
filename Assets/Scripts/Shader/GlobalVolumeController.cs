@@ -23,8 +23,8 @@ public class GlobalVolumeController : MonoBehaviour
         // Use the QuickVolume method to create a volume with a priority of 100, and assign the vignette to this volume
         //m_Volume = PostProcessManager.instance.QuickVolume(gameObject.layer, 100f, m_Vignette);
 
-        gameObject = GameObject.FindWithTag("GlobalVolume");
-        vol = gameObject.GetComponent<Volume>();
+        vol = GetComponent<Volume>();
+
         vol.profile.TryGet(out colorTintPostProcess);
     }
 

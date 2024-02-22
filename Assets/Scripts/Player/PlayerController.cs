@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private GameObject collidedInteractable;
     private ShopUIController shopController;
     private GlobalVolumeController globalVolumeController;
+    private GameObject goVolCon;
     private CameraController cameraController;
 
     public Transform itemHoldPoint;
@@ -53,7 +54,8 @@ public class PlayerController : MonoBehaviour
         cameraCapture.SubscribeOnCapture(OnScreenCapture);
         cameraCapture.SubscribeOnCapture(GameManager.AddEvidence);
         shopController = GetComponent<ShopUIController>();
-        globalVolumeController = GetComponent<GlobalVolumeController>();
+        goVolCon = GameObject.FindGameObjectWithTag("GlobalVolume");
+        globalVolumeController = goVolCon.GetComponent<GlobalVolumeController>();
         cameraController = GetComponent<CameraController>();
 
         // Initialize components
