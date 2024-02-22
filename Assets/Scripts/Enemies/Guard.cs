@@ -150,8 +150,10 @@ public class Guard : MonoBehaviour, IEventListener
 
                 break;
             case GuardState.CHASE:
-                if (!fov.CheckTargetInLineOfSight(out positionOfInterest, 10000))
+                timer += Time.deltaTime;
+                if (!fov.CheckTargetInLineOfSight(out positionOfInterest, 10000) && timer >= 3f)
                 {
+                    timer = 0f;
                     enemyUIController.StartDecaySuspicion();
                     aiNavigation.StopNavigation();
                     ChangeState(GuardState.SEARCH);
@@ -180,8 +182,9 @@ public class Guard : MonoBehaviour, IEventListener
                 if (positionOfInterest == Vector3.zero)
                     ChangeState(GuardState.PATROL);
 
-                if (aiNavigation.OnReachTarget(positionOfInterest, 0.3f))
+                if (aiNavigation.OnReachTarget(positionOfInterest, 3))
                 {
+                    enemyUIController.StartDecaySuspicion();
                     positionOfInterest = Vector3.zero;
                     ChangeState(GuardState.LOOK_AROUND);
                 }
