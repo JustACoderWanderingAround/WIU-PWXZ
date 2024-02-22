@@ -31,6 +31,7 @@ public class MovementController : MonoBehaviour
     float submergence;
     float buoyancy = 2.25f;
     private float _y = 0f;
+    float breathtimer = 100f;
     Vector3 gravity;
     LayerMask waterMask;
 
