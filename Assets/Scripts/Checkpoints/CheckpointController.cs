@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static UnityEngine.EventSystems.EventTrigger;
@@ -14,9 +15,12 @@ public class CheckpointController : MonoBehaviour
     public GameObject inventoryCache;
     private SceneManagement sceneManagement;
     public List<ItemState> ItemsList { get; private set; }
+
+    public List<InventorySlot> InventorySlots { get; private set; }
     public List<EnemyState> EnemiesList { get; private set; }
 
     public List<GameObject> EnemyObjectList { get; private set; }
+    public PhotoAlbum photoAlbum;
     private Collider collided = null;
     private bool isSaveUIActive;
     [SerializeField]
@@ -39,7 +43,7 @@ public class CheckpointController : MonoBehaviour
 
     public void SetSaveUIActive(Collider other)
     {
-        isSaveUIActive = !isSaveUIActive;
+        isSaveUIActive = true;
         saveUICanvas.SetActive(isSaveUIActive);
         if (saveUICanvas.activeSelf)
         {
@@ -47,6 +51,25 @@ public class CheckpointController : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = saveUICanvas.activeSelf;
         }
+
+        string enemies = JsonUtility.ToJson(new SerializableList<EnemyState>(EnemiesList));
+
+        if (FileManager.WriteToFile("enemiesdata.json", enemies))
+        {
+            Debug.Log("Save scene data successful");
+        }
+
+        PlayerPrefs.SetString("SceneName", SceneManager.GetActiveScene().name);
+        PlayerPrefs.SetString("CheckpointPos", transform.position.ToString());
+        //PlayerPrefs.SetInt("Money", ShopItemController.Instance.GetMoney());
+        PlayerPrefs.Save();
+
+    }
+
+    public void SetSaveUIInactive()
+    {
+        isSaveUIActive = false;
+        saveUICanvas.SetActive(isSaveUIActive);
         if (!saveUICanvas.activeSelf)
         {
             collided = null;
@@ -54,6 +77,7 @@ public class CheckpointController : MonoBehaviour
             Cursor.visible = saveUICanvas.activeSelf;
         }
     }
+
 
     public void Save()
     {
@@ -129,7 +153,6 @@ public class CheckpointController : MonoBehaviour
         PlayerPrefs.Save();
 
     }
-
     public void Load()
     {
         StartCoroutine(LoadRoutine());
@@ -192,7 +215,9 @@ public class CheckpointController : MonoBehaviour
             {
                 if (enemy.GetComponent<AINavigation>() != null)
                 {
-                    EnemyObjectList.Add(enemy);
+                    child.transform.position = enemyState.position;
+                    child.transform.Rotate(enemyState.eulerAngles);
+                    //Quaternion.Euler()
                 }
             }
 

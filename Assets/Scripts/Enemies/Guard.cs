@@ -16,6 +16,7 @@ public class Guard : MonoBehaviour, IEventListener
     [SerializeField] private Transform[] waypoints;
     public int WaypointIndex { get => waypointIndex; set => waypointIndex = value; }
     private int waypointIndex = 0;
+    public int WaypointIndex { get => waypointIndex; set => waypointIndex = value; }
     private Vector3 positionOfInterest = Vector3.zero;
 
     // Animations

@@ -14,8 +14,7 @@ public class MovementController : MonoBehaviour
     private bool isCrouching = false;
     private bool isGrounded = true;
 
-    private bool inWater => submergence > 0f;
-    private bool isSwimming;
+    private bool inWater => submergence > 0.7f;
 
     private Vector3 direction;
     public float stamina = 100;
@@ -27,8 +26,8 @@ public class MovementController : MonoBehaviour
     float maxFPTimer = 10f;
     float shitTimer;
 
-    float subOffset = 0.875f;
-    float subRange = 1.75f;
+    float subOffset = 1.0f;
+    float subRange = 2.0f;
     float submergence;
     float buoyancy = 2.25f;
     private float _y = 0f;
@@ -213,6 +212,7 @@ public class MovementController : MonoBehaviour
         // Update facing direction
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, targetAngle, 0), moveSpeed * Time.deltaTime);
+        Debug.Log(submergence);
     }
 
     public void ChargeJump()

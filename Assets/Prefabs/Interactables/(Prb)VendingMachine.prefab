@@ -10351,6 +10351,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1975251531564983441}
   - component: {fileID: 119223387359723135}
+  - component: {fileID: 6687222974339252804}
   m_Layer: 0
   m_Name: (Prb)VendingMachine
   m_TagString: Shop
@@ -10393,8 +10394,29 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 2.5, z: 4}
-  m_Center: {x: 0, y: 1.1672084, z: 0}
+  m_Size: {x: 2.5879116, y: 2.5, z: 4}
+  m_Center: {x: 0.7060442, y: 1.1672084, z: 0}
+--- !u!65 &6687222974339252804
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6580970829318808498}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2.4728668, z: 1.515893}
+  m_Center: {x: 0, y: 1.228902, z: -0.0024924278}
 --- !u!1 &6612353297722587827
 GameObject:
   m_ObjectHideFlags: 0
