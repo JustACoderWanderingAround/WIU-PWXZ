@@ -20,6 +20,10 @@ public class CameraTracker : MonoBehaviour, IInventoryItem
     private int prevIndex = 0;
 
     private Vector3 targetPosition = Vector3.zero;
+
+    private string loadedSceneName = string.Empty;
+
+    private Sprite noCameraSprite = null;
     public GameObject GetGameObject()
     {
         return gameObject;
@@ -42,8 +46,12 @@ public class CameraTracker : MonoBehaviour, IInventoryItem
 
     public void OnUseItem()
     {
+        //New Scene: Camera Destroyed
+        if (loadedSceneName != SceneManagement.Instance.GetActiveSceneName())
+            Initialise();
+
         //Set the opposite
-        targetMaterial.SetTexture("_Texture2D", isEnabled ? defaultTexture : cameras[textureIndex].cameraFOV.targetTexture);
+        targetMaterial.SetTexture("_Texture2D", isEnabled ? defaultTexture : (cameras.Count != 0 ? cameras[textureIndex].cameraFOV.targetTexture : noCameraSprite.texture));
         targetPosition = new Vector3(0f, isEnabled ? 0f : offsetY, 0f);
 
         isEnabled = !isEnabled;
@@ -97,6 +105,9 @@ public class CameraTracker : MonoBehaviour, IInventoryItem
         //Init all the camera in the scene
         cameras = new List<CameraBehaviour>(FindObjectsOfType<CameraBehaviour>());
         textureIndex = prevIndex = 0;
+        loadedSceneName = SceneManagement.Instance.GetActiveSceneName();
+        if (noCameraSprite == null)
+            noCameraSprite = Resources.Load<Sprite>("Sprites/nocamera");
     }
 
     // Update is called once per frame
@@ -134,6 +145,9 @@ public class CameraTracker : MonoBehaviour, IInventoryItem
         {
             textureIndex++;
         }
+
+        if (cameras.Count == 0)
+            return;
 
         textureIndex = textureIndex % cameras.Count;
         if (textureIndex < 0)
