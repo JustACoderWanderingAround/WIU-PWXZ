@@ -146,6 +146,7 @@ public class PlayerController : MonoBehaviour
         cameraController.UpdateTransform();
 
         uiController.UpdateStaminaBar(movementController.stamina, 100);
+        uiController.UpdateBreathBar(movementController.breathTimer, 100);
     }
 
     public IEnumerator LoadLevel(string nextLevel, Vector3 nextSpawnPos)

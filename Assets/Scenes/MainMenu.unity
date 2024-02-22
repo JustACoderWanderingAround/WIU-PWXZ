@@ -205,43 +205,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 46424357}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 523669792}
-        m_TargetAssemblyTypeName: SceneManagement, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: BasementLevel
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 523669791}
-        m_TargetAssemblyTypeName: PhotoAlbum, Assembly-CSharp
-        m_MethodName: ClearImages
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 523669792}
-        m_TargetAssemblyTypeName: SceneManagement, Assembly-CSharp
-        m_MethodName: OnSceneLoadSetTimeScale
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 1
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &46424357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2401,31 +2365,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1314149903}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1749769218}
-        m_TargetAssemblyTypeName: LoadGameScript, Assembly-CSharp
-        m_MethodName: OnLoadGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 523669792}
-        m_TargetAssemblyTypeName: SceneManagement, Assembly-CSharp
-        m_MethodName: OnSceneLoadSetTimeScale
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 1
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1314149903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3805,6 +3745,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26f23adfd3e4e94faef40a63be437ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  newGameButton: {fileID: 46424356}
+  loadGameButton: {fileID: 1314149902}
+  photoAlbum: {fileID: 523669791}
 --- !u!1 &1750819251
 GameObject:
   m_ObjectHideFlags: 0

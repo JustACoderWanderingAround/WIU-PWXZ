@@ -18,6 +18,7 @@ public class MovementController : MonoBehaviour
 
     private Vector3 direction;
     public float stamina = 100;
+    public float breathTimer = 100f;
     private float jumpChargeTime = 0;
     private float moveSpeed;
     private bool useStamina = true;
@@ -132,7 +133,7 @@ public class MovementController : MonoBehaviour
         {
             playerRB.velocity +=
                 gravity * ((1f - buoyancy * submergence) * Time.deltaTime);
-            breathtimer = Time.deltaTime;
+            breathTimer -= movementData.swimBreathCost * Time.deltaTime;
         }
 
 
@@ -401,7 +402,7 @@ public class MovementController : MonoBehaviour
         {
             moveSpeed = movementData.walkSpeed;
             playerRB.drag = movementData.groundDrag;
-
+            breathTimer = 100;
         }
     }
 }
