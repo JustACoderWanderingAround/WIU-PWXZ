@@ -191,8 +191,8 @@ public class PlayerController : MonoBehaviour
         {
             shopController.SetShopNameActive(col);
         }
-        if (col.gameObject.CompareTag("Water"))
-            globalVolumeController.SetWaterEffect();
+        //if (col.gameObject.CompareTag("Water") && movementController.GetSubmergence() > 0.9f)
+        //    globalVolumeController.SetWaterEffect();
 
         if (col.gameObject.CompareTag("Checkpoint"))
             checkpointController.SetSaveUIActive(col);
@@ -204,6 +204,12 @@ public class PlayerController : MonoBehaviour
             collidedInteractable = col.gameObject;
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Water") && movementController.GetSubmergence() > 0.7f)
+            globalVolumeController.EnableWaterEffect();
+    }
+
     private void OnTriggerExit(Collider col)
     {
         uiController.SetDialogueBoxActive(false);
@@ -211,8 +217,8 @@ public class PlayerController : MonoBehaviour
             collidedInteractable = null;
         if (col.gameObject.CompareTag("Shop"))
             shopController.SetShopNameActive(col);
-        if (col.gameObject.CompareTag("Water"))
-            globalVolumeController.SetWaterEffect();
+        if (movementController.GetSubmergence() < 0.7f || col.gameObject.CompareTag("Water"))
+            globalVolumeController.DisableWaterEffect();
         if (col.gameObject.CompareTag("Checkpoint"))
             checkpointController.SetSaveUIInactive();
     }

@@ -115,12 +115,12 @@ public class MovementController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.R))
         {
-            _y = 1.5f;
+            _y = 1.75f;
         }
         // move down
         else if (Input.GetKey(KeyCode.F))
         {
-            _y = -1.5f;
+            _y = -1.75f;
         }
         else
         {
@@ -134,6 +134,7 @@ public class MovementController : MonoBehaviour
                 gravity * ((1f - buoyancy * submergence) * Time.deltaTime);
             breathtimer = Time.deltaTime;
         }
+
 
         isMoving = horizontal != 0 || vertical != 0;
         if (isMoving)
@@ -342,6 +343,11 @@ public class MovementController : MonoBehaviour
         return inWater;
     }
 
+    public float GetSubmergence()
+    {
+        return submergence;
+    }
+
     public void EnterCollision(Collision col)
     {
         if (LayerMask.LayerToName(col.gameObject.layer) == "Ground" && !inWater)
@@ -386,7 +392,7 @@ public class MovementController : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Water"))
         {
             CheckSubmergence();
-            AudioManager.Instance.Play("Splat");
+            //AudioManager.Instance.Play("Splat");
         }
     }
     private void OnTriggerExit(Collider other)
@@ -395,6 +401,7 @@ public class MovementController : MonoBehaviour
         {
             moveSpeed = movementData.walkSpeed;
             playerRB.drag = movementData.groundDrag;
+
         }
     }
 }
