@@ -199,7 +199,7 @@ public class CheckpointController : MonoBehaviour
                 foreach (EnemyState enemyState in listEnemies)
                 {
                     child.transform.position = enemyState.position;
-                    child.transform.Rotate(enemyState.rotationX, enemyState.rotationY, enemyState.rotationZ);
+                    child.transform.Rotate(enemyState.eulerAngles);
                     //Quaternion.Euler()
                 }
             }
