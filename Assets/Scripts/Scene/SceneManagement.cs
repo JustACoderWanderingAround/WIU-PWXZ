@@ -32,6 +32,14 @@ public class SceneManagement : MonoBehaviour
     
     public bool isLoading { get; private set; }
 
+    private System.Action onSceneLoaded;
+
+    public void OnSceneLoaded(System.Action onSceneLoad)
+    {
+        if (isLoading)
+            onSceneLoaded += onSceneLoad;
+    }
+
     private void Awake()
     {
         if (instance != null)
@@ -101,6 +109,8 @@ public class SceneManagement : MonoBehaviour
             yield return null;
         }
         asyncHandler = null;
+        onSceneLoaded?.Invoke();
+        onSceneLoaded = null;
         loadingText.gameObject.SetActive(false);
         isLoading = false;
 

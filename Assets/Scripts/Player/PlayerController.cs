@@ -212,5 +212,7 @@ public class PlayerController : MonoBehaviour
             shopController.SetShopNameActive(col);
         if (col.gameObject.CompareTag("Water"))
             globalVolumeController.SetWaterEffect();
+        if (col.gameObject.CompareTag("Checkpoint"))
+            checkpointController.SetSaveUIInactive();
     }
 }

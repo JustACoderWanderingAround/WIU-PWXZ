@@ -51,19 +51,6 @@ public class CheckpointController : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = saveUICanvas.activeSelf;
         }
-
-        string enemies = JsonUtility.ToJson(new SerializableList<EnemyState>(EnemiesList));
-
-        if (FileManager.WriteToFile("enemiesdata.json", enemies))
-        {
-            Debug.Log("Save scene data successful");
-        }
-
-        PlayerPrefs.SetString("SceneName", SceneManager.GetActiveScene().name);
-        PlayerPrefs.SetString("CheckpointPos", transform.position.ToString());
-        //PlayerPrefs.SetInt("Money", ShopItemController.Instance.GetMoney());
-        PlayerPrefs.Save();
-
     }
 
     public void SetSaveUIInactive()
@@ -215,9 +202,7 @@ public class CheckpointController : MonoBehaviour
             {
                 if (enemy.GetComponent<AINavigation>() != null)
                 {
-                    child.transform.position = enemyState.position;
-                    child.transform.Rotate(enemyState.eulerAngles);
-                    //Quaternion.Euler()
+                    EnemyObjectList.Add(enemy);
                 }
             }
 
@@ -248,6 +233,7 @@ public class CheckpointController : MonoBehaviour
         }
         Debug.Log("LoadDone");
         Time.timeScale = 1f;
+        SetSaveUIInactive();
     }
 
     public static Vector3 StringToVector3(string sVector)
