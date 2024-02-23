@@ -68,11 +68,6 @@ public class MirrorBehaviour : MonoBehaviour
         _camera.fieldOfView = Mathf.Max(60f - _camera.nearClipPlane * adjustValue, 1f);
     }
 
-    private void OnValidate()
-    {
-        UpdateCameraTexture();
-    }
-
     public void Initialise()
     {
         UpdateCameraTexture();
@@ -105,8 +100,9 @@ public class MirrorBehaviour : MonoBehaviour
 
         _renderer = GetComponent<Renderer>();
 
-        _renderer.material = new Material(shader);
-        _material = _renderer.material;
+        Material mat = new Material(shader);
+        _renderer.material = mat;
+        _material = mat;
 
         _material.SetTexture("_Texture2D", newRenderTexture);
         _material.SetColor("_Color", matColor);
