@@ -35,7 +35,7 @@ public class MovementController : MonoBehaviour
     private float _y = 0f;
     float breathtimer = 100f;
     private bool atPoolLadder =false;
-    private Vector3 ladderPos;
+    private Transform ladderTra;
     Vector3 gravity;
     LayerMask waterMask;
 
@@ -367,7 +367,8 @@ public class MovementController : MonoBehaviour
     {
         if (atPoolLadder == true)
         {
-            transform.position = ladderPos;
+            playerRB.AddForce(ladderTra.position + ladderTra.right * 1000f + ladderTra.forward * 800f);
+            Debug.Log(transform.position);
         }
     }
 
@@ -423,7 +424,7 @@ public class MovementController : MonoBehaviour
         {
             atPoolLadder = true;
             //transform.position = other.transform.position;
-            ladderPos = other.transform.position;
+            ladderTra = other.transform;
         }
     }
 

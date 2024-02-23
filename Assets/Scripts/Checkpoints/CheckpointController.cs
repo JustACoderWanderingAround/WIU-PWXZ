@@ -96,6 +96,7 @@ public class CheckpointController : MonoBehaviour
             }
         }
 
+        photoAlbum?.SaveImage();
         string items = JsonUtility.ToJson(new SerializableList<ItemState>(ItemsList));
 
         if (FileManager.WriteToFile("scenedata.json", items))
@@ -173,6 +174,8 @@ public class CheckpointController : MonoBehaviour
         Time.timeScale = 0f;
         transform.position = StringToVector3(PlayerPrefs.GetString("CheckpointPos"));
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+
+        photoAlbum?.Reload();
 
         string s;
         if (FileManager.LoadFromFile("playerdata.json", out s))
