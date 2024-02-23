@@ -78,8 +78,13 @@ public class CheckpointController : MonoBehaviour
 
         foreach (InventorySlot g in inventoryManager.items)
         {
+            if (g.goRef == null)
+            {
+                g.LoadSpriteAndGameObject();
+            }
             ItemState itemState = new ItemState(g.goRef.name, g.goRef.GetInstanceID(), g.goRef.activeSelf, g.goRef.transform.position, g.goRef.transform.rotation.x, g.goRef.transform.rotation.y, g.goRef.transform.rotation.z);
             ItemsList.Add(itemState);
+            
         }
 
         foreach (GameObject item in GameObject.FindGameObjectsWithTag("Item"))
