@@ -41,6 +41,7 @@ public class ObjectBuoyancy : MonoBehaviour
             );
             submergence = 0f;
         }
+        Debug.Log(rb.velocity);
     }
 
     void CheckSubmergence()

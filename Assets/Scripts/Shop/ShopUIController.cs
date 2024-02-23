@@ -37,20 +37,15 @@ public class ShopUIController : MonoBehaviour
     private int TCCount = 0;
     private int AMCount = 0;
 
+    private int EDCost = 10;
+    private int TCCost = 20;
+    private int AMCost = 40;
     private int money = 0;
     private int cost = 0;
 
     private void Awake()
     {
-        //if (Instance != null)
-        //{
-        //    Destroy(gameObject.transform.parent.gameObject);
-        //    return;
-        //}
-        //DontDestroyOnLoad(this);
-        //if (Instance == null)
-            Instance = this;
-        
+            Instance = this;   
     }
 
     public void SetShopNameActive(Collider other)
@@ -89,9 +84,9 @@ public class ShopUIController : MonoBehaviour
         //Register Button Events
         buttonEDDec.onClick.AddListener(() => buttonCallBack(buttonEDDec));
         buttonEDInc.onClick.AddListener(() => buttonCallBack(buttonEDInc));
-        buttonTCInc.onClick.AddListener(() => buttonCallBack(buttonTCDec));
+        buttonTCDec.onClick.AddListener(() => buttonCallBack(buttonTCDec));
         buttonTCInc.onClick.AddListener(() => buttonCallBack(buttonTCInc));
-        buttonAMInc.onClick.AddListener(() => buttonCallBack(buttonAMDec));
+        buttonAMDec.onClick.AddListener(() => buttonCallBack(buttonAMDec));
         buttonAMInc.onClick.AddListener(() => buttonCallBack(buttonAMInc));
         buttonBuy.onClick.AddListener(() => buttonCallBack(buttonBuy));
     }
@@ -100,12 +95,11 @@ public class ShopUIController : MonoBehaviour
     {
         if (buttonPressed == buttonEDDec)
         {
-            //Your code for button 2
             if (EDCount > 0)
             {
                 EDCount--;
                 EDCountText.text = EDCount.ToString();
-                cost -= 5;
+                cost -= EDCost;
                 totalText.text = "Total: $" + cost.ToString();
                 moneyText.text = "Money: $" + money.ToString();
             }
@@ -113,22 +107,20 @@ public class ShopUIController : MonoBehaviour
 
         if (buttonPressed == buttonEDInc)
         {
-            //Your code for button 1
             EDCount++;
             EDCountText.text = EDCount.ToString() + "";
-            cost += 5;
+            cost += EDCost;
             totalText.text = "Total: $" + cost.ToString();
             moneyText.text = "Money: $" + money.ToString();
         }
 
         if (buttonPressed == buttonTCDec)
         {
-            //Your code for button 3
             if (TCCount > 0)
             {
                 TCCount--;
                 TCCountText.text = TCCount.ToString() + "";
-                cost -= 10;
+                cost -= TCCost;
                 totalText.text = "Total: $" + cost.ToString();
                 moneyText.text = "Money: $" + money.ToString();
             }
@@ -136,10 +128,9 @@ public class ShopUIController : MonoBehaviour
 
         if (buttonPressed == buttonTCInc)
         {
-            //Your code for button 3
             TCCount++;
             TCCountText.text = TCCount.ToString() + "";
-            cost += 10;
+            cost += TCCost;
             totalText.text = "Total: $" + cost.ToString();
             moneyText.text = "Money: $" + money.ToString();
         }
@@ -148,10 +139,9 @@ public class ShopUIController : MonoBehaviour
         {
             if (AMCount > 0)
             {
-                //Your code for button 3
                 AMCount--;
                 AMCountText.text = AMCount.ToString() + "";
-                cost -= 15;
+                cost -= AMCost;
                 totalText.text = "Total: $" + cost.ToString();
                 moneyText.text = "Money: $" + money.ToString();
             }
@@ -159,10 +149,9 @@ public class ShopUIController : MonoBehaviour
 
         if (buttonPressed == buttonAMInc)
         {
-            //Your code for button 3
             AMCount++;
             AMCountText.text = AMCount.ToString() + "";
-            cost += 15;
+            cost += AMCost;
             totalText.text = "Total: $" + cost.ToString();
             moneyText.text = "Money: $" + money.ToString();
         }
@@ -172,7 +161,6 @@ public class ShopUIController : MonoBehaviour
             if (money - cost < 0)
                 return;
 
-            //Your code for button 3
             for (int i = 0; i < EDCount; i++)
             {
                 GameObject ed = Instantiate(eDrink, transform.position, Quaternion.identity);

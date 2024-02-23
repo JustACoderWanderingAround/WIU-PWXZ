@@ -185,7 +185,7 @@ MonoBehaviour:
   maxRotationY: 90
   idleTime: 3
   speedMultiplier: 2
-  isHostile: 1
+  isHostile: 0
   currState: 0
 --- !u!1001 &9010215671994702441
 PrefabInstance:

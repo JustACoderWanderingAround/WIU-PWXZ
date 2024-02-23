@@ -14,7 +14,8 @@ public class MovementController : MonoBehaviour
     private bool isCrouching = false;
     private bool isGrounded = true;
 
-    private bool inWater => submergence > 0.7f;
+    private bool inWater => submergence > 0.0f;
+    private bool underWater => submergence > 0.9f;
 
     private Vector3 direction;
     public float stamina = 100;
@@ -33,6 +34,8 @@ public class MovementController : MonoBehaviour
     float buoyancy = 2.25f;
     private float _y = 0f;
     float breathtimer = 100f;
+    private bool atPoolLadder =false;
+    private Vector3 ladderPos;
     Vector3 gravity;
     LayerMask waterMask;
 
@@ -133,9 +136,21 @@ public class MovementController : MonoBehaviour
         {
             playerRB.velocity +=
                 gravity * ((1f - buoyancy * submergence) * Time.deltaTime);
-            breathTimer -= movementData.swimBreathCost * Time.deltaTime;
+            
         }
 
+        if (underWater)
+        {
+            breathTimer -= movementData.swimBreathCost * Time.deltaTime;
+            if (breathtimer <= 0f)
+            {
+                
+            }
+        }
+        if (!underWater)
+        {
+            breathTimer = 100f;
+        }
 
         isMoving = horizontal != 0 || vertical != 0;
         if (isMoving)
@@ -199,7 +214,7 @@ public class MovementController : MonoBehaviour
         }
 
         // Set player to falling if falling
-        if (playerRB.velocity.y <= -0.5f)
+        if (playerRB.velocity.y <= -0.5f && !inWater)
             animationController.ChangeAnimation(animationController.Falling, 0.1f, 0, 0);
 
         // If run out of stamina
@@ -216,7 +231,7 @@ public class MovementController : MonoBehaviour
         // Update facing direction
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, targetAngle, 0), moveSpeed * Time.deltaTime);
-        Debug.Log(submergence);
+        //Debug.Log(submergence);
     }
 
     public void ChargeJump()
@@ -253,14 +268,23 @@ public class MovementController : MonoBehaviour
 
     public void UpdateAnimation()
     {
+        if (inWater && !isMoving)
+        {
+            animationController.ChangeAnimation(animationController.SwimmingIdle, 0.15f, 0, 0);
+        }
+        if (inWater && isMoving)
+        {
+            animationController.ChangeAnimation(animationController.SwimmingMoving, 0.15f, 0, 0);
+        }
+
         if (!isGrounded)
             return;
-
         if (isMoving)
         {
-            if (!isSprinting && !isCrouching) animationController.ChangeAnimation(animationController.Walk, 0.15f, 0, 0);
-            if (isSprinting && !isCrouching) animationController.ChangeAnimation(animationController.Sprint, 0.15f, 0, 0);
-            if (!isSprinting && isCrouching) animationController.ChangeAnimation(animationController.CrouchWalk, 0.15f, 0, 0);
+            if (!isSprinting && !isCrouching && !inWater) animationController.ChangeAnimation(animationController.Walk, 0.15f, 0, 0);
+            if (isSprinting && !isCrouching && !inWater) animationController.ChangeAnimation(animationController.Sprint, 0.15f, 0, 0);
+            if (!isSprinting && isCrouching && !inWater) animationController.ChangeAnimation(animationController.CrouchWalk, 0.15f, 0, 0);
+
         }
         else
         {
@@ -339,6 +363,14 @@ public class MovementController : MonoBehaviour
       
     }
 
+    public void ExitPool()
+    {
+        if (atPoolLadder == true)
+        {
+            transform.position = ladderPos;
+        }
+    }
+
     public bool GetInWater()
     {
         return inWater;
@@ -385,6 +417,13 @@ public class MovementController : MonoBehaviour
             CheckSubmergence();
             moveSpeed = movementData.swimSpeed;
             playerRB.drag = movementData.waterDrag;
+            isGrounded = false;
+        }
+        if (other.gameObject.CompareTag("PoolLadder") && inWater)
+        {
+            atPoolLadder = true;
+            //transform.position = other.transform.position;
+            ladderPos = other.transform.position;
         }
     }
 
@@ -403,6 +442,12 @@ public class MovementController : MonoBehaviour
             moveSpeed = movementData.walkSpeed;
             playerRB.drag = movementData.groundDrag;
             breathTimer = 100;
+            submergence = 0;
+        }
+        if (other.gameObject.CompareTag("PoolLadder") && inWater)
+        {
+            atPoolLadder = false;
+            //ladderPos = new Vector3 (0,0,0);
         }
     }
 }

@@ -21,6 +21,7 @@ TagManager:
   - Water
   - GlobalVolume
   - Cutscene
+  - PoolLadder
   layers:
   - Default
   - TransparentFX
@@ -33,7 +34,7 @@ TagManager:
   - Mirror
   - ActiveInventory
   - Evidence
-  - 
+  - PoolFloor
   - 
   - 
   - 

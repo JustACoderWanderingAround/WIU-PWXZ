@@ -22,6 +22,8 @@ public class AnimationController : MonoBehaviour
     public readonly int Falling = Animator.StringToHash("Falling");
     // Others
     public readonly int Drinking = Animator.StringToHash("Drinking");
+    public readonly int SwimmingIdle = Animator.StringToHash("SwimmingIdle");
+    public readonly int SwimmingMoving = Animator.StringToHash("SwimmingMoving");
 
     private void Awake()
     {
