@@ -292,6 +292,25 @@ public class PhotoAlbum : MonoBehaviour
             RenderImage();
     }
 
+    /// <summary>
+    /// Temporarily add Image to a list such as players not need to reload to look at new images taken.
+    /// This hugely reduces the time taken.
+    /// </summary>
+    public void AddImage(Texture2D texture)
+    {
+        //Get Sprite of it (Do not delete texture of it, as sprite is created with a reference to it)
+        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height),
+            new Vector2(texture.width * 0.5f, texture.height * 0.5f));
+
+        //Add to the list
+        unsavedImages.Add(sprite);
+
+        if (renderAll)
+            RenderAllImage();
+        else
+            RenderImage();
+    }
+
     public void RenderImage()
     {
         //Check if any Images is initialised

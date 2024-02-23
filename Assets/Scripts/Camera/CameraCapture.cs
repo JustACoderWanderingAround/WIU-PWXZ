@@ -102,7 +102,7 @@ public class CameraCapture : MonoBehaviour
 
     public void CaptureScreen()
     {
-        if (captureHandler != null || identifyHandler != null)
+        if (captureHandler != null || identifyHandler != null || effectCoroutine != null)
         {
             Debug.Log("Please wait for the image to done Rendering and/or Identifying Before capturing again");
             return;
@@ -124,10 +124,17 @@ public class CameraCapture : MonoBehaviour
             sceneName = SceneManagement.Instance.GetActiveSceneName();
         }
 
+        //Wait until the captureHandler is going to capture (after done rendering)
+        yield return new WaitForEndOfFrame();
+
         // While capturing Image wait
         while (captureHandler != null)
             yield return null;
 
+        //Wait for one more frame for margin error
+        yield return null;
+
+        Debug.Log("Camera Flick");
         AudioManager.Instance.Play("CameraFlick");
         volumeManager.weight = 1f;
         if (sceneVolume != null)
