@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.PostProcessing;
 
 //Created by: Tan Xiang Feng Wayne
 public class CameraCapture : MonoBehaviour
@@ -28,6 +30,14 @@ public class CameraCapture : MonoBehaviour
 
     [SerializeField]
     private bool debugAutoSave = false;
+
+    [Header("Effects")]
+    public float timeToResolve = 0.5f;
+
+    private string sceneName = string.Empty;
+    public Volume volumeManager = null;
+    private Volume sceneVolume = null;
+    private Coroutine effectCoroutine = null;
 
     #region DebugOnly
     // Start is called before the first frame update
@@ -76,6 +86,7 @@ public class CameraCapture : MonoBehaviour
         }
 
         FileName = fileName;
+        volumeManager.weight = 0f;
     }
 
     //Subscribe to listener
@@ -91,14 +102,60 @@ public class CameraCapture : MonoBehaviour
 
     public void CaptureScreen()
     {
-        if (captureHandler != null || identifyHandler != null)
+        if (captureHandler != null || identifyHandler != null || effectCoroutine != null)
         {
             Debug.Log("Please wait for the image to done Rendering and/or Identifying Before capturing again");
             return;
         }
+        //Stop previous effect
+        if (effectCoroutine != null)
+            StopCoroutine(effectCoroutine);
 
+        effectCoroutine = StartCoroutine(CameraFlickEffect());
         captureHandler = StartCoroutine(CaptureScreenshotAtEndOfFrame());
         identifyHandler = StartCoroutine(IdentifyGameObject());
+    }
+
+    private IEnumerator CameraFlickEffect()
+    {
+        if (sceneName != SceneManagement.Instance.GetActiveSceneName())
+        {
+            sceneVolume = GameObject.FindGameObjectWithTag("EditableVolume")?.GetComponent<Volume>();
+            sceneName = SceneManagement.Instance.GetActiveSceneName();
+        }
+
+        //Wait until the captureHandler is going to capture (after done rendering)
+        yield return new WaitForEndOfFrame();
+
+        // While capturing Image wait
+        while (captureHandler != null)
+            yield return null;
+
+        //Wait for one more frame for margin error
+        yield return null;
+
+        Debug.Log("Camera Flick");
+        AudioManager.Instance.Play("CameraFlick");
+        volumeManager.weight = 1f;
+        if (sceneVolume != null)
+            sceneVolume.weight = 0f;
+
+        float time = 0f;
+        float multiplier = 1 / timeToResolve;
+        while (time < timeToResolve)
+        {
+            time += Time.deltaTime;
+            volumeManager.weight = 1f - (time * multiplier);
+            if (sceneVolume != null)
+                sceneVolume.weight = (time * multiplier);
+            yield return null;
+        }
+
+        volumeManager.weight = 0f;
+        if (sceneVolume != null)
+            sceneVolume.weight = 1f;
+
+        effectCoroutine = null;
     }
 
     private IEnumerator IdentifyGameObject()

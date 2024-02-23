@@ -86,35 +86,36 @@ public class Guard : MonoBehaviour, IEventListener
     {
         currentState = nextState;
         timer = 0;
+        animator.StopPlayback();
 
         switch (currentState)
         {
             case GuardState.IDLE:
-                animator.CrossFade(Idle, 0.1f);
+                animator.CrossFade(Idle, 0.05f);
                 break;
             case GuardState.PATROL:
                 aiNavigation.ResumeNavigation();
                 ChangeColor(Color.white);
-                animator.CrossFade(Walk, 0.1f);
+                animator.CrossFade(Walk, 0.05f);
                 aiNavigation.SetNavMeshTarget(waypoints[waypointIndex].position, 2f);
                 break;
             case GuardState.CHASE:
                 aiNavigation.ResumeNavigation();
                 ChangeColor(Color.red);
-                animator.CrossFade(Sprint, 0.1f);
+                animator.CrossFade(Sprint, 0.05f);
                 break;
             case GuardState.LOOK_AROUND:
-                animator.CrossFade(LookAround, 0.1f);
+                animator.CrossFade(LookAround, 0.05f);
                 break;
             case GuardState.SEARCH:
                 aiNavigation.ResumeNavigation();
                 ChangeColor(Color.red);
-                animator.CrossFade(Walk, 0.1f);
+                animator.CrossFade(Walk, 0.05f);
                 aiNavigation.SetNavMeshTarget(positionOfInterest, 3f);
                 break;
             case GuardState.STUNNED:
                 ChangeColor(Color.yellow);
-                animator.CrossFade(Stunned, 0.1f);
+                animator.CrossFade(Stunned, 0.05f);
                 aiNavigation.StopNavigation();
                 break;
         }
@@ -245,6 +246,7 @@ public class Guard : MonoBehaviour, IEventListener
         if (Vector3.Distance(transform.position, PlayerController.Instance.transform.position) <= 1f && !caughtPlayer)
         {
             caughtPlayer = true;
+            Debug.Log(gameObject + " Called Load");
             CheckpointController.Instance.Load();
         }
     }

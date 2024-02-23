@@ -49,13 +49,20 @@ public class Locker : MonoBehaviour, IInteractable
         animator.SetTrigger("open");
         miniGame.gameObject.SetActive(false);
     }
-    private void OnTriggerEnter(Collider other)
+    void ClearMiniGame()
+    {
+        if (miniGame.gameObject.activeInHierarchy)
+        {
+            miniGame.gameObject.SetActive(false);
+        }
+    }
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             playerInside = true;
         }
-        else if (other.gameObject.CompareTag("Enemy") )
+        if (other.gameObject.CompareTag("Enemy"))
         {
             if (playerInside)
                 StartCoroutine(StartMiniGame());
@@ -66,6 +73,7 @@ public class Locker : MonoBehaviour, IInteractable
         if (other.gameObject.CompareTag("Player"))
         {
             playerInside = false;
+            ClearMiniGame();
         }
     }
 }

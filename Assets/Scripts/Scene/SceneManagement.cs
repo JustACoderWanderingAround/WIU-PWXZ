@@ -35,7 +35,7 @@ public class SceneManagement : MonoBehaviour
 
     private System.Action onSceneLoaded;
 
-    
+    public Volume dissolveVolume;
 
     public void OnSceneLoaded(System.Action onSceneLoad)
     {
@@ -75,26 +75,14 @@ public class SceneManagement : MonoBehaviour
         isLoadingEffect = true;
         Time.timeScale = 0;
         //Doing Scene Transitions
-        Volume globalVolume = FindObjectOfType<Volume>();
-
-        if (globalVolume != null)
+        if (dissolveVolume != null)
         {
-            DissolvePostProcessing dPP = null;
-            globalVolume.sharedProfile.TryGet<DissolvePostProcessing>(out dPP);
-
-            if (dPP != null)
+            float timePassed = 0f;
+            while (timePassed < 1f)
             {
-                float timePassed = 0f;
-                while (timePassed < 1f)
-                {
-                    timePassed += Time.unscaledDeltaTime;
-                    dPP.Progress.SetValue(new FloatParameter(Mathf.Min(timePassed, 1f)));
-                    yield return null;
-                }
-            }
-            else
-            {
-                Debug.Log("No Dissolve Post Processing Attached");
+                timePassed += Time.unscaledDeltaTime;
+                dissolveVolume.weight = Mathf.Min(timePassed, 1f);
+                yield return null;
             }
         }
 
@@ -120,26 +108,14 @@ public class SceneManagement : MonoBehaviour
         loadCoroutine = null;
 
         //Doing Scene Transitions : ON GAME TIME
-        globalVolume = FindObjectOfType<Volume>();
-
-        if (globalVolume != null)
+        if (dissolveVolume != null)
         {
-            DissolvePostProcessing dPP = null;
-            globalVolume.sharedProfile.TryGet<DissolvePostProcessing>(out dPP);
-
-            if (dPP != null)
+            float timePassed = 0f;
+            while (timePassed < 1f)
             {
-                float timePassed = 0f;
-                while (timePassed < 1f)
-                {
-                    timePassed += Time.deltaTime;
-                    dPP.Progress.SetValue(new FloatParameter(1f - Mathf.Min(timePassed, 1f)));
-                    yield return null;
-                }
-            }
-            else
-            {
-                Debug.Log("No Dissolve Post Processing Attached");
+                timePassed += Time.deltaTime;
+                dissolveVolume.weight = 1f - Mathf.Min(timePassed, 1f);
+                yield return null;
             }
         }
 

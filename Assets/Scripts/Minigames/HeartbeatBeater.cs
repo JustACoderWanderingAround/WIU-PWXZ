@@ -63,12 +63,12 @@ public class HeartbeatBeater : MiniGame
         {
             spawnLeft = false;
             GameObject newHalf = Instantiate(leftHalf, leftSpawner.transform.position, Quaternion.identity, gameObject.transform);
-            newHalf.GetComponent<HeartHalf>().Init(target, 2 + Random.Range(0, 3));
+            newHalf.GetComponent<HeartHalf>().Init(target, 2);
         } else
         {
             spawnLeft = true;
             GameObject newHalf = Instantiate(rightHalf, rightSpawner.transform.position, Quaternion.identity, gameObject.transform);
-            newHalf.GetComponent<HeartHalf>().Init(target, 2 + Random.Range(0, 3));
+            newHalf.GetComponent<HeartHalf>().Init(target, 2);
         }
     }
     void DestroyHalf(bool isLeft)

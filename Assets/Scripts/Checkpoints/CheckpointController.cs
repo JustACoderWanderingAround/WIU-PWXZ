@@ -24,6 +24,8 @@ public class CheckpointController : MonoBehaviour
     [SerializeField]
     private GameObject saveUICanvas;
 
+    private Coroutine loadCoroutine = null;
+
     void Start()
     {
         // We search all the checkpoints in the current scene
@@ -76,8 +78,13 @@ public class CheckpointController : MonoBehaviour
 
         foreach (InventorySlot g in inventoryManager.items)
         {
+            if (g.goRef == null)
+            {
+                g.LoadSpriteAndGameObject();
+            }
             ItemState itemState = new ItemState(g.goRef.name, g.goRef.GetInstanceID(), g.goRef.activeSelf, g.goRef.transform.position, g.goRef.transform.rotation.x, g.goRef.transform.rotation.y, g.goRef.transform.rotation.z);
             ItemsList.Add(itemState);
+            
         }
 
         foreach (GameObject item in GameObject.FindGameObjectsWithTag("Item"))
@@ -140,7 +147,8 @@ public class CheckpointController : MonoBehaviour
     }
     public void Load()
     {
-        StartCoroutine(LoadRoutine());
+        if (loadCoroutine == null)
+            loadCoroutine = StartCoroutine(LoadRoutine());
     }
 
     public IEnumerator LoadRoutine()
@@ -242,6 +250,7 @@ public class CheckpointController : MonoBehaviour
         Debug.Log("LoadDone");
         Time.timeScale = 1f;
         SetSaveUIInactive();
+        loadCoroutine = null;
     }
 
     public static Vector3 StringToVector3(string sVector)
