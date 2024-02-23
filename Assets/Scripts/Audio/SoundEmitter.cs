@@ -14,14 +14,6 @@ public class SoundEmitter : MonoBehaviour
 
     public void EmitSound(SoundWPosition.SoundType soundType)
     {
-        if (audioSource != null)
-        {
-            if (audioSource.isPlaying)
-                audioSource.Stop();
-
-            audioSource.Play();
-        }
-
         SoundWPosition sound = new SoundWPosition(audioSource, soundType, transform.position, emissionRange);
 
         Collider[] colliders = Physics.OverlapSphere(sound.position, sound.range);

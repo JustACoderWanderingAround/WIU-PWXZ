@@ -9,15 +9,17 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
     private Rigidbody pipeRB;
     [SerializeField] private Sprite itemDisplayImage = null;
 
-    private bool onCollide = false;
     private bool isEnabled = false;
     private bool hasRan = true;
 
     private float _force = 0f;
+    private float timeSinceSpawn;
+
     private void Awake()
     {
         pipeRB = GetComponent<Rigidbody>();
         soundEmitter = GetComponent<SoundEmitter>();
+        timeSinceSpawn = 0;
     }
 
     public string GetItemName()
@@ -52,6 +54,9 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
 
     private void Update()
     {
+        if (timeSinceSpawn <= 5f)
+            timeSinceSpawn += Time.deltaTime;
+
         if (isEnabled && Input.GetMouseButton(0))
         {
             _force += Time.deltaTime * 10f;
@@ -82,12 +87,20 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
 
     private void OnCollisionEnter(Collision col)
     {
-        if (!col.gameObject.CompareTag("Player"))
+        if (!col.gameObject.CompareTag("Player") && timeSinceSpawn > 5f)
         {
-            if (!onCollide)
-                soundEmitter.EmitSound(SoundWPosition.SoundType.IMPORTANT);
+            AudioSource audio = GetComponent<AudioSource>();
+
+            if (audio == null)
+                return;
+
+            if (audio.isPlaying)
+                return;
+
+            audio.Play();
+            soundEmitter.EmitSound(SoundWPosition.SoundType.IMPORTANT);
         }
-        else
+        else if (timeSinceSpawn > 5f)
             pipeRB.useGravity = false;
     }
 
