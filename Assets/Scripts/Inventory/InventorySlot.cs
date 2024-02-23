@@ -53,6 +53,6 @@ public class InventorySlot
 
     public string GetString()
     {
-        return $"<b>Name:</b> {itemName}\n<b>Description: </b>{(itemDescription == string.Empty ? "NULL" : itemDescription)}\n" + (isStackable ? $"<b>Item Count:</b> {itemCount}" : "") + $"\n\n<b>IsStackable: </b>{isStackable}\n<b>IsConsumable: </b>{isConsumable}";
+        return $"<b>Name:</b> {itemName}\n<b>Description: </b>{(itemDescription == string.Empty ? "NULL" : itemDescription)}\n" + (isStackable ? $"<b>Item Count:</b> {itemCount}" : "");
     }
 }

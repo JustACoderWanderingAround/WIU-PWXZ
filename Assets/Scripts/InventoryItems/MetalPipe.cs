@@ -99,9 +99,17 @@ public class MetalPipe : MonoBehaviour, IInventoryItem
 
             audio.Play();
             soundEmitter.EmitSound(SoundWPosition.SoundType.IMPORTANT);
+
+            StartCoroutine(DestroyRoutine());
         }
         else if (timeSinceSpawn > 5f)
             pipeRB.useGravity = false;
+    }
+
+    private IEnumerator DestroyRoutine()
+    {
+        yield return new WaitForSeconds(3f);
+        Destroy(gameObject);
     }
 
     public GameObject GetGameObject()
