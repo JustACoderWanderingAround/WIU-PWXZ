@@ -10,6 +10,8 @@ public class EndScenePlayer : MonoBehaviour
 
     private void Awake()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         if (GameManager.GetEvidenceList().Count > 2)
         {
             whistleDirector.SetActive(true);
