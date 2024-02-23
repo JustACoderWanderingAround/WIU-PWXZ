@@ -81,7 +81,7 @@ public class MirrorBehaviour : MonoBehaviour
 
     private void OnDestroy()
     {
-        _camera.targetTexture.Release();
+        _camera.targetTexture?.Release();
     }
 
     private void UpdateCameraTexture()

@@ -21,6 +21,7 @@ TagManager:
   - Water
   - GlobalVolume
   - Cutscene
+  - PoolLadder
   - EditableVolume
   layers:
   - Default
@@ -34,7 +35,7 @@ TagManager:
   - Mirror
   - ActiveInventory
   - Evidence
-  - 
+  - PoolFloor
   - 
   - 
   - 

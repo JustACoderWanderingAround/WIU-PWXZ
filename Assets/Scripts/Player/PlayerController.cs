@@ -99,7 +99,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(isDisabled);
         if (isDisabled)
             return;
 
@@ -125,11 +124,14 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             shopController?.SetShopCatalogueActive();
+            movementController.ExitPool();
             if (collidedInteractable != null && collidedInteractable.TryGetComponent(out IInteractable interactable))
             {
                 interactable.OnInteract();
             }
         }
+
+
         if (Input.GetKeyDown(KeyCode.T))
         {
             cameraCapture.CaptureScreen();
@@ -200,8 +202,6 @@ public class PlayerController : MonoBehaviour
         {
             shopController.SetShopNameActive(col);
         }
-        //if (col.gameObject.CompareTag("Water") && movementController.GetSubmergence() > 0.9f)
-        //    globalVolumeController.SetWaterEffect();
 
         if (col.gameObject.CompareTag("Checkpoint"))
             checkpointController.SetSaveUIActive(col);
@@ -215,8 +215,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Water") && movementController.GetSubmergence() > 0.7f)
+        if (other.gameObject.CompareTag("Water") && movementController.GetSubmergence() > 0.9f)
             globalVolumeController?.EnableWaterEffect();
+        if (other.gameObject.CompareTag("Water") && movementController.GetSubmergence() < 0.9f)
+            globalVolumeController?.DisableWaterEffect();
     }
 
     private void OnTriggerExit(Collider col)
@@ -226,7 +228,7 @@ public class PlayerController : MonoBehaviour
             collidedInteractable = null;
         if (col.gameObject.CompareTag("Shop"))
             shopController.SetShopNameActive(col);
-        if (movementController.GetSubmergence() < 0.7f || col.gameObject.CompareTag("Water"))
+        if (col.gameObject.CompareTag("Water"))
             globalVolumeController?.DisableWaterEffect();
         if (col.gameObject.CompareTag("Checkpoint"))
             checkpointController.SetSaveUIInactive();
