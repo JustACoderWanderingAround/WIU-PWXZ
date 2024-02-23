@@ -24,7 +24,6 @@ public class MiniGame : MonoBehaviour
         BaseEventData eventData = new BaseEventData(EventSystem.current);
         eventData.selectedObject = this.gameObject;
         OnWinCallBack.Invoke(eventData);
-        AudioManager.Instance.Play("DoorOpen");
     }
     protected virtual void OnLose()
     {
