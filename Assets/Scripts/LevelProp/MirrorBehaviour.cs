@@ -65,7 +65,7 @@ public class MirrorBehaviour : MonoBehaviour
 
         //Calculation that is used
         //To minimaise calculation
-        _camera.fieldOfView = 60f - _camera.nearClipPlane * adjustValue;
+        _camera.fieldOfView = Mathf.Max(60f - _camera.nearClipPlane * adjustValue, 1f);
     }
 
     private void OnValidate()
@@ -92,8 +92,10 @@ public class MirrorBehaviour : MonoBehaviour
         if (_camera == null)
             Debug.LogWarning("MirrorBehaviour: There is no Camera Attached to the Mirror");
 
-        if (_camera.targetTexture == null)
-            return;
+        if (_camera.targetTexture != null)
+        {
+            _camera.targetTexture.Release();
+        }
 
         //Create a Render Texture based on the new local Scale
         RenderTexture newRenderTexture = new RenderTexture(Mathf.FloorToInt(transform.localScale.x * scaleMultiplier),
@@ -103,6 +105,7 @@ public class MirrorBehaviour : MonoBehaviour
 
         _renderer = GetComponent<Renderer>();
 
+        _renderer.material = new Material(shader);
         _material = _renderer.material;
 
         _material.SetTexture("_Texture2D", newRenderTexture);
